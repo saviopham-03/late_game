@@ -10,8 +10,8 @@ and represents some of the stress and anxiety associated with it through a uniqu
 puzzles and platforming.
 
 ## Version Control Guidelines
-1. Please `git branch [name]` off from `dev` when you work on individual things\
-2. Create a pull request when you are finished with your branch and let us know on the group so we can review.\
+1. Please `git branch [name]` off from `dev` when you work on individual things
+2. Create a pull request when you are finished with your branch and let us know on the group so we can review.
 3. Push to main at every major milestone when *everybody* is in agreement and attendance.
 
 ## Pre-release Installation
