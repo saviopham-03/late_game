@@ -12,7 +12,7 @@
 |------|------------|-------|--------------|
 |Savio Pham |33109095 |spha0026@student.monash.edu |Art Lead, Documentation Lead, Programmer |
 |Oscar Percy | | |Lead Developer, Programmer |
-|Bhanu Wijekoon | | |Project Manager, Programmer |
+|Bhanu Wijekoon |30564891 |bwij0005@student.monash.edu |Project Manager, Programmer |
 |Jun Li | | |Testing Lead, Programmer |
 |Yixuan Zheng | | |Research Lead, Programmer |
 
