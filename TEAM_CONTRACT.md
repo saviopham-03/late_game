@@ -11,7 +11,7 @@
 | Name | Student ID | Email | Primary Role |
 |------|------------|-------|--------------|
 |Savio Pham |33109095 |spha0026@student.monash.edu |Art Lead, Documentation Lead, Programmer |
-|Oscar Percy | | |Lead Developer, Programmer |
+|Oscar Percy |33965544 | |Lead Developer, Programmer |
 |Bhanu Wijekoon |30564891 |bwij0005@student.monash.edu |Project Manager, Programmer |
 |Jun Li | | |Testing Lead, Programmer |
 |Yixuan Zheng | | |Research Lead, Programmer |
@@ -289,7 +289,7 @@ By signing below, each member agrees to follow this team contract for the durati
 |------|-----------|------|
 |Savio Pham |Savio |31/07/26 |
 |Bhanu Wijekoon |Bhanu |31/07/26 |
-| | | |
+|Oscar Percy | Oscar|31/7/26 |
 | | | |
 | | | |
 
