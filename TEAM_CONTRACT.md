@@ -290,7 +290,7 @@ By signing below, each member agrees to follow this team contract for the durati
 |Savio Pham |Savio |31/07/26 |
 |Bhanu Wijekoon |Bhanu |31/07/26 |
 |Oscar Percy | Oscar|31/7/26 |
-| | | |
+|Jun Li |Jun |2/08/26 |
 | | | |
 
 ---
