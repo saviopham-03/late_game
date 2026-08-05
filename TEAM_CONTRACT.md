@@ -84,8 +84,8 @@ Roles may change throughout the semester as needed.
 ### Regular Meeting Schedule
 
 - Frequency: Fortnightly
-- Day: ____________________
-- Time: ___________________
+- Day: Monday
+- Time: 4pm - 5pm
 - Location/Platform: Discord or Zoom
 
 ### Meeting Roles
