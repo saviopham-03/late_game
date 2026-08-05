@@ -1,13 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
 
+    private Rigidbody2D playerBody;
+    private float horizontalInput;
+
+    private void Awake()
+    {
+        playerBody = GetComponent<Rigidbody2D>();
+    }
+
     private void Update()
     {
-        float horizontalInput = 0f;
+        horizontalInput = 0f;
 
         if (Keyboard.current == null)
         {
@@ -17,18 +26,21 @@ public class PlayerMovement : MonoBehaviour
         if (Keyboard.current.aKey.isPressed ||
             Keyboard.current.leftArrowKey.isPressed)
         {
-            horizontalInput = -1f;
+            horizontalInput -= 1f;
         }
 
         if (Keyboard.current.dKey.isPressed ||
             Keyboard.current.rightArrowKey.isPressed)
         {
-            horizontalInput = 1f;
+            horizontalInput += 1f;
         }
+    }
 
-        transform.position += Vector3.right
-            * horizontalInput
-            * moveSpeed
-            * Time.deltaTime;
+    private void FixedUpdate()
+    {
+        playerBody.linearVelocity = new Vector2(
+            horizontalInput * moveSpeed,
+            playerBody.linearVelocity.y
+        );
     }
 }
