@@ -15,5 +15,5 @@ puzzles and platforming.
 3. Push to main at every major milestone when *everybody* is in agreement and attendance.
 
 ## Pre-release Installation
-You will need [Unity](https://unity.com/products/unity-personal) installed.\
+You will need [Unity](https://unity.com/products/unity-personal) and [Git LFS](https://git-lfs.com/) installed.\
 `git pull https://github.com/saviopham-03/late_game.git` to gain access to the workspace

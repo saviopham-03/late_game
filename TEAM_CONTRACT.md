@@ -11,10 +11,10 @@
 | Name | Student ID | Email | Primary Role |
 |------|------------|-------|--------------|
 |Savio Pham |33109095 |spha0026@student.monash.edu |Art Lead, Documentation Lead, Programmer |
-|Oscar Percy |33965544 | |Lead Developer, Programmer |
+|Oscar Percy |33965544 | oper0009@student.monash.edu |Lead Developer, Programmer |
 |Bhanu Wijekoon |30564891 |bwij0005@student.monash.edu |Project Manager, Programmer |
 |Jun Li |34626905 |jlii0478@student.monash.edu |Testing Lead, Programmer |
-|Yixuan Zheng |35042052 | yzhe0128@student.monash.edu |Research Lead, Programmer |
+|Yixuan Zheng |35042052 |yzhe0128@student.monash.edu |Research Lead, Programmer |
 
 ---
 
@@ -84,8 +84,8 @@ Roles may change throughout the semester as needed.
 ### Regular Meeting Schedule
 
 - Frequency: Fortnightly
-- Day: ____________________
-- Time: ___________________
+- Day: Monday
+- Time: 4pm - 5pm
 - Location/Platform: Discord or Zoom
 
 ### Meeting Roles
@@ -291,7 +291,7 @@ By signing below, each member agrees to follow this team contract for the durati
 |Bhanu Wijekoon |Bhanu |31/07/26 |
 |Oscar Percy | Oscar|31/7/26 |
 |Jun Li |Jun |2/08/26 |
-| Yixuan Zheng| Zheng | 4/8/26 |
+| Yixuan Zheng| Zheng| 4/8/26|
 
 ---
 
