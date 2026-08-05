@@ -14,7 +14,7 @@
 |Oscar Percy |33965544 | |Lead Developer, Programmer |
 |Bhanu Wijekoon |30564891 |bwij0005@student.monash.edu |Project Manager, Programmer |
 |Jun Li |34626905 |jlii0478@student.monash.edu |Testing Lead, Programmer |
-|Yixuan Zheng | | |Research Lead, Programmer |
+|Yixuan Zheng |35042052 | yzhe0128@student.monash.edu |Research Lead, Programmer |
 
 ---
 
@@ -291,7 +291,7 @@ By signing below, each member agrees to follow this team contract for the durati
 |Bhanu Wijekoon |Bhanu |31/07/26 |
 |Oscar Percy | Oscar|31/7/26 |
 |Jun Li |Jun |2/08/26 |
-| | | |
+| Yixuan Zheng| Zheng | 4/8/26 |
 
 ---
 
