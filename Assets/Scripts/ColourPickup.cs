@@ -13,6 +13,7 @@ public class ColourPickup: MonoBehaviour
             return;
         }
         playerColourController.SetColour(pickupColour);
+        Destroy(gameObject);
     }
 
 }
