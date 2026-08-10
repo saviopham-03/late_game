@@ -4,11 +4,20 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 8f;
+    [SerializeField] private float accelerationSpeed;
+    [SerializeField] private float decelerationSpeed;
+    [SerializeField] private float maxMoveSpeed;
+    [SerializeField] private float jumpForce;
     [SerializeField] private Transform groundCheck;
-    [SerializeField] private float groundCheckRadius = 0.3f;
+    [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float coyoteTimer;
+    [SerializeField] private float inputBuffer;
+    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference grappleAction;
+    [SerializeField] private InputActionReference interactAction;
+
 
     private Rigidbody2D playerBody;
     private float horizontalInput;
@@ -17,47 +26,34 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
     }
 
     private void Update()
     {
-        horizontalInput = 0f;
-
-        if (Keyboard.current == null)
+        moveAction.action.started += ctx =>
         {
-            return;
-        }
-
-        if (Keyboard.current.aKey.isPressed ||
-            Keyboard.current.leftArrowKey.isPressed)
+            Vector2 input = moveAction.action.ReadValue<Vector2>();
+            horizontalInput = input.x;
+        };
+        moveAction.action.canceled += ctx =>
         {
-            horizontalInput -= 1f;
-        }
+            Vector2 input = moveAction.action.ReadValue<Vector2>();
+            horizontalInput = input.x;
+        };
 
-        if (Keyboard.current.dKey.isPressed ||
-            Keyboard.current.rightArrowKey.isPressed)
+
+        if (jumpAction.action.triggered)
         {
-            horizontalInput += 1f;
-        }
-
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            Debug.Log("Space detected");
-
-            bool grounded = IsGrounded();
-            Debug.Log("Grounded: " + grounded);
-
-            if (grounded)
-            {
-                jumpRequested = true;
-            }
+            jumpRequested = IsGrounded();
         }
     }
 
     private void FixedUpdate()
     {
         playerBody.linearVelocity = new Vector2(
-            horizontalInput * moveSpeed,
+            Mathf.Lerp(playerBody.linearVelocity.x, maxMoveSpeed*horizontalInput, horizontalInput==0?decelerationSpeed:accelerationSpeed),
             playerBody.linearVelocity.y
         );
 

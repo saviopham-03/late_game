@@ -556,13 +556,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2681b7b9d49e947bec5078647af6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeed: 5
+  accelerationSpeed: 0.1
+  decelerationSpeed: 0.3
+  maxMoveSpeed: 10
   jumpForce: 10
   groundCheck: {fileID: 1255777265}
   groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  coyoteTimer: 0
+  inputBuffer: 0
+  moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
 --- !u!212 &1407064542
 SpriteRenderer:
   m_ObjectHideFlags: 0
