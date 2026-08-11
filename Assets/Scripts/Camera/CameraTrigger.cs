@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class CameraTrigger : MonoBehaviour
 {
-    public enum TriggerDirection
-    {
-        Left,
-        Right
-    }
-
     [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private Transform targetCameraPoint;
-    [SerializeField] private TriggerDirection requiredDirection;
+    [SerializeField] private Transform leftCameraPoint;
+    [SerializeField] private Transform rightCameraPoint;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Player"))
         {
@@ -26,16 +20,13 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
-        if (requiredDirection == TriggerDirection.Right &&
-            rb.linearVelocity.x > 0)
+        if (rb.linearVelocity.x > 0.1f)
         {
-            cameraManager.SwitchCamera(targetCameraPoint);
+            cameraManager.SwitchCamera(rightCameraPoint);
         }
-
-        if (requiredDirection == TriggerDirection.Left &&
-            rb.linearVelocity.x < 0)
+        else if (rb.linearVelocity.x < -0.1f)
         {
-            cameraManager.SwitchCamera(targetCameraPoint);
+            cameraManager.SwitchCamera(leftCameraPoint);
         }
     }
 }
