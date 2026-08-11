@@ -12,4 +12,8 @@ public class Hitbox : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.isTrigger = isTrigger;
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Hitbox entered by: {other.name}");
+    }
 }
