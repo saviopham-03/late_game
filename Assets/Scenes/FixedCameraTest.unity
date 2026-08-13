@@ -312,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 457404292}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.55, z: 0}
+  m_LocalPosition: {x: 0, y: -0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -605,17 +605,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.09936267, y: 0}
+  m_Offset: {x: 0.015402693, y: -0.0121387895}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.13, y: 0.18}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 0.13, y: 0.18}
     adaptiveTilingThreshold: 0.5
-    drawMode: 1
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5012747, y: 0.85}
+  m_Size: {x: 0.06225524, y: 0.121672794}
   m_EdgeRadius: 0
 --- !u!50 &882863292
 Rigidbody2D:
@@ -691,12 +691,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3294107662893279235, guid: 382085434858eb34aa669c7136101845, type: 3}
+  m_Sprite: {fileID: 1946532098153926926, guid: 66d9bc5c767d30e4dbe9480c347a49f1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 0
+  m_Size: {x: 0.13, y: 0.18}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -712,7 +712,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.425, y: 1.442, z: 0}
-  m_LocalScale: {x: 1, y: 1.3846155, z: 7.692308}
+  m_LocalScale: {x: 7.692308, y: 7.6923084, z: 7.692308}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 457404293}
@@ -730,6 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2681b7b9d49e947bec5078647af6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _animator: {fileID: 882863298}
   accelerationSpeed: 0.1
   decelerationSpeed: 0.2
   maxMoveSpeed: 10
@@ -755,8 +756,7 @@ Animation:
   m_Enabled: 1
   serializedVersion: 4
   m_Animation: {fileID: 7400000, guid: ece20ed0d8c947944b61d5c90e537fe9, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: ece20ed0d8c947944b61d5c90e537fe9, type: 2}
+  m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -772,7 +772,7 @@ Animator:
   m_GameObject: {fileID: 882863290}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 95d25f0ba6b07a5408713241908ff4e2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0bd2472c229608b4a9e9f6acaa8d3cb3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

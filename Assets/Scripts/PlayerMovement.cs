@@ -3,7 +3,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
-{
+{   
+    [SerializeField] private Animator _animator;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float maxMoveSpeed;
@@ -36,22 +37,38 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+            _animator.SetBool("is_running", true);
+            GetComponent<SpriteRenderer>().flipX = horizontalInput!=1;
         };
         moveAction.action.canceled += ctx =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+            _animator.SetBool("is_running", false);
         };
 
 
         if (jumpAction.action.triggered)
         {
             jumpRequested = IsGrounded();
+            if (jumpRequested)
+            {
+                _animator.SetTrigger("jumped");
+            }
         }
     }
 
     private void FixedUpdate()
     {
+        Debug.Log(playerBody.linearVelocity.y);
+        if (playerBody.linearVelocity.y < 0)
+        {
+            _animator.SetBool("is_falling", true);
+        }
+        else
+        {
+            _animator.SetBool("is_falling", false);
+        }
         playerBody.linearVelocity = new Vector2(
             Mathf.Lerp(playerBody.linearVelocity.x, maxMoveSpeed*horizontalInput, horizontalInput==0?decelerationSpeed:accelerationSpeed),
             playerBody.linearVelocity.y
