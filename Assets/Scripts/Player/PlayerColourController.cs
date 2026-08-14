@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerColourController : MonoBehaviour
 {
+    Renderer renderer;
+    void Start()
+    {
+        renderer = GetComponent<Renderer>();
+    }
     [SerializeField] 
     private PlayerColour currentColour;
 
@@ -10,7 +15,10 @@ public class PlayerColourController : MonoBehaviour
     
     public void SetColour(PlayerColour newColour)
     {
+        Debug.Log("changed colour from " + currentColour + "to " + newColour);
         currentColour = newColour;
+        renderer.material.color = PlayerColours.GetColor(currentColour);
+        Debug.Log(renderer.material.color);
     }
     
 }

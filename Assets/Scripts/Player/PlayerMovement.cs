@@ -60,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(playerBody.linearVelocity.y);
         if (playerBody.linearVelocity.y < 0)
         {
             _animator.SetBool("is_falling", true);
@@ -82,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
-            Debug.Log("Jump performed");
         }
     }
 
