@@ -1,0 +1,345 @@
+fileFormatVersion: 2
+guid: 4f6ad2bdf91b72244aef74b2cfd0d1e0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4784927685993486811
+    second: greenorb_die-Sheet_0
+  - first:
+      213: 3319550586431030380
+    second: greenorb_die-Sheet_1
+  - first:
+      213: -7792308685531197639
+    second: greenorb_die-Sheet_2
+  - first:
+      213: 2405222795961276948
+    second: greenorb_die-Sheet_3
+  - first:
+      213: -6527862250070877901
+    second: greenorb_die-Sheet_4
+  - first:
+      213: 5709470727350574820
+    second: greenorb_die-Sheet_5
+  - first:
+      213: 3548819049983921862
+    second: greenorb_die-Sheet_6
+  - first:
+      213: -3399682563446807520
+    second: greenorb_die-Sheet_7
+  - first:
+      213: 6656359248558939474
+    second: greenorb_die-Sheet_8
+  - first:
+      213: 6676831023106795427
+    second: greenorb_die-Sheet_9
+  - first:
+      213: -3993714646332490595
+    second: greenorb_die-Sheet_10
+  - first:
+      213: 9107573062527284173
+    second: greenorb_die-Sheet_11
+  - first:
+      213: 1715112482085187835
+    second: greenorb_die-Sheet_12
+  - first:
+      213: 1777803133914502841
+    second: greenorb_die-Sheet_13
+  - first:
+      213: 3452622859364505146
+    second: greenorb_die-Sheet_14
+  - first:
+      213: -8953130866572112377
+    second: greenorb_die-Sheet_15
+  - first:
+      213: 7332688506561235557
+    second: greenorb_die-Sheet_16
+  - first:
+      213: 2221970851825370046
+    second: greenorb_die-Sheet_17
+  - first:
+      213: -5708676858269682553
+    second: greenorb_die-Sheet_18
+  - first:
+      213: 6515154458175837465
+    second: greenorb_die-Sheet_19
+  - first:
+      213: -1246280399162318736
+    second: greenorb_die-Sheet_20
+  - first:
+      213: 1365008563640722821
+    second: greenorb_die-Sheet_21
+  - first:
+      213: 6176229183261118073
+    second: greenorb_die-Sheet_22
+  - first:
+      213: -6724916150067352010
+    second: greenorb_die-Sheet_23
+  - first:
+      213: 4895533387122288241
+    second: greenorb_die-Sheet_24
+  - first:
+      213: -4305583217024506723
+    second: greenorb_die-Sheet_25
+  - first:
+      213: -2118170988945004269
+    second: greenorb_die-Sheet_26
+  - first:
+      213: 4950388534002108029
+    second: greenorb_die-Sheet_27
+  - first:
+      213: -8787009108959516319
+    second: greenorb_die-Sheet_28
+  - first:
+      213: -3083819982742609950
+    second: greenorb_die-Sheet_29
+  - first:
+      213: -7221604157174150548
+    second: greenorb_die-Sheet_30
+  - first:
+      213: -4229508994301168201
+    second: greenorb_die-Sheet_31
+  - first:
+      213: 6022183037614638382
+    second: greenorb_die-Sheet_32
+  - first:
+      213: -7384730691113348093
+    second: greenorb_die-Sheet_33
+  - first:
+      213: 2087848827976790029
+    second: greenorb_die-Sheet_34
+  - first:
+      213: -848609133912178246
+    second: greenorb_die-Sheet_35
+  - first:
+      213: 466348158423523569
+    second: greenorb_die-Sheet_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: colour_orb_take_0
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 107
+        width: 121
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4982b506d88d7e4a964f18d6d6891fa
+      internalID: -636240189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colour_orb_take_1
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 99
+        width: 121
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d440c56cf0d6f24798b4b1f19f8aab5
+      internalID: 1689533988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colour_orb_take_2
+      rect:
+        serializedVersion: 2
+        x: 728
+        y: 98
+        width: 154
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbcd82607a3d09847972b486ff8b10b7
+      internalID: 1017528156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colour_orb_take_3
+      rect:
+        serializedVersion: 2
+        x: 1047
+        y: 79
+        width: 174
+        height: 152
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a8931a20128d5a41b1060a22ba833d1
+      internalID: -1049289659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: colour_orb_take_4
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 167
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b1694a000250134a8b67f8a05da35c4
+      internalID: -1193977194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c05eaf7fb69bbdf41b1273716b8771d8
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":320.0,"y":320.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      colour_orb_take_0: -636240189
+      colour_orb_take_1: 1689533988
+      colour_orb_take_2: 1017528156
+      colour_orb_take_3: -1049289659
+      colour_orb_take_4: -1193977194
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
