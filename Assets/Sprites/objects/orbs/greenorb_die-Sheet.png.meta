@@ -1,0 +1,370 @@
+fileFormatVersion: 2
+guid: b7e032743d25db1409f4ea7a0a3dee65
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4784927685993486811
+    second: greenorb_die-Sheet_0
+  - first:
+      213: 3319550586431030380
+    second: greenorb_die-Sheet_1
+  - first:
+      213: -7792308685531197639
+    second: greenorb_die-Sheet_2
+  - first:
+      213: 2405222795961276948
+    second: greenorb_die-Sheet_3
+  - first:
+      213: -6527862250070877901
+    second: greenorb_die-Sheet_4
+  - first:
+      213: 5709470727350574820
+    second: greenorb_die-Sheet_5
+  - first:
+      213: 3548819049983921862
+    second: greenorb_die-Sheet_6
+  - first:
+      213: -3399682563446807520
+    second: greenorb_die-Sheet_7
+  - first:
+      213: 6656359248558939474
+    second: greenorb_die-Sheet_8
+  - first:
+      213: 6676831023106795427
+    second: greenorb_die-Sheet_9
+  - first:
+      213: -3993714646332490595
+    second: greenorb_die-Sheet_10
+  - first:
+      213: 9107573062527284173
+    second: greenorb_die-Sheet_11
+  - first:
+      213: 1715112482085187835
+    second: greenorb_die-Sheet_12
+  - first:
+      213: 1777803133914502841
+    second: greenorb_die-Sheet_13
+  - first:
+      213: 3452622859364505146
+    second: greenorb_die-Sheet_14
+  - first:
+      213: -8953130866572112377
+    second: greenorb_die-Sheet_15
+  - first:
+      213: 7332688506561235557
+    second: greenorb_die-Sheet_16
+  - first:
+      213: 2221970851825370046
+    second: greenorb_die-Sheet_17
+  - first:
+      213: -5708676858269682553
+    second: greenorb_die-Sheet_18
+  - first:
+      213: 6515154458175837465
+    second: greenorb_die-Sheet_19
+  - first:
+      213: -1246280399162318736
+    second: greenorb_die-Sheet_20
+  - first:
+      213: 1365008563640722821
+    second: greenorb_die-Sheet_21
+  - first:
+      213: 6176229183261118073
+    second: greenorb_die-Sheet_22
+  - first:
+      213: -6724916150067352010
+    second: greenorb_die-Sheet_23
+  - first:
+      213: 4895533387122288241
+    second: greenorb_die-Sheet_24
+  - first:
+      213: -4305583217024506723
+    second: greenorb_die-Sheet_25
+  - first:
+      213: -2118170988945004269
+    second: greenorb_die-Sheet_26
+  - first:
+      213: 4950388534002108029
+    second: greenorb_die-Sheet_27
+  - first:
+      213: -8787009108959516319
+    second: greenorb_die-Sheet_28
+  - first:
+      213: -3083819982742609950
+    second: greenorb_die-Sheet_29
+  - first:
+      213: -7221604157174150548
+    second: greenorb_die-Sheet_30
+  - first:
+      213: -4229508994301168201
+    second: greenorb_die-Sheet_31
+  - first:
+      213: 6022183037614638382
+    second: greenorb_die-Sheet_32
+  - first:
+      213: -7384730691113348093
+    second: greenorb_die-Sheet_33
+  - first:
+      213: 2087848827976790029
+    second: greenorb_die-Sheet_34
+  - first:
+      213: -848609133912178246
+    second: greenorb_die-Sheet_35
+  - first:
+      213: 466348158423523569
+    second: greenorb_die-Sheet_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd9d297f06a776240800000000000000
+      internalID: 4784927685993486811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c64492eaba9611e20800000000000000
+      internalID: 3319550586431030380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93fc8b239882cd390800000000000000
+      internalID: -7792308685531197639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a91f6b361116120800000000000000
+      internalID: 2405222795961276948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339d7d1aedf5865a0800000000000000
+      internalID: -6527862250070877901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: greenorb_die-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 0
+        width: 320
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eed83f506d1c3f40800000000000000
+      internalID: 5709470727350574820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9132f5d126503204b82c62284e1e6704
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceOnImport
+        value: False
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":320.0,"y":320.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      greenorb_die-Sheet_0: 4784927685993486811
+      greenorb_die-Sheet_1: 3319550586431030380
+      greenorb_die-Sheet_2: -7792308685531197639
+      greenorb_die-Sheet_3: 2405222795961276948
+      greenorb_die-Sheet_4: -6527862250070877901
+      greenorb_die-Sheet_5: 5709470727350574820
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
