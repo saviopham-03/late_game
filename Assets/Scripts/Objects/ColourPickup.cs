@@ -13,14 +13,14 @@ public class ColourPickup: MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!active) return;
-        active = false;
         PlayerColourController playerColourController = other.GetComponent<PlayerColourController>();
-        if(playerColourController == null)
+        if(playerColourController == null || playerColourController.GetColour() == pickupColour)
         {
             return;
         }
         playerColourController.SetColour(pickupColour);
         _animator.SetTrigger("pickup");
+        active = false;
     }
 
 }

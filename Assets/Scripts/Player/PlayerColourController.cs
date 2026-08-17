@@ -20,5 +20,10 @@ public class PlayerColourController : MonoBehaviour
         renderer.material.color = PlayerColours.GetColor(currentColour);
         Debug.Log(renderer.material.color);
     }
+
+    public PlayerColour GetColour()
+    {
+        return currentColour;
+    }
     
 }
