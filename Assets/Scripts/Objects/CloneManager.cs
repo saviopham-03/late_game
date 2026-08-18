@@ -1,0 +1,59 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class CloneList
+{
+    public GameObject Value;
+    public CloneList Next;
+    public CloneList Previous;
+
+}
+
+public class CloneManager : MonoBehaviour
+{
+    [SerializeField] private InputActionReference switchAction;
+
+    [SerializeField] GameObject player;
+    private CloneList current = new();
+
+    void Start()
+    {
+        current.Value = player;
+        current.Next = current;
+        current.Previous = current;
+        switchAction.action.Enable();
+    }
+
+    public void addClone(GameObject newClone)
+    {
+        PlayerMovement clone_movement = newClone.GetComponent<PlayerMovement>();
+        clone_movement.setActive(false);
+        CloneList new_node = new()
+        {
+            Value = newClone,
+            Previous = current,
+            Next = current.Next
+        };
+        current.Next = new_node;
+    }
+
+    private void switchClone()
+    {
+        Debug.Log("asdf");
+        PlayerMovement current_player = current.Value.GetComponent<PlayerMovement>();
+        current_player.setActive(false);
+
+        PlayerMovement next = current.Next.Value.GetComponent<PlayerMovement>();
+        next.setActive(true);
+        current = current.Next;
+    }
+
+    void Update()
+    {
+        switchAction.action.started += ctx =>
+        {
+            Debug.Log("swtiched");
+            switchClone();
+        };
+    }
+}

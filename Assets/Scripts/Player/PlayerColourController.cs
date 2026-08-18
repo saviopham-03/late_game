@@ -15,6 +15,10 @@ public class PlayerColourController : MonoBehaviour
     
     public void SetColour(PlayerColour newColour)
     {
+        if (!renderer)
+        {
+            renderer = GetComponent<Renderer>();
+        }
         Debug.Log("changed colour from " + currentColour + "to " + newColour);
         currentColour = newColour;
         renderer.material.color = PlayerColours.GetColor(currentColour);

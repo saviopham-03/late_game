@@ -18,9 +18,9 @@ public class ColourPickup: MonoBehaviour
         {
             return;
         }
+        active = false;
         playerColourController.SetColour(pickupColour);
         _animator.SetTrigger("pickup");
-        active = false;
     }
 
 }
