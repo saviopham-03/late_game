@@ -23,22 +23,34 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
+    [SerializeField] public bool active = true;
+    public void setActive(bool active)
+    {
+        this.active = active;
+        if (!this.active)
+        {
+            horizontalInput=0;
+            _animator.SetBool("is_sleeping", true);
+        }
+        else
+        {
+            _animator.SetBool("is_sleeping", false);
+        }
+    }
 
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
         moveAction.action.Enable();
         jumpAction.action.Enable();
-    }
-
-    private void Update()
-    {
         moveAction.action.started += ctx =>
         {
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
-            horizontalInput = input.x;
-            _animator.SetBool("is_running", true);
-            GetComponent<SpriteRenderer>().flipX = horizontalInput!=1;
+            if (active) {
+                Vector2 input = moveAction.action.ReadValue<Vector2>();
+                horizontalInput = input.x;
+                _animator.SetBool("is_running", true);
+                GetComponent<SpriteRenderer>().flipX = horizontalInput!=1;
+            }
         };
         moveAction.action.canceled += ctx =>
         {
@@ -46,9 +58,11 @@ public class PlayerMovement : MonoBehaviour
             horizontalInput = input.x;
             _animator.SetBool("is_running", false);
         };
+    }
 
-
-        if (jumpAction.action.triggered)
+    private void Update()
+    {
+        if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
             if (jumpRequested)

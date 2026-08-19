@@ -1,28 +1,58 @@
 fileFormatVersion: 2
-guid: f66b14b7547a0a94ca77e90d1e85ccd8
+guid: 714a9af40eb71f14d8d019c6f84ef0c7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3072457161376313928
-    second: clone_0
+      213: 1334821672569532398
+    second: clone_take-Sheet_0
   - first:
-      213: -2233593911814457748
-    second: clone_1
+      213: 5055713538132208854
+    second: clone_take-Sheet_1
   - first:
-      213: -6134172950893734919
-    second: clone_2
+      213: -729378329201653778
+    second: clone_take-Sheet_2
   - first:
-      213: -9052685520014466710
-    second: clone_3
+      213: -22768639052696596
+    second: clone_take-Sheet_3
   - first:
-      213: -6740672203532731742
-    second: clone_4
+      213: 3481959440523833707
+    second: clone_take-Sheet_4
   - first:
-      213: 8684923391610088029
-    second: clone_5
+      213: 648145788004813994
+    second: clone_take-Sheet_5
   - first:
-      213: 8803637765495852743
-    second: clone_6
+      213: 7800079663472528927
+    second: clone_take-Sheet_6
+  - first:
+      213: -8092254559809420684
+    second: clone_take-Sheet_7
+  - first:
+      213: -3855548587473328922
+    second: clone_take-Sheet_8
+  - first:
+      213: 1481522841574632436
+    second: clone_take-Sheet_9
+  - first:
+      213: 3113389546770896928
+    second: clone_take-Sheet_10
+  - first:
+      213: 14821427845912933
+    second: clone_take-Sheet_11
+  - first:
+      213: -6688928208239988270
+    second: clone_take-Sheet_12
+  - first:
+      213: -5733746922402438169
+    second: clone_take-Sheet_13
+  - first:
+      213: 7803878419181419431
+    second: clone_take-Sheet_14
+  - first:
+      213: -4978200160291683383
+    second: clone_take-Sheet_15
+  - first:
+      213: 4005687656328404865
+    second: clone_take-Sheet_16
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +85,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -91,9 +121,9 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,155 +148,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: clone_0
+      name: clone_take-Sheet_0
       rect:
         serializedVersion: 2
-        x: 69
-        y: 189
-        width: 22
+        x: 0
+        y: 0
+        width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8bd4f848d707c55d0800000000000000
-      internalID: -3072457161376313928
+      spriteID: eefefff2d3d368210800000000000000
+      internalID: 1334821672569532398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: clone_1
+      name: clone_take-Sheet_1
       rect:
         serializedVersion: 2
-        x: 89
-        y: 99
-        width: 182
-        height: 172
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c66f2d9db2ea001e0800000000000000
-      internalID: -2233593911814457748
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: clone_2
-      rect:
-        serializedVersion: 2
-        x: 239
-        y: 169
-        width: 42
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9f35b2f833a0fdaa0800000000000000
-      internalID: -6134172950893734919
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: clone_3
-      rect:
-        serializedVersion: 2
-        x: 59
-        y: 109
-        width: 42
-        height: 72
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a6127349b766e5280800000000000000
-      internalID: -9052685520014466710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: clone_4
-      rect:
-        serializedVersion: 2
-        x: 279
-        y: 149
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2aaf41138525472a0800000000000000
-      internalID: -6740672203532731742
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: clone_5
-      rect:
-        serializedVersion: 2
-        x: 109
-        y: 69
+        x: 32
+        y: 0
         width: 32
-        height: 22
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5a666a5fcb078870800000000000000
-      internalID: 8684923391610088029
+      spriteID: 6dce0863da0892640800000000000000
+      internalID: 5055713538132208854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: clone_6
+      name: clone_take-Sheet_2
       rect:
         serializedVersion: 2
-        x: 159
-        y: 59
-        width: 72
-        height: 42
+        x: 64
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ce089f67edcc2a70800000000000000
-      internalID: 8803637765495852743
+      spriteID: ee74115264ab0e5f0800000000000000
+      internalID: -729378329201653778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clone_take-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce3be3d1b0c1faff0800000000000000
+      internalID: -22768639052696596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: clone_take-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b61bdb6b9a7625030800000000000000
+      internalID: 3481959440523833707
       vertices: []
       indices: 
       edges: []
@@ -275,7 +261,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: cc98468a3277eb742b5b969cf5fbfaed
     internalID: 0
     vertices: []
     indices: 
@@ -283,15 +269,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      clone_0: -3072457161376313928
-      clone_1: -2233593911814457748
-      clone_2: -6134172950893734919
-      clone_3: -9052685520014466710
-      clone_4: -6740672203532731742
-      clone_5: 8684923391610088029
-      clone_6: 8803637765495852743
+      clone_take-Sheet_0: 1334821672569532398
+      clone_take-Sheet_1: 5055713538132208854
+      clone_take-Sheet_2: -729378329201653778
+      clone_take-Sheet_3: -22768639052696596
+      clone_take-Sheet_4: 3481959440523833707
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
