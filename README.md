@@ -3,11 +3,12 @@
 ##### Group CS_07: Funhouse Studios
 S. Pham, O. Percy, B. Wijekoon, J. Li, Y. Zheng.
 
+*You've woken up after a late night playing video games. \
+As a jarring pain in your head envelops your head, and an overdone blur in your eyes blinds you, you manage to get up, ready to go to class. \
+Only to realise the three assignments you put off until now are due in just a few hours!*
+
 ## About Late!
-Late! is a university assignment project spanning 2 semesters under the units FIT3161 and FIT3162.
-Late! conveys the mutually understood story of being late to class for many and most Uni students 
-and represents some of the stress and anxiety associated with it through a unique combination of
-puzzles and platforming.
+Late! is a puzzle-platformer game encompassing a unique puzzle mechanic we like to call "colour gating". Alongside mobility implements and this mechanic, Late! functions as a good, fun game which is particularly relatable to students.
 
 ## Version Control Guidelines
 1. Please `git branch [name]` off from `dev` when you work on individual things
