@@ -11,7 +11,7 @@ public class CloneOrb : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!active) return;
+        if (!active || other.GetComponent<PlayerMovement>() == null) return;
         active = false;
         GameObject clone = Instantiate(player_obj, transform.position, Quaternion.identity);
         _manager.addClone(clone);

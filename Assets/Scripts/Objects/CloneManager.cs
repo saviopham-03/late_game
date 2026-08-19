@@ -34,12 +34,12 @@ public class CloneManager : MonoBehaviour
             Previous = current,
             Next = current.Next
         };
+        current.Next.Previous = new_node;
         current.Next = new_node;
     }
 
     private void switchClone()
     {
-        Debug.Log("asdf");
         PlayerMovement current_player = current.Value.GetComponent<PlayerMovement>();
         current_player.setActive(false);
 
@@ -52,7 +52,6 @@ public class CloneManager : MonoBehaviour
     {
         switchAction.action.started += ctx =>
         {
-            Debug.Log("swtiched");
             switchClone();
         };
     }

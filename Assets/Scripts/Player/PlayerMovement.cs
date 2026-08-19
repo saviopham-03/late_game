@@ -27,6 +27,15 @@ public class PlayerMovement : MonoBehaviour
     public void setActive(bool active)
     {
         this.active = active;
+        if (!this.active)
+        {
+            horizontalInput=0;
+            _animator.SetBool("is_sleeping", true);
+        }
+        else
+        {
+            _animator.SetBool("is_sleeping", false);
+        }
     }
 
     private void Awake()
@@ -34,20 +43,6 @@ public class PlayerMovement : MonoBehaviour
         playerBody = GetComponent<Rigidbody2D>();
         moveAction.action.Enable();
         jumpAction.action.Enable();
-    }
-
-    private void Update()
-    {
-        if (!active)
-        {
-            _animator.SetBool("is_sleeping", true);
-            return;
-        }
-        else
-        {
-            _animator.SetBool("is_sleeping", false);
-        }
-
         moveAction.action.started += ctx =>
         {
             if (active) {
@@ -63,8 +58,10 @@ public class PlayerMovement : MonoBehaviour
             horizontalInput = input.x;
             _animator.SetBool("is_running", false);
         };
+    }
 
-
+    private void Update()
+    {
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
