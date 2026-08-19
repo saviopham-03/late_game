@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static System.Math;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTimer;
     [SerializeField] private float inputBuffer;
+    [SerializeField] private float footstoolPower;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference grappleAction;
@@ -23,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
-    [SerializeField] public bool active = true;
+    private bool active = true;
+    public Vector2 last_vel;
     public void setActive(bool active)
     {
         this.active = active;
@@ -38,6 +41,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!other.gameObject.CompareTag("Player")) return;
+        // collided w clone
+
+        PlayerMovement other_player = other.gameObject.GetComponent<PlayerMovement>();
+        Rigidbody2D other_body = other.gameObject.GetComponent<Rigidbody2D>();
+        Rigidbody2D player_body = GetComponent<Rigidbody2D>();
+
+        Vector2 incoming_vel = other_player.last_vel;
+        if (incoming_vel.y != 0 && last_vel.y != 0) { // ensuring you can't bounce on ppl
+            if (incoming_vel.y < 0) // footstooled
+            {
+                other_body.linearVelocityY += last_vel.y*footstoolPower;
+                player_body.linearVelocityY = 0;
+            }
+            else if(incoming_vel.y > 0) // footstooling
+            {
+                other_body.linearVelocityY = 0;
+                player_body.linearVelocityY += incoming_vel.y*footstoolPower;
+            }
+        }
+    }
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
@@ -74,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        last_vel = playerBody.linearVelocity;
         if (playerBody.linearVelocity.y < 0)
         {
             _animator.SetBool("is_falling", true);
