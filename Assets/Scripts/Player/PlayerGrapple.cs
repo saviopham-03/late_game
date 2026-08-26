@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(DistanceJoint2D))]
+[RequireComponent(typeof(LineRenderer))]
 public class PlayerGrapple : MonoBehaviour
 {
     [SerializeField]
@@ -16,6 +17,7 @@ public class PlayerGrapple : MonoBehaviour
 
     private Rigidbody2D playerBody;
     private DistanceJoint2D grappleJoint;
+    private LineRenderer grappleLine;
     private Collider2D currentGrapplePoint;
     private bool isGrappling;
 
@@ -23,9 +25,12 @@ public class PlayerGrapple : MonoBehaviour
     {
         playerBody = GetComponent<Rigidbody2D>();
         grappleJoint = GetComponent<DistanceJoint2D>();
+        grappleLine = GetComponent<LineRenderer>();
+
         grappleAction.action.Enable();
 
         grappleJoint.enabled = false;
+        grappleLine.enabled = false;
     }
 
     private void Update()
@@ -36,7 +41,9 @@ public class PlayerGrapple : MonoBehaviour
             {
                 isGrappling = false;
                 currentGrapplePoint = null;
+
                 grappleJoint.enabled = false;
+                grappleLine.enabled = false;
 
                 Debug.Log("Grapple detached");
                 return;
@@ -59,6 +66,8 @@ public class PlayerGrapple : MonoBehaviour
                 );
                 grappleJoint.enabled = true;
 
+                grappleLine.enabled = true;
+
                 Debug.Log($"Attached to grapple point: {currentGrapplePoint.name}");
             }
             else
@@ -66,6 +75,12 @@ public class PlayerGrapple : MonoBehaviour
                 isGrappling = false;
                 Debug.Log("No grapple point in range");
             }
+        }
+
+        if (isGrappling && currentGrapplePoint != null)
+        {
+            grappleLine.SetPosition(0, transform.position);
+            grappleLine.SetPosition(1, currentGrapplePoint.transform.position);
         }
     }
 }
