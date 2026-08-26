@@ -104,3 +104,9 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+# Unity project is inside the nested late_game folder
+/late_game/[Ll]ibrary/
+/late_game/[Tt]emp/
+/late_game/[Oo]bj/
+/late_game/[Ll]ogs/
+/late_game/[Uu]ser[Ss]ettings/
