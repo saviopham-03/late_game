@@ -70,6 +70,12 @@ public class PlayerGrapple : MonoBehaviour
 
         if (isGrappling && currentGrapplePoint != null)
         {
+            if (IsGrapplePathBlocked())
+            {
+                DetachGrapple();
+                return;
+            }
+
             grappleLine.SetPosition(0, transform.position);
             grappleLine.SetPosition(
                 1,
@@ -91,10 +97,23 @@ public class PlayerGrapple : MonoBehaviour
 
         foreach (Collider2D grapplePoint in grapplePoints)
         {
-            float distance = Vector2.Distance(
+            Vector2 direction =
+                (Vector2)grapplePoint.transform.position -
+                (Vector2)transform.position;
+
+            float distance = direction.magnitude;
+
+            RaycastHit2D hit = Physics2D.Raycast(
                 transform.position,
-                grapplePoint.transform.position
+                direction.normalized,
+                distance
             );
+
+            if (hit.collider != null &&
+                hit.collider != grapplePoint)
+            {
+                continue;
+            }
 
             if (distance < closestDistance)
             {
@@ -104,6 +123,24 @@ public class PlayerGrapple : MonoBehaviour
         }
 
         return closestPoint;
+    }
+
+    private bool IsGrapplePathBlocked()
+    {
+        Vector2 direction =
+            (Vector2)currentGrapplePoint.transform.position -
+            (Vector2)transform.position;
+
+        float distance = direction.magnitude;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction.normalized,
+            distance
+        );
+
+        return hit.collider != null &&
+               hit.collider != currentGrapplePoint;
     }
 
     private void AttachGrapple(Collider2D grapplePoint)
