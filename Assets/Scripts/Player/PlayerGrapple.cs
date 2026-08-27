@@ -18,6 +18,7 @@ public class PlayerGrapple : MonoBehaviour
     private Rigidbody2D playerBody;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
+    private PlayerMovement playerMovement;
 
     private Collider2D currentGrapplePoint;
     private bool isGrappling;
@@ -27,6 +28,7 @@ public class PlayerGrapple : MonoBehaviour
         playerBody = GetComponent<Rigidbody2D>();
         grappleJoint = GetComponent<DistanceJoint2D>();
         grappleLine = GetComponent<LineRenderer>();
+        playerMovement = GetComponent<PlayerMovement>();
 
         grappleAction.action.Enable();
 
@@ -36,6 +38,16 @@ public class PlayerGrapple : MonoBehaviour
 
     private void Update()
     {
+        if (!playerMovement.IsActive)
+        {
+            if (isGrappling)
+            {
+                DetachGrapple();
+            }
+
+            return;
+        }
+
         if (grappleAction.action.triggered)
         {
             if (isGrappling)
