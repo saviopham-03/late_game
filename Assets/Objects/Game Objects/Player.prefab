@@ -297,14 +297,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGrapple
   grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
-  jumpAction: {fileID: 0}
+  jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   grappleRange: 5
   grapplePointLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   grappleObstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!232 &6926498755701110910
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -312,7 +312,7 @@ DistanceJoint2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4657046605377314688}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
@@ -324,7 +324,7 @@ DistanceJoint2D:
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 1
   m_Distance: 4.65403
-  m_MaxDistanceOnly: 0
+  m_MaxDistanceOnly: 1
 --- !u!120 &6077947501557256869
 LineRenderer:
   serializedVersion: 2
