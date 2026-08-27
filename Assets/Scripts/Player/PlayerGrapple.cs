@@ -15,6 +15,9 @@ public class PlayerGrapple : MonoBehaviour
     [SerializeField]
     private LayerMask grapplePointLayer;
 
+    [SerializeField]
+    private LayerMask grappleObstacleLayer;
+
     private Rigidbody2D playerBody;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
@@ -103,14 +106,14 @@ public class PlayerGrapple : MonoBehaviour
 
             float distance = direction.magnitude;
 
-            RaycastHit2D hit = Physics2D.Raycast(
+            RaycastHit2D obstacleHit = Physics2D.Raycast(
                 transform.position,
                 direction.normalized,
-                distance
+                distance,
+                grappleObstacleLayer
             );
 
-            if (hit.collider != null &&
-                hit.collider != grapplePoint)
+            if (obstacleHit.collider != null)
             {
                 continue;
             }
@@ -133,14 +136,14 @@ public class PlayerGrapple : MonoBehaviour
 
         float distance = direction.magnitude;
 
-        RaycastHit2D hit = Physics2D.Raycast(
+        RaycastHit2D obstacleHit = Physics2D.Raycast(
             transform.position,
             direction.normalized,
-            distance
+            distance,
+            grappleObstacleLayer
         );
 
-        return hit.collider != null &&
-               hit.collider != currentGrapplePoint;
+        return obstacleHit.collider != null;
     }
 
     private void AttachGrapple(Collider2D grapplePoint)
