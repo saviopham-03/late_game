@@ -18,17 +18,19 @@ public class PlayerGrapple : MonoBehaviour
     [SerializeField]
     private LayerMask grappleObstacleLayer;
 
-    private Rigidbody2D playerBody;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
     private PlayerMovement playerMovement;
 
     private Collider2D currentGrapplePoint;
+
     private bool isGrappling;
+    private bool jointActive;
+
+    private float ropeLength;
 
     private void Awake()
     {
-        playerBody = GetComponent<Rigidbody2D>();
         grappleJoint = GetComponent<DistanceJoint2D>();
         grappleLine = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
@@ -59,11 +61,11 @@ public class PlayerGrapple : MonoBehaviour
                 return;
             }
 
-            currentGrapplePoint = FindClosestGrapplePoint();
+            Collider2D grapplePoint = FindClosestGrapplePoint();
 
-            if (currentGrapplePoint != null)
+            if (grapplePoint != null)
             {
-                AttachGrapple(currentGrapplePoint);
+                AttachGrapple(grapplePoint);
             }
             else
             {
@@ -71,19 +73,59 @@ public class PlayerGrapple : MonoBehaviour
             }
         }
 
-        if (isGrappling && currentGrapplePoint != null)
+        if (!isGrappling || currentGrapplePoint == null)
         {
-            if (IsGrapplePathBlocked())
+            return;
+        }
+
+        if (IsGrapplePathBlocked())
+        {
+            DetachGrapple();
+            return;
+        }
+
+        UpdateGrappleLine();
+
+        float currentDistance = Vector2.Distance(
+            transform.position,
+            currentGrapplePoint.transform.position
+        );
+
+        /*
+         * While the joint is inactive, the rope is slack.
+         * Walking/jumping closer to the grapple point does not
+         * shorten the stored rope length.
+         */
+        if (!jointActive)
+        {
+            // Ground attachment cannot be stretched beyond normal range.
+            if (playerMovement.IsGrounded() &&
+                currentDistance > grappleRange)
             {
                 DetachGrapple();
                 return;
             }
 
-            grappleLine.SetPosition(0, transform.position);
-            grappleLine.SetPosition(
-                1,
-                currentGrapplePoint.transform.position
-            );
+            /*
+             * Only activate the physics joint once the player actually
+             * reaches the end of the rope while airborne.
+             */
+            if (!playerMovement.IsGrounded() &&
+                currentDistance >= ropeLength)
+            {
+                ActivateGrappleJoint();
+            }
+
+            return;
+        }
+
+        /*
+         * Once the rope is taut, DistanceJoint2D handles the swing.
+         * Landing releases the grapple.
+         */
+        if (playerMovement.IsGrounded())
+        {
+            DetachGrapple();
         }
     }
 
@@ -149,25 +191,65 @@ public class PlayerGrapple : MonoBehaviour
     private void AttachGrapple(Collider2D grapplePoint)
     {
         isGrappling = true;
+        jointActive = false;
+
         currentGrapplePoint = grapplePoint;
 
-        grappleJoint.connectedAnchor = grapplePoint.transform.position;
-
-        grappleJoint.distance = Vector2.Distance(
+        // Store the distance at the moment the grapple was fired.
+        ropeLength = Vector2.Distance(
             transform.position,
             grapplePoint.transform.position
         );
 
-        grappleJoint.enabled = true;
+        grappleJoint.enabled = false;
         grappleLine.enabled = true;
 
-        Debug.Log($"Attached to grapple point: {grapplePoint.name}");
+        /*
+         * If we grapple while already airborne, the rope should
+         * immediately behave as taut.
+         */
+        if (!playerMovement.IsGrounded())
+        {
+            ActivateGrappleJoint();
+        }
+
+        Debug.Log(
+            $"Attached to grapple point: {grapplePoint.name}"
+        );
+    }
+
+    private void ActivateGrappleJoint()
+    {
+        grappleJoint.connectedAnchor =
+            currentGrapplePoint.transform.position;
+
+        grappleJoint.distance = ropeLength;
+        grappleJoint.maxDistanceOnly = true;
+        grappleJoint.enabled = true;
+
+        jointActive = true;
+    }
+
+    private void UpdateGrappleLine()
+    {
+        grappleLine.SetPosition(
+            0,
+            transform.position
+        );
+
+        grappleLine.SetPosition(
+            1,
+            currentGrapplePoint.transform.position
+        );
     }
 
     private void DetachGrapple()
     {
         isGrappling = false;
+        jointActive = false;
+
         currentGrapplePoint = null;
+        ropeLength = 0f;
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
