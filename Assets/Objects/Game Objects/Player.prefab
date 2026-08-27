@@ -109,7 +109,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4657046605377314688}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Animation: {fileID: 7400000, guid: ece20ed0d8c947944b61d5c90e537fe9, type: 2}
   m_Animations: []
@@ -297,8 +297,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGrapple
   grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  jumpAction: {fileID: 0}
   grappleRange: 5
   grapplePointLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  grappleObstacleLayer:
     serializedVersion: 2
     m_Bits: 0
 --- !u!232 &6926498755701110910

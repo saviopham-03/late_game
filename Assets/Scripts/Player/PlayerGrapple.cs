@@ -10,6 +10,9 @@ public class PlayerGrapple : MonoBehaviour
     private InputActionReference grappleAction;
 
     [SerializeField]
+    private InputActionReference jumpAction;
+
+    [SerializeField]
     private float grappleRange = 5f;
 
     [SerializeField]
@@ -36,6 +39,7 @@ public class PlayerGrapple : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
 
         grappleAction.action.Enable();
+        jumpAction.action.Enable();
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
@@ -51,6 +55,11 @@ public class PlayerGrapple : MonoBehaviour
             }
 
             return;
+        }
+
+        if (jumpAction.action.triggered && isGrappling)
+        {
+            DetachGrapple();
         }
 
         if (grappleAction.action.triggered)
@@ -91,14 +100,8 @@ public class PlayerGrapple : MonoBehaviour
             currentGrapplePoint.transform.position
         );
 
-        /*
-         * While the joint is inactive, the rope is slack.
-         * Walking/jumping closer to the grapple point does not
-         * shorten the stored rope length.
-         */
         if (!jointActive)
         {
-            // Ground attachment cannot be stretched beyond normal range.
             if (playerMovement.IsGrounded() &&
                 currentDistance > grappleRange)
             {
@@ -106,10 +109,6 @@ public class PlayerGrapple : MonoBehaviour
                 return;
             }
 
-            /*
-             * Only activate the physics joint once the player actually
-             * reaches the end of the rope while airborne.
-             */
             if (!playerMovement.IsGrounded() &&
                 currentDistance >= ropeLength)
             {
@@ -119,10 +118,6 @@ public class PlayerGrapple : MonoBehaviour
             return;
         }
 
-        /*
-         * Once the rope is taut, DistanceJoint2D handles the swing.
-         * Landing releases the grapple.
-         */
         if (playerMovement.IsGrounded())
         {
             DetachGrapple();
@@ -195,7 +190,6 @@ public class PlayerGrapple : MonoBehaviour
 
         currentGrapplePoint = grapplePoint;
 
-        // Store the distance at the moment the grapple was fired.
         ropeLength = Vector2.Distance(
             transform.position,
             grapplePoint.transform.position
@@ -204,10 +198,6 @@ public class PlayerGrapple : MonoBehaviour
         grappleJoint.enabled = false;
         grappleLine.enabled = true;
 
-        /*
-         * If we grapple while already airborne, the rope should
-         * immediately behave as taut.
-         */
         if (!playerMovement.IsGrounded())
         {
             ActivateGrappleJoint();
