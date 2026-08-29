@@ -21,18 +21,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference grappleAction;
     [SerializeField] private InputActionReference interactAction;
 
-
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
     private bool active = true;
     public Vector2 last_vel;
+
+    [SerializeField] public bool active = true;
+
+    public bool IsActive => active;
+
     public void setActive(bool active)
     {
         this.active = active;
+
         if (!this.active)
         {
-            horizontalInput=0;
+            horizontalInput = 0;
             _animator.SetBool("is_sleeping", true);
         }
         else
@@ -67,21 +72,27 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
+
         moveAction.action.Enable();
         jumpAction.action.Enable();
+
         moveAction.action.started += ctx =>
         {
-            if (active) {
+            if (active)
+            {
                 Vector2 input = moveAction.action.ReadValue<Vector2>();
                 horizontalInput = input.x;
+
                 _animator.SetBool("is_running", true);
-                GetComponent<SpriteRenderer>().flipX = horizontalInput!=1;
+                GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
             }
         };
+
         moveAction.action.canceled += ctx =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+
             _animator.SetBool("is_running", false);
         };
     }
@@ -91,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
+
             if (jumpRequested)
             {
                 _animator.SetTrigger("jumped");
@@ -109,8 +121,13 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("is_falling", false);
         }
+
         playerBody.linearVelocity = new Vector2(
-            Mathf.Lerp(playerBody.linearVelocity.x, maxMoveSpeed*horizontalInput, horizontalInput==0?decelerationSpeed:accelerationSpeed),
+            Mathf.Lerp(
+                playerBody.linearVelocity.x,
+                maxMoveSpeed * horizontalInput,
+                horizontalInput == 0 ? decelerationSpeed : accelerationSpeed
+            ),
             playerBody.linearVelocity.y
         );
 
@@ -125,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if (groundCheck == null)
         {
