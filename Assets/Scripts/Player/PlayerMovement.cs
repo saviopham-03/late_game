@@ -26,9 +26,6 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpRequested;
     private bool active = true;
     public Vector2 last_vel;
-
-    [SerializeField] public bool active = true;
-
     public bool IsActive => active;
 
     public void setActive(bool active)
@@ -113,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         last_vel = playerBody.linearVelocity;
-        if (playerBody.linearVelocity.y < 0)
+        if (playerBody.linearVelocity.y < 0 && !IsGrounded())
         {
             _animator.SetBool("is_falling", true);
         }
