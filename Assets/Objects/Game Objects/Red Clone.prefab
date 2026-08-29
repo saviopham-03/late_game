@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   cloneColour: 0
-  player_obj: {fileID: 0}
+  player_obj: {fileID: 6633145958266178313, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
   _manager: {fileID: 0}
   _animator: {fileID: 4782479442967850571}
 --- !u!61 &7018212662916169050

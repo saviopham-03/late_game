@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 344765445156760735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1594, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,12 +46,12 @@ GameObject:
   - component: {fileID: 6077947501557256869}
   - component: {fileID: 4182828659204834302}
   - component: {fileID: 2191016675684407331}
+  - component: {fileID: 5777206070958966010}
+  - component: {fileID: 482638558920465766}
   - component: {fileID: 4714763999312180038}
   - component: {fileID: 2916844962024744366}
-  - component: {fileID: 482638558920465766}
-  - component: {fileID: 5777206070958966010}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ Transform:
   m_GameObject: {fileID: 6633145958266178313}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.720283, y: 3.2641594, z: 0}
+  m_LocalPosition: {x: 2.1213, y: 2.91002, z: 0}
   m_LocalScale: {x: 7.692308, y: 7.6923084, z: 7.692308}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -254,7 +254,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -265,7 +265,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &2191016675684407331
 BoxCollider2D:
@@ -313,6 +313,49 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.059177604, y: 0.15091015}
   m_EdgeRadius: 0
+--- !u!114 &5777206070958966010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6633145958266178313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2681b7b9d49e947bec5078647af6e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _animator: {fileID: 2916844962024744366}
+  accelerationSpeed: 0.1
+  decelerationSpeed: 0.2
+  maxMoveSpeed: 10
+  jumpForce: 15
+  groundCheck: {fileID: 4037066102089844437}
+  groundCheckRadius: 0.15
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 66
+  coyoteTimer: 0
+  inputBuffer: 0
+  footstoolPower: 0.6
+  moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  interactAction: {fileID: 1676646104994126285, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  last_vel: {x: 0, y: 0}
+--- !u!114 &482638558920465766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6633145958266178313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45840abe501c60a449d6965c4a934173, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerColourController
+  currentColour: 1
 --- !u!212 &4714763999312180038
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -393,46 +436,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &482638558920465766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6633145958266178313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45840abe501c60a449d6965c4a934173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerColourController
-  currentColour: 0
---- !u!114 &5777206070958966010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6633145958266178313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2681b7b9d49e947bec5078647af6e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _animator: {fileID: 2916844962024744366}
-  accelerationSpeed: 0.1
-  decelerationSpeed: 0.2
-  maxMoveSpeed: 10
-  jumpForce: 15
-  groundCheck: {fileID: 4037066102089844437}
-  groundCheckRadius: 0.15
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 66
-  coyoteTimer: 0
-  inputBuffer: 0
-  footstoolPower: 0
-  moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
-  jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
-  grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
-  interactAction: {fileID: 1676646104994126285, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
-  last_vel: {x: 0, y: 0}
