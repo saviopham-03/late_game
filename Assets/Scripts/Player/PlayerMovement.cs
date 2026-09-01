@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
+    [SerializeField] private float sleepDrift;
     [SerializeField] private float maxMoveSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private Transform groundCheck;
@@ -34,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (!this.active)
         {
-            horizontalInput = 0;
             _animator.SetBool("is_sleeping", true);
         }
         else
@@ -75,14 +75,11 @@ public class PlayerMovement : MonoBehaviour
 
         moveAction.action.started += ctx =>
         {
-            if (active)
-            {
-                Vector2 input = moveAction.action.ReadValue<Vector2>();
-                horizontalInput = input.x;
+            Vector2 input = moveAction.action.ReadValue<Vector2>();
+            horizontalInput = input.x;
 
-                _animator.SetBool("is_running", true);
-                GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
-            }
+            _animator.SetBool("is_running", true);
+            if (active) GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
         };
 
         moveAction.action.canceled += ctx =>
@@ -118,13 +115,24 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("is_falling", false);
         }
-
-        playerBody.linearVelocity = new Vector2(
-            Mathf.Lerp(
+        float vel_x;
+        if (active)
+        {
+            vel_x = Mathf.Lerp(
                 playerBody.linearVelocity.x,
                 maxMoveSpeed * horizontalInput,
                 horizontalInput == 0 ? decelerationSpeed : accelerationSpeed
-            ),
+            );
+        } else
+        {
+            vel_x = Mathf.Lerp(
+                playerBody.linearVelocity.x,
+                maxMoveSpeed,
+                sleepDrift
+            );
+        }
+        playerBody.linearVelocity = new Vector2(
+            vel_x,
             playerBody.linearVelocity.y
         );
 
