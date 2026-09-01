@@ -1,28 +1,37 @@
 using UnityEngine;
+using System;
 
 public class PlayerColourController : MonoBehaviour
 {
-    SpriteRenderer renderer;
-    void Start()
-    {
-        renderer = GetComponent<SpriteRenderer>();
-        SetColour(currentColour);
-    }
-    [SerializeField] 
+    private Renderer renderer;
+
+    [SerializeField]
     private PlayerColour currentColour;
 
     public PlayerColour CurrentColour => currentColour;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
+
+    public event Action<PlayerColour> ColourChanged;
+
+    private void Start()
+    {
+        renderer = GetComponent<Renderer>();
+        SetColour(currentColour);
+    }
+
     public void SetColour(PlayerColour newColour)
     {
         if (!renderer)
         {
             renderer = GetComponent<SpriteRenderer>();
         }
-        Debug.Log("changed colour from " + currentColour + "to " + newColour);
+
+        Debug.Log("changed colour from " + currentColour + " to " + newColour);
+
         currentColour = newColour;
         renderer.material.color = PlayerColours.GetColor(currentColour);
+
+        ColourChanged?.Invoke(currentColour);
+
         Debug.Log(renderer.material.color);
     }
 
@@ -30,5 +39,4 @@ public class PlayerColourController : MonoBehaviour
     {
         return currentColour;
     }
-    
 }
