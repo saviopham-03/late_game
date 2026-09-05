@@ -5,7 +5,6 @@ using static System.Math;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {   
-    [SerializeField] private Animator _animator;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float sleepDrift;
@@ -28,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private bool active = true;
     public Vector2 last_vel;
     public bool IsActive => active;
+    private Animator _animator;
 
     public void setActive(bool active)
     {
@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
