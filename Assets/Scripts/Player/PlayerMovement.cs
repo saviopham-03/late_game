@@ -45,33 +45,49 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
-
         moveAction.action.Enable();
         jumpAction.action.Enable();
+    }
 
-        moveAction.action.started += ctx =>
-        {
-            if (active)
-            {
-                Vector2 input = moveAction.action.ReadValue<Vector2>();
-                horizontalInput = input.x;
+    private void OnEnable()
+    {
+        moveAction.action.started += OnMoveStarted;
+        moveAction.action.canceled += OnMoveCanceled;
+    }
 
-                _animator.SetBool("is_running", true);
-                GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
-            }
-        };
+    private void OnDisable()
+    {
+        moveAction.action.started -= OnMoveStarted;
+        moveAction.action.canceled -= OnMoveCanceled;
+        horizontalInput = 0f;
+        jumpRequested = false;
+    }
 
-        moveAction.action.canceled += ctx =>
-        {
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
-            horizontalInput = input.x;
+    private void OnMoveStarted(InputAction.CallbackContext context)
+    {
+        if (!active || Time.timeScale == 0f) return;
 
-            _animator.SetBool("is_running", false);
-        };
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", true);
+        GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", false);
     }
 
     private void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            jumpRequested = false;
+            return;
+        }
+
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();

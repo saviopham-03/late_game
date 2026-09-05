@@ -48,11 +48,19 @@ public class CloneManager : MonoBehaviour
         current = current.Next;
     }
 
-    void Update()
+    private void OnEnable()
     {
-        switchAction.action.started += ctx =>
-        {
-            switchClone();
-        };
+        switchAction.action.started += OnSwitchStarted;
+    }
+
+    private void OnDisable()
+    {
+        switchAction.action.started -= OnSwitchStarted;
+    }
+
+    private void OnSwitchStarted(InputAction.CallbackContext context)
+    {
+        if (Time.timeScale == 0f || current.Value == null) return;
+        switchClone();
     }
 }

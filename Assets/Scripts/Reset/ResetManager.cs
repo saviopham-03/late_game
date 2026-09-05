@@ -16,7 +16,7 @@ public class ResetManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current == null)
+        if (Keyboard.current == null || Time.timeScale == 0f)
         {
             return;
         }
