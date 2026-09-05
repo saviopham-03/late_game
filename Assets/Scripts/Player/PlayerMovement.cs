@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTimer;
     [SerializeField] private float inputBuffer;
-    [SerializeField] private float footstoolPower;
+    [SerializeField] private Vector2 footstoolPower;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
     [SerializeField] private InputActionReference grappleAction;
@@ -54,16 +54,19 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 incoming_vel = other_player.last_vel;
         if (incoming_vel.y != 0 && last_vel.y != 0) { // ensuring you can't bounce on ppl
-            if (incoming_vel.y < 0) // footstooled
+            if (other_body.position.y >= player_body.position.y) // footstooled
             {
-                other_body.linearVelocityY += last_vel.y*footstoolPower;
+                Debug.Log("COllided");
+                other_body.linearVelocityY += Abs(last_vel.y*footstoolPower.y);
                 player_body.linearVelocityY = 0;
+                other_body.linearVelocityX += last_vel.x*footstoolPower.x;
+                player_body.linearVelocityX = 0;
             }
-            else if(incoming_vel.y > 0) // footstooling
-            {
-                other_body.linearVelocityY = 0;
-                player_body.linearVelocityY += incoming_vel.y*footstoolPower;
-            }
+            // else // footstooling
+            // {
+            //     other_body.linearVelocityY = 0;
+            //     player_body.linearVelocityY += incoming_vel.y*footstoolPower;
+            // }
         }
     }
     private void Awake()
@@ -124,6 +127,13 @@ public class PlayerMovement : MonoBehaviour
                 maxMoveSpeed * horizontalInput,
                 horizontalInput == 0 ? decelerationSpeed : accelerationSpeed
             );
+        } else if (IsGrounded())
+        {
+            vel_x = Mathf.Lerp(
+                playerBody.linearVelocity.x,
+                0,
+                decelerationSpeed
+            );
         } else
         {
             vel_x = Mathf.Lerp(
@@ -156,13 +166,22 @@ public class PlayerMovement : MonoBehaviour
             return false;
         }
 
-        Collider2D groundCollider = Physics2D.OverlapCircle(
+        Collider2D[] groundCollider = Physics2D.OverlapCircleAll(
             groundCheck.position,
             groundCheckRadius,
             groundLayer
         );
 
-        return groundCollider != null;
+        foreach (Collider2D collider in groundCollider)
+        {
+            // dont detect self
+            if (collider.transform.root == transform.root)
+                continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmosSelected()

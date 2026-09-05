@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 482638558920465766}
   - component: {fileID: 5777206070958966010}
   - component: {fileID: 588466632265852135}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -411,6 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   accelerationSpeed: 0.1
   decelerationSpeed: 0.2
+  sleepDrift: 0
   maxMoveSpeed: 10
   jumpForce: 15
   groundCheck: {fileID: 4037066102089844437}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PressurePlate : PuzzleInput
 {
-    [SerializeField] private Rigidbody2D plateBody;
+    // [SerializeField] private Rigidbody2D plateBody;
 
     [SerializeField] private float activationDistance = 0.15f;
 
@@ -10,30 +10,42 @@ public class PressurePlate : PuzzleInput
 
     private void Start()
     {
-        restingPosition = plateBody.position;
+        // restingPosition = plateBody.position;
     }
 
-    private void FixedUpdate()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        float pressedDistance =
-            restingPosition.y - plateBody.position.y;
-
-        if (pressedDistance >= activationDistance)
-        {
-            SetActive(true);
-        }
-        else
-        {
-            SetActive(false);
-        }
+        Debug.Log("active");
+        SetActive(true);
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log("notactive");
+        SetActive(false);
+    }
+
+    // private void FixedUpdate()
+    // {
+    //     float pressedDistance =
+    //         restingPosition.y - plateBody.position.y;
+
+    //     if (pressedDistance >= activationDistance)
+    //     {
+    //         SetActive(true);
+    //     }
+    //     else
+    //     {
+    //         SetActive(false);
+    //     }
+    // }
 
     public override void ResetPuzzleObject()
     {
-        plateBody.position = restingPosition;
-        plateBody.linearVelocity = Vector2.zero;
-        plateBody.angularVelocity = 0f;
+        // plateBody.position = restingPosition;
+        // plateBody.linearVelocity = Vector2.zero;
+        // plateBody.angularVelocity = 0f;
 
-        SetActive(false);
+        // SetActive(false);
     }
 }
