@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 5a8d277826a84ef4f94c85e5a7cc321b
+guid: bdeaffd6a36874e40b0969c949a325fa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1479041520144092992
-    second: pressure_plate_0
-  - first:
-      213: 6605888185601254042
-    second: pressure_plate_1
+      213: -467385860410842029
+    second: pressure_activate-Sheet_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,29 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pressure_plate_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 48
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0c0f1cfd293697be0800000000000000
-      internalID: -1479041520144092992
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pressure_plate_1
+      name: pressure_activate-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -140,8 +115,140 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a9266b82e44dcab50800000000000000
-      internalID: 6605888185601254042
+      spriteID: 354eb2949038389f0800000000000000
+      internalID: -467385860410842029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 394e94fcb20207c499563ff8b8b05a6b
+      internalID: 135230010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d21f26405e286409414d3bafe63467
+      internalID: 610046771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb97e152f095a264186a16ef61cbdd4f
+      internalID: 785612690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1182308697a74fa47b2993ef8e7be919
+      internalID: 1645577583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e76fbda878f21c4f917ab0878054267
+      internalID: -1339995215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pressure_activate-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6b17a417e80a7842998d014fa058f87
+      internalID: -490710120
       vertices: []
       indices: 
       edges: []
@@ -150,7 +257,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e4ff58d1e73333743a560b734162ab05
+    spriteID: 4369aee869771424780e1500f11a39c2
     internalID: 0
     vertices: []
     indices: 
@@ -162,8 +269,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      pressure_plate_0: -1479041520144092992
-      pressure_plate_1: 6605888185601254042
+      pressure_activate-Sheet_0: -467385860410842029
+      pressure_activate-Sheet_1: 135230010
+      pressure_activate-Sheet_2: 610046771
+      pressure_activate-Sheet_3: 785612690
+      pressure_activate-Sheet_4: 1645577583
+      pressure_activate-Sheet_5: -1339995215
+      pressure_activate-Sheet_6: -490710120
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

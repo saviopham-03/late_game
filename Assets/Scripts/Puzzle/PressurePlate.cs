@@ -4,9 +4,11 @@ public class PressurePlate : PuzzleInput
 {
     // [SerializeField] private Rigidbody2D plateBody;
 
-    [SerializeField] private float activationDistance = 0.15f;
+    // [SerializeField] private float activationDistance = 0.15f;
+    [SerializeField] private Animator _animator;
 
     private Vector2 restingPosition;
+    private int objects_on_plate;
 
     private void Start()
     {
@@ -15,22 +17,23 @@ public class PressurePlate : PuzzleInput
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("active");
-        SetActive(true);
+        objects_on_plate++;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("notactive");
-        SetActive(false);
+        objects_on_plate--;
     }
 
-    // private void FixedUpdate()
-    // {
-    //     float pressedDistance =
-    //         restingPosition.y - plateBody.position.y;
-
-    //     if (pressedDistance >= activationDistance)
+    private void FixedUpdate()
+    {
+        // float pressedDistance =
+        //     restingPosition.y - plateBody.position.y;
+        SetActive(objects_on_plate != 0);
+        _animator.SetBool("active", objects_on_plate != 0);
+        // if (pressedDistance >= activationDistance)
+        
+    //     if (objects_on_plate != 0)
     //     {
     //         SetActive(true);
     //     }
@@ -38,7 +41,7 @@ public class PressurePlate : PuzzleInput
     //     {
     //         SetActive(false);
     //     }
-    // }
+    }
 
     public override void ResetPuzzleObject()
     {
@@ -46,6 +49,6 @@ public class PressurePlate : PuzzleInput
         // plateBody.linearVelocity = Vector2.zero;
         // plateBody.angularVelocity = 0f;
 
-        // SetActive(false);
+        SetActive(false);
     }
 }

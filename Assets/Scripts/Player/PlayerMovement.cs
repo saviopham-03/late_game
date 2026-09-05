@@ -28,35 +28,29 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 last_vel;
     public bool IsActive => active;
     private Animator _animator;
+    private float sleep_vel;
 
     public void setActive(bool active)
     {
         this.active = active;
-
-        if (!this.active)
-        {
-            _animator.SetBool("is_sleeping", true);
-        }
-        else
-        {
-            _animator.SetBool("is_sleeping", false);
-        }
+        _animator.SetBool("is_sleeping", !active);
+        sleep_vel = last_vel.x*sleepDrift;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
-    {
+    {   
+        sleep_vel = playerBody.linearVelocityX*sleepDrift;
         if (!other.gameObject.CompareTag("Player")) return;
         // collided w clone
 
         PlayerMovement other_player = other.gameObject.GetComponent<PlayerMovement>();
-        Rigidbody2D other_body = other.gameObject.GetComponent<Rigidbody2D>();
         Rigidbody2D player_body = GetComponent<Rigidbody2D>();
+        Rigidbody2D other_body = other.gameObject.GetComponent<Rigidbody2D>();
 
         Vector2 incoming_vel = other_player.last_vel;
         if (incoming_vel.y != 0 && last_vel.y != 0) { // ensuring you can't bounce on ppl
             if (other_body.position.y >= player_body.position.y) // footstooled
             {
-                Debug.Log("COllided");
                 other_body.linearVelocityY += Abs(last_vel.y*footstoolPower.y);
                 player_body.linearVelocityY = 0;
                 other_body.linearVelocityX += last_vel.x*footstoolPower.x;
@@ -138,8 +132,8 @@ public class PlayerMovement : MonoBehaviour
         {
             vel_x = Mathf.Lerp(
                 playerBody.linearVelocity.x,
-                maxMoveSpeed,
-                sleepDrift
+                sleep_vel,
+                decelerationSpeed
             );
         }
         playerBody.linearVelocity = new Vector2(
