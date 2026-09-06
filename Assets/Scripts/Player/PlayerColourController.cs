@@ -3,7 +3,7 @@ using System;
 
 public class PlayerColourController : MonoBehaviour
 {
-    private Renderer renderer;
+    private SpriteRenderer renderer;
 
     [SerializeField]
     private PlayerColour currentColour;
@@ -14,7 +14,7 @@ public class PlayerColourController : MonoBehaviour
 
     private void Start()
     {
-        renderer = GetComponent<Renderer>();
+        renderer = GetComponent<SpriteRenderer>();
         SetColour(currentColour);
     }
 
@@ -22,7 +22,7 @@ public class PlayerColourController : MonoBehaviour
     {
         if (!renderer)
         {
-            renderer = GetComponent<Renderer>();
+            renderer = GetComponent<SpriteRenderer>();
         }
 
         Debug.Log("changed colour from " + currentColour + " to " + newColour);
