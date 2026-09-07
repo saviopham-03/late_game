@@ -36,6 +36,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] public bool active = true;
 
+    public bool IsActive => active;
+
     public void setActive(bool active)
     {
         this.active = active;
@@ -66,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
                 horizontalInput = input.x;
 
                 _animator.SetBool("is_running", true);
-
                 GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
             }
         };
@@ -106,23 +107,18 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isGrounded = IsGrounded();
 
-        // -------------------------
         // Landing sound
-        // -------------------------
         if (!wasGrounded && isGrounded)
         {
             PlayLandingSound();
 
-            // Prevent a footstep from playing at exactly
-            // the same moment as the landing sound
+            // Prevent footstep and landing sound playing at the same time
             footstepTimer = 0f;
         }
 
         wasGrounded = isGrounded;
 
-        // -------------------------
-        // Animation
-        // -------------------------
+        // Falling animation
         if (playerBody.linearVelocity.y < 0)
         {
             _animator.SetBool("is_falling", true);
@@ -132,9 +128,7 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool("is_falling", false);
         }
 
-        // -------------------------
         // Horizontal movement
-        // -------------------------
         playerBody.linearVelocity = new Vector2(
             Mathf.Lerp(
                 playerBody.linearVelocity.x,
@@ -146,9 +140,7 @@ public class PlayerMovement : MonoBehaviour
             playerBody.linearVelocity.y
         );
 
-        // -------------------------
         // Jump
-        // -------------------------
         if (jumpRequested)
         {
             playerBody.linearVelocity = new Vector2(
@@ -159,9 +151,7 @@ public class PlayerMovement : MonoBehaviour
             jumpRequested = false;
         }
 
-        // -------------------------
         // Footsteps
-        // -------------------------
         HandleFootsteps(isGrounded);
     }
 
@@ -182,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Reset when stopping or leaving the ground
             footstepTimer = 0f;
         }
     }
