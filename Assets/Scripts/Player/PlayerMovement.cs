@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
-{   
+{
     [SerializeField] private Animator _animator;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
@@ -19,17 +19,30 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference grappleAction;
     [SerializeField] private InputActionReference interactAction;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource playerAudioSource;
+    [SerializeField] private AudioClip landingSound;
+    [SerializeField] private AudioClip footstepSound;
+
+    [Header("Footstep Settings")]
+    [SerializeField] private float footstepInterval = 0.35f;
+    [SerializeField] private float minimumFootstepSpeed = 0.5f;
 
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
+    private bool wasGrounded;
+    private float footstepTimer;
+
     [SerializeField] public bool active = true;
+
     public void setActive(bool active)
     {
         this.active = active;
+
         if (!this.active)
         {
-            horizontalInput=0;
+            horizontalInput = 0;
             _animator.SetBool("is_sleeping", true);
         }
         else
@@ -41,23 +54,39 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerBody = GetComponent<Rigidbody2D>();
+
         moveAction.action.Enable();
         jumpAction.action.Enable();
+
         moveAction.action.started += ctx =>
         {
-            if (active) {
+            if (active)
+            {
                 Vector2 input = moveAction.action.ReadValue<Vector2>();
                 horizontalInput = input.x;
+
                 _animator.SetBool("is_running", true);
-                GetComponent<SpriteRenderer>().flipX = horizontalInput!=1;
+
+                GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
             }
         };
+
         moveAction.action.canceled += ctx =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+
             _animator.SetBool("is_running", false);
         };
+    }
+
+    private void Start()
+    {
+        // Prevent landing sound from playing immediately on scene start
+        wasGrounded = IsGrounded();
+
+        // Allows the first footstep to play without a long delay
+        footstepTimer = footstepInterval;
     }
 
     private void Update()
@@ -65,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
+
             if (jumpRequested)
             {
                 _animator.SetTrigger("jumped");
@@ -74,6 +104,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        bool isGrounded = IsGrounded();
+
+        // -------------------------
+        // Landing sound
+        // -------------------------
+        if (!wasGrounded && isGrounded)
+        {
+            PlayLandingSound();
+
+            // Prevent a footstep from playing at exactly
+            // the same moment as the landing sound
+            footstepTimer = 0f;
+        }
+
+        wasGrounded = isGrounded;
+
+        // -------------------------
+        // Animation
+        // -------------------------
         if (playerBody.linearVelocity.y < 0)
         {
             _animator.SetBool("is_falling", true);
@@ -82,11 +131,24 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("is_falling", false);
         }
+
+        // -------------------------
+        // Horizontal movement
+        // -------------------------
         playerBody.linearVelocity = new Vector2(
-            Mathf.Lerp(playerBody.linearVelocity.x, maxMoveSpeed*horizontalInput, horizontalInput==0?decelerationSpeed:accelerationSpeed),
+            Mathf.Lerp(
+                playerBody.linearVelocity.x,
+                maxMoveSpeed * horizontalInput,
+                horizontalInput == 0
+                    ? decelerationSpeed
+                    : accelerationSpeed
+            ),
             playerBody.linearVelocity.y
         );
 
+        // -------------------------
+        // Jump
+        // -------------------------
         if (jumpRequested)
         {
             playerBody.linearVelocity = new Vector2(
@@ -95,6 +157,49 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
+        }
+
+        // -------------------------
+        // Footsteps
+        // -------------------------
+        HandleFootsteps(isGrounded);
+    }
+
+    private void HandleFootsteps(bool isGrounded)
+    {
+        bool isMoving =
+            Mathf.Abs(playerBody.linearVelocity.x) > minimumFootstepSpeed;
+
+        if (active && isGrounded && isMoving)
+        {
+            footstepTimer += Time.fixedDeltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayFootstepSound();
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            // Reset when stopping or leaving the ground
+            footstepTimer = 0f;
+        }
+    }
+
+    private void PlayLandingSound()
+    {
+        if (playerAudioSource != null && landingSound != null)
+        {
+            playerAudioSource.PlayOneShot(landingSound);
+        }
+    }
+
+    private void PlayFootstepSound()
+    {
+        if (playerAudioSource != null && footstepSound != null)
+        {
+            playerAudioSource.PlayOneShot(footstepSound);
         }
     }
 
