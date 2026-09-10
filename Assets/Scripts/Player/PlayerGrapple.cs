@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(DistanceJoint2D))]
@@ -20,7 +21,6 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField]
     private LayerMask grappleObstacleLayer;
-
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
     private PlayerMovement playerMovement;
@@ -31,6 +31,7 @@ public class PlayerGrapple : MonoBehaviour
     private bool jointActive;
 
     private float ropeLength;
+    private Collider2D[] previous_grapples;
 
     private void Awake()
     {
@@ -40,9 +41,11 @@ public class PlayerGrapple : MonoBehaviour
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
+        previous_grapples = new Collider2D[0];
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
+
     }
 
     private void Update()
@@ -60,6 +63,22 @@ public class PlayerGrapple : MonoBehaviour
         if (jumpAction.action.triggered && isGrappling)
         {
             DetachGrapple();
+        }
+        Collider2D[] grapples_in_range = GetGrapplesInRange();
+
+        if (grapples_in_range != null)
+        {
+            foreach (Collider2D grapple in grapples_in_range)
+            {
+                grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(true);
+            }
+            foreach (Collider2D grapple in previous_grapples)
+            {
+                if (Array.IndexOf(grapples_in_range, grapple) == -1) {
+                    grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(false);
+                }
+            }
+            previous_grapples = grapples_in_range;
         }
 
         if (grappleAction.action.triggered)
@@ -124,13 +143,19 @@ public class PlayerGrapple : MonoBehaviour
         }
     }
 
-    private Collider2D FindClosestGrapplePoint()
+    private Collider2D[] GetGrapplesInRange()
     {
         Collider2D[] grapplePoints = Physics2D.OverlapCircleAll(
             transform.position,
             grappleRange,
             grapplePointLayer
         );
+        return grapplePoints;
+    }
+
+    private Collider2D FindClosestGrapplePoint()
+    {
+        Collider2D[] grapplePoints = GetGrapplesInRange();
 
         Collider2D closestPoint = null;
         float closestDistance = Mathf.Infinity;
