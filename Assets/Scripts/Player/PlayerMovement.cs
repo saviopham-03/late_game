@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         moveAction.action.Enable();
         jumpAction.action.Enable();
 
-        moveAction.action.started += ctx =>
+        moveAction.action.started += _ =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
             if (active) GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
         };
 
-        moveAction.action.canceled += ctx =>
+        moveAction.action.canceled += _ =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;

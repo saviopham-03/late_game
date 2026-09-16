@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class NPCDialogue : MonoBehaviour
 {
-    public DialogueSet dialogue;
+    [SerializeField] float interactRadius = 10;
 
-    public void Interact()
+    public DialogueSet dialogue;
+    public bool interactable;
+
+    private void Awake()
     {
-        DialogueManager.Instance.StartDialogue(dialogue);
+        interactable = false;
     }
 
-    private void OnCollisionEnter2D()
+    private void OnTriggerEnter2D()
     {
-        Interact();
+        DialogueManager.Instance.AddInRangeNPC(this);
+    }
+    private void OnTriggerExit2D()
+    {
+        DialogueManager.Instance.RemoveNPC(this);
     }
 }
