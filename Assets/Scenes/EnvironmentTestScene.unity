@@ -3888,6 +3888,7 @@ MonoBehaviour:
   textComponent: {fileID: 397688592}
   nameComponent: {fileID: 490379941}
   imgComponent: {fileID: 2116651037}
+  player: {fileID: 0}
   textSpeed: 0.03
 --- !u!1 &1092551434
 GameObject:
@@ -6275,8 +6276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00efe9496b1e3e4e903116fb6fc0afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
-  player: {fileID: 3094237549141487040}
-  interactAction: {fileID: 1676646104994126285, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  interactAction: {fileID: -8368549873458926913, guid: 2ad224b35fc45db499157ec4f29790b1, type: 3}
   _dialogueBox: {fileID: 1075448831}
 --- !u!4 &1930706975
 Transform:
@@ -6459,7 +6459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3459380418008133722, guid: 87ef4eb183215a544819e9841e1bda64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1
+      value: 2.41
       objectReference: {fileID: 0}
     - target: {fileID: 3459380418008133722, guid: 87ef4eb183215a544819e9841e1bda64, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6505,11 +6505,6 @@ PrefabInstance:
 --- !u!1 &3094237549141487028 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6137904323305246293, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
-  m_PrefabInstance: {fileID: 8585023212615278201}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3094237549141487040 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1263975108803250100, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
   m_PrefabInstance: {fileID: 8585023212615278201}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5899571364239612508

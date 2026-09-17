@@ -18,17 +18,26 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector2 footstoolPower;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
-    [SerializeField] private InputActionReference grappleAction;
-    [SerializeField] private InputActionReference interactAction;
 
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
     private bool active = true;
+    private bool inDialogue = false;
     public Vector2 last_vel;
     public bool IsActive => active;
     private Animator _animator;
     private float sleep_vel;
+    public void DisableMovement()
+    {
+        moveAction.action.Disable();
+        jumpAction.action.Disable();
+    }
+    public void EnableMovement()
+    {
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
+    }
 
     public void setActive(bool active)
     {

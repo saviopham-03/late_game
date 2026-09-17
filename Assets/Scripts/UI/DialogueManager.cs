@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Transform player;
+    private GameObject active_player;
     public static DialogueManager Instance;
     private DialogueSet currentDialogue;
     private int currentLineIndex;
@@ -46,10 +46,11 @@ public class DialogueManager : MonoBehaviour
 
         foreach (NPCDialogue npc in nearbyNPCs)
         {
-            if (npc == null)
+            if (active_player == null) active_player = npc.NearActiveClone();
+            if (npc == null || active_player==null)
                 continue;
 
-            float distanceSqr = (npc.transform.position - player.position).sqrMagnitude;
+            float distanceSqr = (npc.transform.position - active_player.transform.position).sqrMagnitude;
 
             if (distanceSqr < closestDistanceSqr)
             {
@@ -66,6 +67,10 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue == null)
         {
             NPCDialogue dialogue_npc = GetClosestNPC();
+
+            active_player.GetComponent<PlayerMovement>().DisableMovement();
+            CloneManager.Instance.Disable();
+
             currentDialogue = dialogue_npc.dialogue;
             currentLineIndex = 0;
             ShowCurrentLine();
@@ -106,6 +111,8 @@ public class DialogueManager : MonoBehaviour
             return;
         }
         currentDialogue = null;
+        active_player.GetComponent<PlayerMovement>().EnableMovement();
+        CloneManager.Instance.Enable();
         // Debug.Log("Dialogue ended");
     }
 }

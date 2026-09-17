@@ -8,12 +8,13 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private TextMeshProUGUI nameComponent;
     [SerializeField] private Image imgComponent;
+    [SerializeField] private PlayerMovement player;
     public float textSpeed;
     private string line;
     private bool active = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         imgComponent.color = new Color(1f,1f,1f,0f);
