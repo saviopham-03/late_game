@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class NPCDialogue : MonoBehaviour
 {
-    [SerializeField] float interactRadius = 10;
 
     public DialogueSet dialogue;
     public bool interactable;

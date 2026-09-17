@@ -13,6 +13,7 @@ public class DialogueManager : MonoBehaviour
     private NPCDialogue activeDialogue;
 
     [SerializeField] InputActionReference interactAction;
+    [SerializeField] DialogueBox _dialogueBox;
 
     private void Awake()
     {
@@ -75,7 +76,9 @@ public class DialogueManager : MonoBehaviour
 {
     DialogueLine line = currentDialogue.lines[currentLineIndex];
 
-    Debug.Log(line.speaker.name + ": " + line.text);
+    int ret = _dialogueBox.showLine(line);
+    if (ret == -1) currentLineIndex--; // last text wasn't finished rendering
+    // Debug.Log(line.speaker.name + ": " + line.text);
 }
 
     public void NextLine()
@@ -96,7 +99,13 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
+        int ret = _dialogueBox.showLine(null);
+        if (ret == -1)
+        {
+            currentLineIndex--;
+            return;
+        }
         currentDialogue = null;
-        Debug.Log("Dialogue ended");
+        // Debug.Log("Dialogue ended");
     }
 }
