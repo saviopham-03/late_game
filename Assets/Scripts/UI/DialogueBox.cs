@@ -8,7 +8,7 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private TextMeshProUGUI nameComponent;
     [SerializeField] private Image imgComponent;
-    [SerializeField] private PlayerMovement player;
+    [SerializeField] private SpriteRenderer overlayComponent;
     public float textSpeed;
     private string line;
     private bool active = false;
@@ -18,6 +18,7 @@ public class DialogueBox : MonoBehaviour
     {
         GetComponent<Image>().color = new Color(1f,1f,1f,0f);
         imgComponent.color = new Color(1f,1f,1f,0f);
+        overlayComponent.material.color = new Color(1f,1f,1f,0f);
         textComponent.text = string.Empty;
     }
 
@@ -31,6 +32,7 @@ public class DialogueBox : MonoBehaviour
     {
         GetComponent<Image>().color = new Color(1f,1f,1f,1f);
         imgComponent.color = new Color(1f,1f,1f,1f);
+        overlayComponent.material.color = new Color(1f,1f,1f,1f);
     }
 
     public int showLine(DialogueLine d_line)
@@ -68,6 +70,7 @@ public class DialogueBox : MonoBehaviour
         imgComponent.sprite = null;
         imgComponent.color = new Color(1f,1f,1f,0f);
         GetComponent<Image>().color = new Color(1f,1f,1f,0f);
+        overlayComponent.material.color = new Color(1f,1f,1f,0f);
         active = false;
     }
 

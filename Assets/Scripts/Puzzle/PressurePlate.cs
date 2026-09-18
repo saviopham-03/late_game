@@ -17,12 +17,12 @@ public class PressurePlate : PuzzleInput
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        objects_on_plate++;
+        if (other.CompareTag("Player") || other.CompareTag("HeavyObject")) objects_on_plate++;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        objects_on_plate--;
+        if (other.CompareTag("Player") || other.CompareTag("HeavyObject")) objects_on_plate--;
     }
 
     private void FixedUpdate()
