@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class CloneList
 {
@@ -15,12 +16,14 @@ public class CloneManager : MonoBehaviour
     [SerializeField] private InputActionReference switchAction;
 
     [SerializeField] GameObject player;
+
+    private Dictionary<BoxCollider2D, CloneList> cloneSets = new();
     private CloneList current = new();
+    private BoxCollider2D currentSpace;
 
     void Awake()
     {
         Instance = this;
-
     }
 
     void Start()
@@ -36,6 +39,43 @@ public class CloneManager : MonoBehaviour
     }
     public void Enable() {
         switchAction.action.Enable();
+    }
+
+    public void switchCloneSet(BoxCollider2D newSpace)
+    {
+        // Debug.Log("Entered space: " + newSpace.GetInstanceID());
+        if (!cloneSets.ContainsKey(newSpace))
+        {
+            removeFromCurrentSet(current);
+            cloneSets.Add(newSpace, current);
+            current.Next = current;
+            current.Previous = current;
+        }
+        else
+        {
+            CloneList current_new = cloneSets[newSpace];
+
+            removeFromCurrentSet(current);
+            current_new.Next.Previous = current;
+            current.Next = current_new.Next;
+            current_new.Next = current;
+            current.Previous = current_new;
+        }
+        currentSpace = newSpace;
+    }
+
+    private void removeFromCurrentSet(CloneList clone)
+    {
+        if (currentSpace == null) return;
+
+        if (clone.Next == clone) // only one
+        {
+            cloneSets.Remove(currentSpace);
+            return;
+        }
+        cloneSets[currentSpace] = clone.Previous;
+        clone.Previous.Next = clone.Next;
+        clone.Next.Previous = clone.Previous;
     }
 
     public void addClone(GameObject newClone)

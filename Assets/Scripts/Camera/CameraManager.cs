@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
 
     public void SwitchCamera(BoxCollider2D targetPoint)
     {
+        CloneManager.Instance.switchCloneSet(targetPoint);
         Bounds bounds = targetPoint.bounds;
 
         // Center camera on rectangle
