@@ -11,16 +11,30 @@ public class CloneList
 
 public class CloneManager : MonoBehaviour
 {
+    public static CloneManager Instance;
     [SerializeField] private InputActionReference switchAction;
 
     [SerializeField] GameObject player;
     private CloneList current = new();
+
+    void Awake()
+    {
+        Instance = this;
+
+    }
 
     void Start()
     {
         current.Value = player;
         current.Next = current;
         current.Previous = current;
+        switchAction.action.Enable();
+    }
+
+    public void Disable() {
+        switchAction.action.Disable();
+    }
+    public void Enable() {
         switchAction.action.Enable();
     }
 

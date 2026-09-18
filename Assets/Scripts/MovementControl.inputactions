@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "Controls",
+    "name": "MovementControl",
     "maps": [
         {
             "name": "Gameplay",
@@ -28,15 +28,6 @@
                     "name": "Grapple",
                     "type": "Button",
                     "id": "e430999b-a6a9-4e51-925a-1d6774a17fab",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "ed8018f3-b116-4c84-8159-fc634f3b3abe",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -138,17 +129,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Grapple",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cfe7eb07-7e28-40c3-869f-7c66b78954fc",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
