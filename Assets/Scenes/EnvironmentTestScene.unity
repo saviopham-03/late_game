@@ -3927,6 +3927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraManager
   mainCamera: {fileID: 1743890995}
   startingCameraPoint: {fileID: 1715030054}
+  cameraSwapSpeed: 0.06
 --- !u!4 &810200179
 Transform:
   m_ObjectHideFlags: 0
