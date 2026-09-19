@@ -67,7 +67,8 @@ public class DialogueManager : MonoBehaviour
         if (currentDialogue == null)
         {
             NPCDialogue dialogue_npc = GetClosestNPC();
-
+            if (!active_player) return;
+            
             active_player.GetComponent<PlayerMovement>().DisableMovement();
             CloneManager.Instance.Disable();
 
@@ -113,6 +114,7 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = null;
         active_player.GetComponent<PlayerMovement>().EnableMovement();
         CloneManager.Instance.Enable();
+        active_player = null;
         // Debug.Log("Dialogue ended");
     }
 }
