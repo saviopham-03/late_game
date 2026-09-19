@@ -6,7 +6,7 @@ public class CameraTrigger : MonoBehaviour
     [SerializeField] private BoxCollider2D leftCameraPoint;
     [SerializeField] private BoxCollider2D rightCameraPoint;
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void switchCamera(Collider2D other)
     {
         if (!other.CompareTag("Player"))
         {
@@ -22,11 +22,29 @@ public class CameraTrigger : MonoBehaviour
 
         if (rb.linearVelocity.x > 0.1f)
         {
-            cameraManager.SwitchCamera(rightCameraPoint);
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightCameraPoint);
+            else
+            {
+                CloneManager.Instance.switchCloneSet(rightCameraPoint, other.gameObject);
+            }
+            
         }
         else if (rb.linearVelocity.x < -0.1f)
         {
-            cameraManager.SwitchCamera(leftCameraPoint);
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftCameraPoint);
+            else
+            {
+                CloneManager.Instance.switchCloneSet(leftCameraPoint, other.gameObject);
+            }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        switchCamera(other);
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        switchCamera(other);
     }
 }

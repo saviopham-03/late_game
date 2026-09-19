@@ -7,6 +7,7 @@ public class CloneList
     public GameObject Value;
     public CloneList Next;
     public CloneList Previous;
+    public BoxCollider2D Space;
 
 }
 
@@ -34,6 +35,11 @@ public class CloneManager : MonoBehaviour
         switchAction.action.Enable();
     }
 
+    public void AssignStartingSpace(BoxCollider2D newSpace)
+    {
+        current.Space = newSpace;
+    }
+
     public void Disable() {
         switchAction.action.Disable();
     }
@@ -41,39 +47,78 @@ public class CloneManager : MonoBehaviour
         switchAction.action.Enable();
     }
 
-    public void switchCloneSet(BoxCollider2D newSpace)
+    private CloneList findByGameObj(GameObject clone)
+    {
+        foreach (CloneList start in cloneSets.Values)
+        {
+            CloneList search = start;
+
+            do
+            {
+                if (search.Value == clone)
+                    return search;
+
+                search = search.Next;
+            }
+            while (search != start);
+        }
+
+        return null;
+    }
+
+    public void switchCloneSet(BoxCollider2D newSpace, GameObject clone=null)
     {
         // Debug.Log("Entered space: " + newSpace.GetInstanceID());
+        CloneList new_clone_list = (clone == null) ? current:findByGameObj(clone);
+
+        if (new_clone_list == null) // clone doesn't have an existing clonelist element so make one
+        {
+            new_clone_list = new();
+            new_clone_list.Next = new_clone_list;
+            new_clone_list.Value = clone;
+            new_clone_list.Previous = new_clone_list;
+            new_clone_list.Space = newSpace;
+        }
+
+        removeFromCurrentSet(new_clone_list);
+        new_clone_list.Space = newSpace;
+        
         if (!cloneSets.ContainsKey(newSpace))
         {
-            removeFromCurrentSet(current);
-            cloneSets.Add(newSpace, current);
-            current.Next = current;
-            current.Previous = current;
+            cloneSets.Add(newSpace, new_clone_list);
+
+            new_clone_list.Next = new_clone_list;
+            new_clone_list.Previous = new_clone_list;
         }
         else
         {
             CloneList current_new = cloneSets[newSpace];
 
-            removeFromCurrentSet(current);
-            current_new.Next.Previous = current;
-            current.Next = current_new.Next;
-            current_new.Next = current;
-            current.Previous = current_new;
+            current_new.Next.Previous = new_clone_list;
+            new_clone_list.Next = current_new.Next;
+            current_new.Next = new_clone_list;
+            new_clone_list.Previous = current_new;
         }
-        currentSpace = newSpace;
+
+        if (clone == null)
+        {
+            currentSpace = newSpace;
+        }
     }
 
     private void removeFromCurrentSet(CloneList clone)
     {
-        if (currentSpace == null) return;
+        BoxCollider2D cloneSpace = clone.Space;
+        if (cloneSpace == null) return;
 
         if (clone.Next == clone) // only one
         {
-            cloneSets.Remove(currentSpace);
+            cloneSets.Remove(cloneSpace);
             return;
         }
-        cloneSets[currentSpace] = clone.Previous;
+        cloneSets.TryGetValue(cloneSpace, out CloneList c_clone_list);
+
+        if (c_clone_list == clone) cloneSets[cloneSpace] = clone.Previous; // if this clone is the head of the clonelist its part of
         clone.Previous.Next = clone.Next;
         clone.Next.Previous = clone.Previous;
     }
@@ -86,7 +131,8 @@ public class CloneManager : MonoBehaviour
         {
             Value = newClone,
             Previous = current,
-            Next = current.Next
+            Next = current.Next,
+            Space = currentSpace
         };
         current.Next.Previous = new_node;
         current.Next = new_node;

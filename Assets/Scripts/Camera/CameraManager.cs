@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
     {
         if (mainCamera != null && startingCameraPoint != null)
         {
+            CloneManager.Instance.AssignStartingSpace(startingCameraPoint);
             SwitchCamera(startingCameraPoint);
         }
     }
