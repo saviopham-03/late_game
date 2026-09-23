@@ -14,7 +14,19 @@ public class PlayerGrapple : MonoBehaviour
     private InputActionReference jumpAction;
 
     [SerializeField]
+    private InputActionReference adjustGrappleLengthAction;
+    
+    [SerializeField]
     private float grappleRange = 5f;
+
+    [SerializeField]
+    private float ropeAdjustSpeed = 2f;
+
+    [SerializeField]
+    private float minRopeLength = 1f;
+
+    [SerializeField]
+    private float maxRopeLength = 8f;
 
     [SerializeField]
     private LayerMask grapplePointLayer;
@@ -41,6 +53,7 @@ public class PlayerGrapple : MonoBehaviour
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
+        adjustGrappleLengthAction.action.Enable();
         previous_grapples = new Collider2D[0];
 
         grappleJoint.enabled = false;
@@ -83,6 +96,9 @@ public class PlayerGrapple : MonoBehaviour
 
         if (grappleAction.action.triggered)
         {
+            Debug.Log(
+                $"Grapple pressed | grounded={playerMovement.IsGrounded()} | y={GetComponent<Rigidbody2D>().linearVelocity.y}"
+            );
             if (isGrappling)
             {
                 DetachGrapple();
@@ -104,6 +120,15 @@ public class PlayerGrapple : MonoBehaviour
         if (!isGrappling || currentGrapplePoint == null)
         {
             return;
+        }
+
+        float ropeInput = adjustGrappleLengthAction.action.ReadValue<float>();
+
+        if (ropeInput != 0f)
+        {
+            ropeLength -= ropeInput * ropeAdjustSpeed * Time.deltaTime;
+            ropeLength = Mathf.Clamp(ropeLength, minRopeLength, maxRopeLength);
+            grappleJoint.distance = ropeLength;
         }
 
         if (IsGrapplePathBlocked())
@@ -137,10 +162,6 @@ public class PlayerGrapple : MonoBehaviour
             return;
         }
 
-        if (playerMovement.IsGrounded())
-        {
-            DetachGrapple();
-        }
     }
 
     private Collider2D[] GetGrapplesInRange()
@@ -167,19 +188,36 @@ public class PlayerGrapple : MonoBehaviour
                 (Vector2)transform.position;
 
             float distance = direction.magnitude;
+            Debug.Log($"Grapple candidate: {grapplePoint.name} | distance={distance}");
+            if (distance > grappleRange)
+            {
+                continue;
+            }
 
-            RaycastHit2D obstacleHit = Physics2D.Raycast(
+            RaycastHit2D[] obstacleHits = Physics2D.RaycastAll(
                 transform.position,
                 direction.normalized,
                 distance,
                 grappleObstacleLayer
             );
 
-            if (obstacleHit.collider != null)
+            bool pathBlocked = false;
+
+            foreach (RaycastHit2D hit in obstacleHits)
+            {
+                if (hit.collider.transform.root == transform.root)
+                {
+                    continue;
+                }
+
+                pathBlocked = true;
+                break;
+            }
+
+            if (pathBlocked)
             {
                 continue;
             }
-
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -198,14 +236,25 @@ public class PlayerGrapple : MonoBehaviour
 
         float distance = direction.magnitude;
 
-        RaycastHit2D obstacleHit = Physics2D.Raycast(
+        RaycastHit2D[] obstacleHits = Physics2D.RaycastAll(
             transform.position,
             direction.normalized,
             distance,
             grappleObstacleLayer
         );
 
-        return obstacleHit.collider != null;
+        foreach (RaycastHit2D hit in obstacleHits)
+        {
+            // Ignore the player's own colliders
+            if (hit.collider.transform.root == transform.root)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private void AttachGrapple(Collider2D grapplePoint)
@@ -223,10 +272,7 @@ public class PlayerGrapple : MonoBehaviour
         grappleJoint.enabled = false;
         grappleLine.enabled = true;
 
-        if (!playerMovement.IsGrounded())
-        {
-            ActivateGrappleJoint();
-        }
+        ActivateGrappleJoint();
 
         Debug.Log(
             $"Attached to grapple point: {grapplePoint.name}"
@@ -239,7 +285,7 @@ public class PlayerGrapple : MonoBehaviour
             currentGrapplePoint.transform.position;
 
         grappleJoint.distance = ropeLength;
-        grappleJoint.maxDistanceOnly = true;
+        grappleJoint.maxDistanceOnly = false;
         grappleJoint.enabled = true;
 
         jointActive = true;

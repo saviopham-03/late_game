@@ -104,14 +104,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGrapple
   grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  adjustGrappleLengthAction: {fileID: -7239600258484585016, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   grappleRange: 5
+  ropeAdjustSpeed: 2
+  minRopeLength: 1
+  maxRopeLength: 8
   grapplePointLayer:
     serializedVersion: 2
     m_Bits: 128
   grappleObstacleLayer:
     serializedVersion: 2
     m_Bits: 256
-  outOfRangeDim: 0.7
 --- !u!232 &2552369461741866297
 DistanceJoint2D:
   m_ObjectHideFlags: 0
