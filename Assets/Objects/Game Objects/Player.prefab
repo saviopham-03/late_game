@@ -105,6 +105,7 @@ MonoBehaviour:
   grappleAction: {fileID: 9187339695220827640, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   adjustGrappleLengthAction: {fileID: -7239600258484585016, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  toggleGrappleModeAction: {fileID: -2103114782840583606, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   grappleRange: 5
   ropeAdjustSpeed: 2
   minRopeLength: 1

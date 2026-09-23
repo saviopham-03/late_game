@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ToggleGrappleMode",
+                    "type": "Button",
+                    "id": "8079d530-b429-4c3c-b0b0-e4d0fc0f8e26",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -226,6 +235,17 @@
                     "action": "AdujstGrappleLength",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8b9a6546-2dbb-4e50-9fee-5d4c92631754",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleGrappleMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

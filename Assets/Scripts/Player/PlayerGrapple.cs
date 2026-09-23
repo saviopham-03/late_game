@@ -15,6 +15,9 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField]
     private InputActionReference adjustGrappleLengthAction;
+
+    [SerializeField]
+    private InputActionReference toggleGrappleModeAction;
     
     [SerializeField]
     private float grappleRange = 5f;
@@ -33,6 +36,9 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField]
     private LayerMask grappleObstacleLayer;
+
+    [SerializeField]
+    private GrappleInputMode grappleInputMode = GrappleInputMode.Toggle;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
     private PlayerMovement playerMovement;
@@ -54,6 +60,7 @@ public class PlayerGrapple : MonoBehaviour
         grappleAction.action.Enable();
         jumpAction.action.Enable();
         adjustGrappleLengthAction.action.Enable();
+        toggleGrappleModeAction.action.Enable();
         previous_grapples = new Collider2D[0];
 
         grappleJoint.enabled = false;
@@ -71,6 +78,58 @@ public class PlayerGrapple : MonoBehaviour
             }
 
             return;
+        }
+        if (toggleGrappleModeAction.action.WasPressedThisFrame())
+        {
+            grappleInputMode =
+                grappleInputMode == GrappleInputMode.Toggle
+                    ? GrappleInputMode.Hold
+                    : GrappleInputMode.Toggle;
+
+            Debug.Log($"Grapple input mode: {grappleInputMode}");
+        }
+        if (grappleInputMode == GrappleInputMode.Toggle)
+        {
+            if (grappleAction.action.WasPressedThisFrame())
+            {
+                if (isGrappling)
+                {
+                    DetachGrapple();
+                    return;
+                }
+
+                Collider2D grapplePoint = FindClosestGrapplePoint();
+
+                if (grapplePoint != null)
+                {
+                    AttachGrapple(grapplePoint);
+                }
+                else
+                {
+                    Debug.Log("No grapple point in range");
+                }
+            }
+        }
+        else if (grappleInputMode == GrappleInputMode.Hold)
+        {
+            if (grappleAction.action.WasPressedThisFrame())
+            {
+                Collider2D grapplePoint = FindClosestGrapplePoint();
+
+                if (grapplePoint != null)
+                {
+                    AttachGrapple(grapplePoint);
+                }
+                else
+                {
+                    Debug.Log("No grapple point in range");
+                }
+            }
+
+            if (grappleAction.action.WasReleasedThisFrame() && isGrappling)
+            {
+                DetachGrapple();
+            }
         }
 
         if (jumpAction.action.triggered && isGrappling)
@@ -92,29 +151,6 @@ public class PlayerGrapple : MonoBehaviour
                 }
             }
             previous_grapples = grapples_in_range;
-        }
-
-        if (grappleAction.action.triggered)
-        {
-            Debug.Log(
-                $"Grapple pressed | grounded={playerMovement.IsGrounded()} | y={GetComponent<Rigidbody2D>().linearVelocity.y}"
-            );
-            if (isGrappling)
-            {
-                DetachGrapple();
-                return;
-            }
-
-            Collider2D grapplePoint = FindClosestGrapplePoint();
-
-            if (grapplePoint != null)
-            {
-                AttachGrapple(grapplePoint);
-            }
-            else
-            {
-                Debug.Log("No grapple point in range");
-            }
         }
 
         if (!isGrappling || currentGrapplePoint == null)
