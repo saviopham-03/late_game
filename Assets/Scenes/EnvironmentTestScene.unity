@@ -3749,6 +3749,14 @@ PrefabInstance:
       propertyPath: outOfRangeDim.r
       value: 0.7830189
       objectReference: {fileID: 0}
+    - target: {fileID: 1136288689983394848, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: adjustGrappleLengthAction
+      value: 
+      objectReference: {fileID: -7239600258484585016, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+    - target: {fileID: 1136288689983394848, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: grappleObstacleLayer.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
     - target: {fileID: 1263975108803250100, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
