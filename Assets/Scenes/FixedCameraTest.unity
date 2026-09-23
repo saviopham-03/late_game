@@ -5784,6 +5784,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2936089481066735481, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: coyoteTimer
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2936089481066735481, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: landingSound
       value: 
       objectReference: {fileID: 8300000, guid: bf6cdf65a81074d67950607cf7543306, type: 3}

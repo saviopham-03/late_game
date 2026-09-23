@@ -46,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
     private bool wasGrounded;
     private float footstepTimer;
 
+    // Tracks how much coyote time remains after leaving the ground.
+    private float coyoteTimeCounter;
+
     public void setActive(bool active)
     {
         this.active = active;
@@ -144,10 +147,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (jumpAction.action.triggered && active)
         {
-            jumpRequested = IsGrounded();
+            jumpRequested =
+                IsGrounded() || coyoteTimeCounter > 0f;
 
             if (jumpRequested)
             {
+                // Consume the coyote jump so it cannot be reused.
+                coyoteTimeCounter = 0f;
+
                 _animator.SetTrigger("jumped");
             }
         }
@@ -158,6 +165,18 @@ public class PlayerMovement : MonoBehaviour
         last_vel = playerBody.linearVelocity;
 
         bool isGrounded = IsGrounded();
+
+        // Coyote time
+        // While grounded, keep refreshing the timer.
+        // Once the player leaves the platform, the timer counts down.
+        if (isGrounded && playerBody.linearVelocity.y <= 0f)
+        {
+            coyoteTimeCounter = coyoteTimer;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.fixedDeltaTime;
+        }
 
         // Landing sound
         if (!wasGrounded && isGrounded)
