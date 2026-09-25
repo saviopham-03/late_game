@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
+
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(DistanceJoint2D))]
@@ -31,7 +31,8 @@ public class PlayerGrapple : MonoBehaviour
     private bool jointActive;
 
     private float ropeLength;
-    private Collider2D[] previous_grapples;
+
+    private Collider2D highlightedGrapplePoint;
 
     private void Awake()
     {
@@ -41,17 +42,18 @@ public class PlayerGrapple : MonoBehaviour
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
-        previous_grapples = new Collider2D[0];
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
 
     }
 
-    private void Update()
+  private void Update()
     {
         if (!playerMovement.IsActive)
         {
+            HighlightGrapplePoint(null);
+
             if (isGrappling)
             {
                 DetachGrapple();
@@ -64,36 +66,27 @@ public class PlayerGrapple : MonoBehaviour
         {
             DetachGrapple();
         }
-        Collider2D[] grapples_in_range = GetGrapplesInRange();
 
-        if (grapples_in_range != null)
+        if (isGrappling && currentGrapplePoint == null)
         {
-            foreach (Collider2D grapple in grapples_in_range)
-            {
-                grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(true);
-            }
-            foreach (Collider2D grapple in previous_grapples)
-            {
-                if (Array.IndexOf(grapples_in_range, grapple) == -1) {
-                    grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(false);
-                }
-            }
-            previous_grapples = grapples_in_range;
+            DetachGrapple();
         }
+
+        Collider2D closestPoint = FindClosestGrapplePoint();
+        HighlightGrapplePoint(isGrappling ? currentGrapplePoint : closestPoint);
 
         if (grappleAction.action.triggered)
         {
             if (isGrappling)
             {
                 DetachGrapple();
+                HighlightGrapplePoint(closestPoint);
                 return;
             }
 
-            Collider2D grapplePoint = FindClosestGrapplePoint();
-
-            if (grapplePoint != null)
+            if (closestPoint != null)
             {
-                AttachGrapple(grapplePoint);
+                AttachGrapple(closestPoint);
             }
             else
             {
@@ -109,6 +102,7 @@ public class PlayerGrapple : MonoBehaviour
         if (IsGrapplePathBlocked())
         {
             DetachGrapple();
+            HighlightGrapplePoint(closestPoint);
             return;
         }
 
@@ -125,6 +119,7 @@ public class PlayerGrapple : MonoBehaviour
                 currentDistance > grappleRange)
             {
                 DetachGrapple();
+                HighlightGrapplePoint(closestPoint);
                 return;
             }
 
@@ -140,9 +135,9 @@ public class PlayerGrapple : MonoBehaviour
         if (playerMovement.IsGrounded())
         {
             DetachGrapple();
+            HighlightGrapplePoint(closestPoint);
         }
     }
-
     private Collider2D[] GetGrapplesInRange()
     {
         Collider2D[] grapplePoints = Physics2D.OverlapCircleAll(
@@ -188,6 +183,26 @@ public class PlayerGrapple : MonoBehaviour
         }
 
         return closestPoint;
+    }
+
+    private void HighlightGrapplePoint(Collider2D point)
+    {
+        if (highlightedGrapplePoint == point)
+        {
+            return;
+        }
+
+        if (highlightedGrapplePoint != null)
+        {
+            highlightedGrapplePoint.GetComponent<GrappleAnimatorScript>().InRange(false);
+        }
+
+        highlightedGrapplePoint = point;
+
+        if (highlightedGrapplePoint != null)
+        {
+            highlightedGrapplePoint.GetComponent<GrappleAnimatorScript>().InRange(true);
+        }
     }
 
     private bool IsGrapplePathBlocked()
