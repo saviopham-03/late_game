@@ -6,13 +6,8 @@ public class NPCDialogue : MonoBehaviour
 {
 
     public DialogueSet dialogue;
-    public bool interactable;
     private List<PlayerMovement> closeClones = new List<PlayerMovement>();
 
-    private void Awake()
-    {
-        interactable = false;
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
