@@ -21,31 +21,47 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField]
     private LayerMask grappleObstacleLayer;
+
+    [Header("Pull Grapple")]
+    [SerializeField]
+    private float pullAcceleration = 60f;
+
+    [SerializeField]
+    private float pullDetachDistance = 0.5f;
+
+    private Rigidbody2D rb;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
     private PlayerMovement playerMovement;
 
     private Collider2D currentGrapplePoint;
+    private GrapplePoint currentGrapple;
 
     private bool isGrappling;
     private bool jointActive;
 
     private float ropeLength;
-    private Collider2D[] previous_grapples;
+
+    // Direction is calculated once when the pull grapple begins.
+    // This keeps the player's trajectory perfectly linear.
+    private Vector2 pullDirection;
+
+    private Collider2D[] previousGrapples;
 
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         grappleJoint = GetComponent<DistanceJoint2D>();
         grappleLine = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
-        previous_grapples = new Collider2D[0];
+
+        previousGrapples = new Collider2D[0];
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
-
     }
 
     private void Update()
@@ -60,25 +76,12 @@ public class PlayerGrapple : MonoBehaviour
             return;
         }
 
+        UpdateGrappleAnimations();
+
         if (jumpAction.action.triggered && isGrappling)
         {
             DetachGrapple();
-        }
-        Collider2D[] grapples_in_range = GetGrapplesInRange();
-
-        if (grapples_in_range != null)
-        {
-            foreach (Collider2D grapple in grapples_in_range)
-            {
-                grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(true);
-            }
-            foreach (Collider2D grapple in previous_grapples)
-            {
-                if (Array.IndexOf(grapples_in_range, grapple) == -1) {
-                    grapple.gameObject.GetComponent<GrappleAnimatorScript>().InRange(false);
-                }
-            }
-            previous_grapples = grapples_in_range;
+            return;
         }
 
         if (grappleAction.action.triggered)
@@ -101,7 +104,9 @@ public class PlayerGrapple : MonoBehaviour
             }
         }
 
-        if (!isGrappling || currentGrapplePoint == null)
+        if (!isGrappling ||
+            currentGrapplePoint == null ||
+            currentGrapple == null)
         {
             return;
         }
@@ -114,10 +119,127 @@ public class PlayerGrapple : MonoBehaviour
 
         UpdateGrappleLine();
 
-        float currentDistance = Vector2.Distance(
-            transform.position,
-            currentGrapplePoint.transform.position
-        );
+        // Pull grapple movement is handled in FixedUpdate.
+        if (currentGrapple.Type == GrapplePoint.GrappleType.Pull)
+        {
+            return;
+        }
+
+        UpdateSwingGrapple();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isGrappling ||
+            currentGrapplePoint == null ||
+            currentGrapple == null)
+        {
+            return;
+        }
+
+        if (currentGrapple.Type == GrapplePoint.GrappleType.Pull)
+        {
+            UpdatePullGrapple();
+        }
+    }
+
+    private void UpdatePullGrapple()
+    {
+        Vector2 toGrapple =
+            (Vector2)currentGrapplePoint.transform.position -
+            rb.position;
+
+        // Measures how far the player still has to travel
+        // along the original grapple direction.
+        float distanceAlongPath =
+            Vector2.Dot(
+                toGrapple,
+                pullDirection
+            );
+
+        // Once we reach/pass the grapple point, detach.
+        // We deliberately leave linearVelocity unchanged.
+        if (distanceAlongPath <= pullDetachDistance)
+        {
+            DetachGrapple();
+            return;
+        }
+
+        // Find how quickly we're already travelling
+        // along the intended launch direction.
+        float speedAlongDirection =
+            Vector2.Dot(
+                rb.linearVelocity,
+                pullDirection
+            );
+
+        // Don't let velocity opposite the grapple direction
+        // fight against the pull.
+        speedAlongDirection =
+            Mathf.Max(
+                speedAlongDirection,
+                0f
+            );
+
+        // Continuously accelerate.
+        // There is deliberately NO maximum speed.
+        speedAlongDirection +=
+            pullAcceleration * Time.fixedDeltaTime;
+
+        // Force the player's velocity to remain on the
+        // original player -> grapple trajectory.
+        rb.linearVelocity =
+            pullDirection * speedAlongDirection;
+    }
+
+    private void UpdateGrappleAnimations()
+    {
+        Collider2D[] grapplesInRange =
+            GetGrapplesInRange();
+
+        foreach (Collider2D grapple in grapplesInRange)
+        {
+            GrappleAnimatorScript animator =
+                grapple.GetComponent<GrappleAnimatorScript>();
+
+            if (animator != null)
+            {
+                animator.InRange(true);
+            }
+        }
+
+        foreach (Collider2D grapple in previousGrapples)
+        {
+            if (grapple == null)
+            {
+                continue;
+            }
+
+            if (Array.IndexOf(
+                grapplesInRange,
+                grapple
+            ) == -1)
+            {
+                GrappleAnimatorScript animator =
+                    grapple.GetComponent<GrappleAnimatorScript>();
+
+                if (animator != null)
+                {
+                    animator.InRange(false);
+                }
+            }
+        }
+
+        previousGrapples = grapplesInRange;
+    }
+
+    private void UpdateSwingGrapple()
+    {
+        float currentDistance =
+            Vector2.Distance(
+                transform.position,
+                currentGrapplePoint.transform.position
+            );
 
         if (!jointActive)
         {
@@ -145,17 +267,17 @@ public class PlayerGrapple : MonoBehaviour
 
     private Collider2D[] GetGrapplesInRange()
     {
-        Collider2D[] grapplePoints = Physics2D.OverlapCircleAll(
+        return Physics2D.OverlapCircleAll(
             transform.position,
             grappleRange,
             grapplePointLayer
         );
-        return grapplePoints;
     }
 
     private Collider2D FindClosestGrapplePoint()
     {
-        Collider2D[] grapplePoints = GetGrapplesInRange();
+        Collider2D[] grapplePoints =
+            GetGrapplesInRange();
 
         Collider2D closestPoint = null;
         float closestDistance = Mathf.Infinity;
@@ -166,14 +288,16 @@ public class PlayerGrapple : MonoBehaviour
                 (Vector2)grapplePoint.transform.position -
                 (Vector2)transform.position;
 
-            float distance = direction.magnitude;
+            float distance =
+                direction.magnitude;
 
-            RaycastHit2D obstacleHit = Physics2D.Raycast(
-                transform.position,
-                direction.normalized,
-                distance,
-                grappleObstacleLayer
-            );
+            RaycastHit2D obstacleHit =
+                Physics2D.Raycast(
+                    transform.position,
+                    direction.normalized,
+                    distance,
+                    grappleObstacleLayer
+                );
 
             if (obstacleHit.collider != null)
             {
@@ -196,53 +320,126 @@ public class PlayerGrapple : MonoBehaviour
             (Vector2)currentGrapplePoint.transform.position -
             (Vector2)transform.position;
 
-        float distance = direction.magnitude;
+        float distance =
+            direction.magnitude;
 
-        RaycastHit2D obstacleHit = Physics2D.Raycast(
-            transform.position,
-            direction.normalized,
-            distance,
-            grappleObstacleLayer
-        );
+        RaycastHit2D obstacleHit =
+            Physics2D.Raycast(
+                transform.position,
+                direction.normalized,
+                distance,
+                grappleObstacleLayer
+            );
 
         return obstacleHit.collider != null;
     }
 
     private void AttachGrapple(Collider2D grapplePoint)
     {
+        GrapplePoint point =
+            grapplePoint.GetComponent<GrapplePoint>();
+
+        if (point == null)
+        {
+            Debug.LogWarning(
+                $"Grapple point {grapplePoint.name} " +
+                "has no GrapplePoint component."
+            );
+
+            return;
+        }
+
         isGrappling = true;
         jointActive = false;
 
         currentGrapplePoint = grapplePoint;
-
-        ropeLength = Vector2.Distance(
-            transform.position,
-            grapplePoint.transform.position
-        );
+        currentGrapple = point;
 
         grappleJoint.enabled = false;
         grappleLine.enabled = true;
 
-        if (!playerMovement.IsGrounded())
+        if (currentGrapple.Type ==
+            GrapplePoint.GrappleType.Swing)
         {
-            ActivateGrappleJoint();
+            ropeLength =
+                Vector2.Distance(
+                    transform.position,
+                    grapplePoint.transform.position
+                );
+
+            if (!playerMovement.IsGrounded())
+            {
+                ActivateGrappleJoint();
+            }
+        }
+        else if (currentGrapple.Type ==
+                 GrapplePoint.GrappleType.Pull)
+        {
+            // Calculate direction ONCE.
+            //
+            // This works regardless of which side
+            // of the orb the player starts on.
+            pullDirection =
+                (
+                    (Vector2)grapplePoint.transform.position -
+                    rb.position
+                ).normalized;
+
+            ropeLength =
+                Vector2.Distance(
+                    rb.position,
+                    grapplePoint.transform.position
+                );
+
+            // Preserve velocity that is already travelling
+            // towards the grapple.
+            float existingSpeed =
+                Vector2.Dot(
+                    rb.linearVelocity,
+                    pullDirection
+                );
+
+            existingSpeed =
+                Mathf.Max(
+                    existingSpeed,
+                    0f
+                );
+
+            // Remove perpendicular/opposing velocity so
+            // the pull starts on the correct linear path.
+            rb.linearVelocity =
+                pullDirection * existingSpeed;
         }
 
         Debug.Log(
-            $"Attached to grapple point: {grapplePoint.name}"
+            $"Attached to {point.Type} grapple point: " +
+            $"{grapplePoint.name}"
         );
     }
 
     private void ActivateGrappleJoint()
     {
+        if (currentGrapple == null ||
+            currentGrapple.Type !=
+            GrapplePoint.GrappleType.Swing)
+        {
+            return;
+        }
+
         grappleJoint.connectedAnchor =
             currentGrapplePoint.transform.position;
 
-        grappleJoint.distance = ropeLength;
-        grappleJoint.maxDistanceOnly = true;
-        grappleJoint.enabled = true;
+        grappleJoint.distance =
+            ropeLength;
 
-        jointActive = true;
+        grappleJoint.maxDistanceOnly =
+            true;
+
+        grappleJoint.enabled =
+            true;
+
+        jointActive =
+            true;
     }
 
     private void UpdateGrappleLine()
@@ -264,10 +461,19 @@ public class PlayerGrapple : MonoBehaviour
         jointActive = false;
 
         currentGrapplePoint = null;
+        currentGrapple = null;
+
         ropeLength = 0f;
+        pullDirection = Vector2.zero;
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
+
+        // IMPORTANT:
+        // Do not modify rb.linearVelocity here.
+        //
+        // Whatever velocity was generated by the pull
+        // becomes the player's launch velocity.
 
         Debug.Log("Grapple detached");
     }
