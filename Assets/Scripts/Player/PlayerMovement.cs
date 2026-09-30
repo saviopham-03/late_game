@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static System.Math;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -16,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTimer;
-    [SerializeField] private float inputBuffer;
+    [FormerlySerializedAs("inputBuffer")]
+    [SerializeField, Min(0f)] private float inputBufferTime = 0.15f;
     [SerializeField] private Vector2 footstoolPower;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerBody;
     private float horizontalInput;
     private bool jumpRequested;
+    private float jumpBufferTimer;
     private bool active = true;
     private bool inDialogue = false;
     public Vector2 last_vel;
@@ -34,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction.action.Disable();
         jumpAction.action.Disable();
+        ClearJumpBuffer();
     }
     public void EnableMovement()
     {
@@ -46,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
         this.active = active;
         _animator.SetBool("is_sleeping", !active);
         sleep_vel = last_vel.x*sleepDrift;
+
+        if (!active)
+        {
+            ClearJumpBuffer();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -102,16 +111,61 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
-        if (jumpAction.action.triggered && active)
+        if (!active)
         {
-            jumpRequested = IsGrounded();
+            ClearJumpBuffer();
+            return;
+        }
 
-            if (jumpRequested)
+        if (jumpAction.action.triggered)
+        {
+            // Grounded jumps remain immediate. If we are airborne, remember the
+            // input for a short window so it can be consumed when we land.
+            if (IsGrounded())
             {
-                _animator.SetTrigger("jumped");
+                RequestJump();
+                ClearJumpBuffer();
+            }
+            else
+            {
+                jumpBufferTimer = inputBufferTime;
             }
         }
+
+        if (jumpBufferTimer <= 0f)
+        {
+            return;
+        }
+
+        if (IsGrounded())
+        {
+            RequestJump();
+            ClearJumpBuffer();
+            return;
+        }
+
+        jumpBufferTimer -= Time.deltaTime;
+
+        if (jumpBufferTimer <= 0f)
+        {
+            ClearJumpBuffer();
+        }
+    }
+
+    private void RequestJump()
+    {
+        if (jumpRequested)
+        {
+            return;
+        }
+
+        jumpRequested = true;
+        _animator.SetTrigger("jumped");
+    }
+
+    private void ClearJumpBuffer()
+    {
+        jumpBufferTimer = 0f;
     }
 
     private void FixedUpdate()
