@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static System.Math;
@@ -5,6 +6,7 @@ using static System.Math;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {   
+    [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float sleepDrift;
@@ -100,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
@@ -114,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         last_vel = playerBody.linearVelocity;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer, 0, 4);
+
+        float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
+
         if (playerBody.linearVelocity.y < 0 && !IsGrounded())
         {
             _animator.SetBool("is_falling", true);
@@ -123,6 +131,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool("is_falling", false);
         }
         float vel_x;
+        float vel_y = playerBody.linearVelocityY;
+
         if (active)
         {
             vel_x = Mathf.Lerp(
@@ -145,9 +155,13 @@ public class PlayerMovement : MonoBehaviour
                 decelerationSpeed
             );
         }
+        // Debug.Log(vel_x);
+
+        
+
         playerBody.linearVelocity = new Vector2(
             vel_x,
-            playerBody.linearVelocity.y
+            vel_y
         );
 
         if (jumpRequested)
@@ -158,6 +172,24 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
+        }
+        if (groundAngle <= maxSlopeAngle && IsGrounded())
+        {
+            Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;
+
+            Vector2 slopeTangent =
+                new Vector2(hit.normal.y, -hit.normal.x);
+
+            float gravityAlongSlope =
+                Vector2.Dot(gravity, slopeTangent);
+
+            Vector2 unfixedLinVel = playerBody.linearVelocity;
+            playerBody.linearVelocity -= slopeTangent * gravityAlongSlope * Time.fixedDeltaTime;
+
+            if (unfixedLinVel.magnitude <= maxMoveSpeed*0.9)
+            {
+                playerBody.linearVelocity = Vector3.Project(playerBody.linearVelocity, slopeTangent);   
+            }
         }
     }
 
@@ -181,6 +213,7 @@ public class PlayerMovement : MonoBehaviour
             if (collider.transform.root == transform.root)
                 continue;
 
+            
             return true;
         }
 

@@ -1483,8 +1483,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7b05fe03c6503449a746e504f89d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  forceDialogue: 0
   dialogue: {fileID: 11400000, guid: 04b8b8a437cc6ab49939f113330c199d, type: 2}
-  interactable: 0
 --- !u!212 &319464608
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1865,8 +1865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7b05fe03c6503449a746e504f89d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogue
+  forceDialogue: 0
   dialogue: {fileID: 11400000, guid: 05c2184be2d99504ab7bb4f2b3ef7048, type: 2}
-  interactable: 0
 --- !u!58 &421064639
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8752,11 +8752,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1263975108803250100, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.45
+      value: 20.6
       objectReference: {fileID: 0}
     - target: {fileID: 1263975108803250100, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.03
+      value: 7.53
       objectReference: {fileID: 0}
     - target: {fileID: 1263975108803250100, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_LocalPosition.z
