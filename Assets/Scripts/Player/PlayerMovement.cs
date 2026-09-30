@@ -118,8 +118,19 @@ public class PlayerMovement : MonoBehaviour
     {
         last_vel = playerBody.linearVelocity;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer, 0, 4);
+        RaycastHit2D hit_l = Physics2D.Raycast(
+            new Vector3(transform.position.x-GetComponent<BoxCollider2D>().bounds.size.x/2, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4);
+        
+        RaycastHit2D hit_r = Physics2D.Raycast(
+            new Vector3(transform.position.x+GetComponent<BoxCollider2D>().bounds.size.x/2, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4);
+        
+        RaycastHit2D hit = hit_l.point.y <= hit_r.point.y ? hit_l : hit_r;
 
+        bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
         float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
 
         if (playerBody.linearVelocity.y < 0 && !IsGrounded())
@@ -186,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 unfixedLinVel = playerBody.linearVelocity;
             playerBody.linearVelocity -= slopeTangent * gravityAlongSlope * Time.fixedDeltaTime;
 
-            if (unfixedLinVel.magnitude <= maxMoveSpeed*0.9)
+            if (unfixedLinVel.magnitude <= maxMoveSpeed*0.9 && evenFloor)
             {
                 playerBody.linearVelocity = Vector3.Project(playerBody.linearVelocity, slopeTangent);   
             }
