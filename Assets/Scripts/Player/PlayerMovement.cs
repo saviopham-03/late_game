@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private InputActionReference jumpAction;
 
     private Rigidbody2D playerBody;
+    private BoxCollider2D _collider;
     private float horizontalInput;
     private bool jumpRequested;
     private bool active = true;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsActive => active;
     private Animator _animator;
     private float sleep_vel;
+    private bool isGrounded;
     public void DisableMovement()
     {
         moveAction.action.Disable();
@@ -67,15 +69,11 @@ public class PlayerMovement : MonoBehaviour
                 other_body.linearVelocityX += last_vel.x*footstoolPower.x;
                 player_body.linearVelocityX = 0;
             }
-            // else // footstooling
-            // {
-            //     other_body.linearVelocityY = 0;
-            //     player_body.linearVelocityY += incoming_vel.y*footstoolPower;
-            // }
         }
     }
     private void Awake()
     {
+        _collider = GetComponent<BoxCollider2D>();
         playerBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
 
@@ -119,16 +117,16 @@ public class PlayerMovement : MonoBehaviour
         last_vel = playerBody.linearVelocity;
 
         RaycastHit2D hit_l = Physics2D.Raycast(
-            new Vector3(transform.position.x-GetComponent<BoxCollider2D>().bounds.size.x/2, transform.position.y, transform.position.z),
+            new Vector3(transform.position.x-GetComponent<BoxCollider2D>().bounds.extents.x, transform.position.y, transform.position.z),
             Vector2.down, 
             Mathf.Infinity, groundLayer, 0, 4);
         
         RaycastHit2D hit_r = Physics2D.Raycast(
-            new Vector3(transform.position.x+GetComponent<BoxCollider2D>().bounds.size.x/2, transform.position.y, transform.position.z),
+            new Vector3(transform.position.x+GetComponent<BoxCollider2D>().bounds.extents.x, transform.position.y, transform.position.z),
             Vector2.down, 
             Mathf.Infinity, groundLayer, 0, 4);
         
-        RaycastHit2D hit = hit_l.point.y <= hit_r.point.y ? hit_l : hit_r;
+        RaycastHit2D hit = hit_l.point.y >= hit_r.point.y ? hit_l : hit_r;
 
         bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
         float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
@@ -184,7 +182,8 @@ public class PlayerMovement : MonoBehaviour
 
             jumpRequested = false;
         }
-        if (groundAngle <= maxSlopeAngle && IsGrounded())
+
+        if (groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1)
         {
             Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;
 
