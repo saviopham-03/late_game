@@ -42,7 +42,7 @@ public class PlayerColourCollision : MonoBehaviour
 
             Physics2D.IgnoreCollision(
                 playerCollider,
-                tilemap.Collider,
+                tilemap.GetComponent<CompositeCollider2D>(),
                 sameColour
             );
         }

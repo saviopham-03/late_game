@@ -3,8 +3,8 @@ using UnityEngine;
 public class CameraTrigger : MonoBehaviour
 {
     [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private Transform leftCameraPoint;
-    [SerializeField] private Transform rightCameraPoint;
+    [SerializeField] private BoxCollider2D leftCameraPoint;
+    [SerializeField] private BoxCollider2D rightCameraPoint;
 
     private void OnTriggerStay2D(Collider2D other)
     {
