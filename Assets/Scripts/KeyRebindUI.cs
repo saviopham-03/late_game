@@ -9,6 +9,11 @@ public class KeyRebindUI : MonoBehaviour
     public TMP_Text keyText;
 
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
+    private bool wasActionEnabled;
+    private int lastCancelledFrame = -1;
+
+    public bool IsRebinding => rebindingOperation != null;
+    public bool CancelledThisFrame => lastCancelledFrame == Time.frameCount;
 
     private void Start()
     {
@@ -43,6 +48,9 @@ public class KeyRebindUI : MonoBehaviour
             return;
         }
 
+        CancelRebind();
+
+        wasActionEnabled = action.enabled;
         action.Disable();
 
         if (keyText != null)
@@ -56,12 +64,13 @@ public class KeyRebindUI : MonoBehaviour
         rebindingOperation = action
             .PerformInteractiveRebinding(bindingIndex)
             .WithControlsExcluding("Mouse")
+            .WithCancelingThrough("<Keyboard>/escape")
             .OnCancel(operation =>
             {
                 operation.Dispose();
                 rebindingOperation = null;
-
-                action.Enable();
+                lastCancelledFrame = Time.frameCount;
+                RestoreActionState(action);
                 UpdateKeyText();
             })
             .OnComplete(operation =>
@@ -69,7 +78,7 @@ public class KeyRebindUI : MonoBehaviour
                 operation.Dispose();
                 rebindingOperation = null;
 
-                action.Enable();
+                RestoreActionState(action);
 
                 UpdateKeyText();
 
@@ -82,6 +91,11 @@ public class KeyRebindUI : MonoBehaviour
             });
 
         rebindingOperation.Start();
+    }
+
+    public void CancelRebind()
+    {
+        rebindingOperation?.Cancel();
     }
 
     private void UpdateKeyText()
@@ -99,8 +113,21 @@ public class KeyRebindUI : MonoBehaviour
         }
     }
 
+    private void RestoreActionState(InputAction action)
+    {
+        if (wasActionEnabled)
+        {
+            action.Enable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        CancelRebind();
+    }
+
     private void OnDestroy()
     {
-        rebindingOperation?.Dispose();
+        CancelRebind();
     }
 }
