@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1445790246225851316}
   - component: {fileID: 5171597394960286244}
   - component: {fileID: 2053095308326458313}
+  - component: {fileID: 2190638486840072906}
   m_Layer: 0
   m_Name: Red Orb
   m_TagString: Untagged
@@ -108,8 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColourPickup
   pickupColour: 0
   _animator: {fileID: 5171597394960286244}
-  audioSource: {fileID: 2053095308326458313}
-  pickupSound: {fileID: 8300000, guid: 7b63adb2d50644e59bf7ad6a5e64e804, type: 3}
 --- !u!61 &1445790246225851316
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -275,3 +274,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2190638486840072906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657541031624332047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 657401adaf2014d86b90cdaa2bcc6b7d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionAudioFeedback
+  audioSource: {fileID: 2053095308326458313}
+  clip: {fileID: 8300000, guid: 7b63adb2d50644e59bf7ad6a5e64e804, type: 3}

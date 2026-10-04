@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9199398401408973894}
   - component: {fileID: 7061254359744028280}
   - component: {fileID: 8466288642057155747}
+  - component: {fileID: 2719276658177212360}
   m_Layer: 0
   m_Name: Blue Orb
   m_TagString: Untagged
@@ -108,8 +109,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColourPickup
   pickupColour: 1
   _animator: {fileID: 7061254359744028280}
-  audioSource: {fileID: 8466288642057155747}
-  pickupSound: {fileID: 8300000, guid: 7b63adb2d50644e59bf7ad6a5e64e804, type: 3}
 --- !u!61 &9199398401408973894
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -275,3 +274,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2719276658177212360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157003718135521842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 657401adaf2014d86b90cdaa2bcc6b7d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionAudioFeedback
+  audioSource: {fileID: 8466288642057155747}
+  clip: {fileID: 8300000, guid: 7b63adb2d50644e59bf7ad6a5e64e804, type: 3}

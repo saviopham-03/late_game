@@ -1,15 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(InteractionAudioFeedback))]
 public class ColourPickup : MonoBehaviour
 {
     [SerializeField] private PlayerColour pickupColour;
     [SerializeField] private Animator _animator;
 
-    [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip pickupSound;
-
     private bool active = true;
+    private InteractionAudioFeedback pickupAudio;
+
+    private void Awake()
+    {
+        pickupAudio = GetComponent<InteractionAudioFeedback>();
+    }
 
     void Start()
     {
@@ -36,11 +39,7 @@ public class ColourPickup : MonoBehaviour
 
         playerColourController.SetColour(pickupColour);
 
-        // Play pickup sound
-        if (audioSource != null && pickupSound != null)
-        {
-            audioSource.PlayOneShot(pickupSound);
-        }
+        pickupAudio.Play();
 
         _animator.SetTrigger("pickup");
     }
