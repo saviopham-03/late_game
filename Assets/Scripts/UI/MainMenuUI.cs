@@ -18,8 +18,7 @@ public class MainMenuUI : MonoBehaviour
 
     private void Start()
     {
-        if (SetLevelSelectVisible(false))
-            SelectButton(startButton);
+        SetLevelSelectVisible(false);
     }
 
     private void Update()
@@ -38,14 +37,12 @@ public class MainMenuUI : MonoBehaviour
 
     public void OpenLevelSelect()
     {
-        if (SetLevelSelectVisible(true))
-            SelectButton(levelSelectPanel.GetComponentInChildren<Button>());
+        SetLevelSelectVisible(true);
     }
 
     public void CloseLevelSelect()
     {
-        if (SetLevelSelectVisible(false))
-            SelectButton(levelSelectButton);
+        SetLevelSelectVisible(false);
     }
 
     public void LoadLevel(string sceneName)
