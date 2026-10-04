@@ -79,27 +79,63 @@ public class PlayerMovement : MonoBehaviour
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
+    }
 
+<<<<<<< HEAD
         moveAction.action.started += _ =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+=======
+    private void OnEnable()
+    {
+        moveAction.action.started += OnMoveStarted;
+        moveAction.action.canceled += OnMoveCanceled;
+    }
+>>>>>>> origin/dev
 
-            _animator.SetBool("is_running", true);
-            if (active) GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
-        };
+    private void OnDisable()
+    {
+        moveAction.action.started -= OnMoveStarted;
+        moveAction.action.canceled -= OnMoveCanceled;
+        horizontalInput = 0f;
+        jumpRequested = false;
+    }
 
+<<<<<<< HEAD
         moveAction.action.canceled += _ =>
         {
             Vector2 input = moveAction.action.ReadValue<Vector2>();
             horizontalInput = input.x;
+=======
+    private void OnMoveStarted(InputAction.CallbackContext context)
+    {
+        if (!active || Time.timeScale == 0f) return;
+>>>>>>> origin/dev
 
-            _animator.SetBool("is_running", false);
-        };
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", true);
+        GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", false);
     }
 
     private void Update()
     {
+<<<<<<< HEAD
+=======
+        if (Time.timeScale == 0f)
+        {
+            jumpRequested = false;
+            return;
+        }
+>>>>>>> origin/dev
 
         if (jumpAction.action.triggered && active)
         {
