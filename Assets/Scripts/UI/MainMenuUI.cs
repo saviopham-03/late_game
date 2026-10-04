@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [SerializeField] private string firstLevelScene = "PuzzleObjectTest";
-    [SerializeField] private string levelSelectScene = "LevelSelect";
+    [SerializeField] private string firstLevelScene = "Act1Scenes/A1L1Scene";
+    [SerializeField] private string levelSelectScene = "LevelSelecst";
 
     public void StartGame()
     {

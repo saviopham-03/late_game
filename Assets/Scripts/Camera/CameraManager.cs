@@ -13,7 +13,10 @@ public class CameraManager : MonoBehaviour
     private float sizeFromHeight;
     private float sizeFromWidth;
 
-    private void Awake() { Instance = this;}
+    private void Awake() { 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        }
 
     private void Start()
     {

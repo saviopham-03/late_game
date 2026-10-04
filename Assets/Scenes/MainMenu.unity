@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4194d8172c94271b5358ca6dcee051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuUI
-  firstLevelScene: PuzzleObjectTest
+  firstLevelScene: A1L1Scene
   levelSelectScene: LevelSelect
 --- !u!1 &832724855
 GameObject:
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2103377161}
+      - m_Target: {fileID: 760303516}
         m_TargetAssemblyTypeName: MainMenuUI, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1

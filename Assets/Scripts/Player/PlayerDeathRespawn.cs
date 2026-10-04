@@ -29,7 +29,8 @@ public class PlayerDeathRespawn : MonoBehaviour
 
     public void revivePlayer()
     {
-        player.transform.position = spawnLocation;
+        GetComponent<Rigidbody2D>().position = spawnLocation;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         CameraManager.Instance.SwitchCamera(cameraSpace);
         _animator.SetBool("died", false);
     }

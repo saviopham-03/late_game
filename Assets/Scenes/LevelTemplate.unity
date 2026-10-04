@@ -3005,6 +3005,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1871021749}
   startingCameraPoint: {fileID: 0}
   cameraSwapSpeed: 0.06
+  currentCameraSpace: {fileID: 0}
 --- !u!4 &2022811398
 Transform:
   m_ObjectHideFlags: 0

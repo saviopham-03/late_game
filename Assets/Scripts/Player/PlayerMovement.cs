@@ -80,19 +80,12 @@ public class PlayerMovement : MonoBehaviour
         moveAction.action.Enable();
         jumpAction.action.Enable();
     }
-
-<<<<<<< HEAD
-        moveAction.action.started += _ =>
-        {
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
-            horizontalInput = input.x;
-=======
+    
     private void OnEnable()
     {
         moveAction.action.started += OnMoveStarted;
         moveAction.action.canceled += OnMoveCanceled;
     }
->>>>>>> origin/dev
 
     private void OnDisable()
     {
@@ -102,16 +95,9 @@ public class PlayerMovement : MonoBehaviour
         jumpRequested = false;
     }
 
-<<<<<<< HEAD
-        moveAction.action.canceled += _ =>
-        {
-            Vector2 input = moveAction.action.ReadValue<Vector2>();
-            horizontalInput = input.x;
-=======
     private void OnMoveStarted(InputAction.CallbackContext context)
     {
         if (!active || Time.timeScale == 0f) return;
->>>>>>> origin/dev
 
         Vector2 input = moveAction.action.ReadValue<Vector2>();
         horizontalInput = input.x;
@@ -128,14 +114,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-<<<<<<< HEAD
-=======
         if (Time.timeScale == 0f)
         {
             jumpRequested = false;
             return;
         }
->>>>>>> origin/dev
 
         if (jumpAction.action.triggered && active)
         {
@@ -150,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
 
         RaycastHit2D hit_l = Physics2D.Raycast(
@@ -200,10 +184,6 @@ public class PlayerMovement : MonoBehaviour
                 decelerationSpeed
             );
         }
-        // Debug.Log(vel_x);
-
-        
-
         playerBody.linearVelocity = new Vector2(
             vel_x,
             vel_y
@@ -218,7 +198,6 @@ public class PlayerMovement : MonoBehaviour
 
             jumpRequested = false;
         }
-
         if (groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1)
         {
             Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;

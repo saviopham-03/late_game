@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
             if (currentDialogue == null) StartDialogue();
             else NextLine();
         };
+        DontDestroyOnLoad(gameObject);
+        
     }
 
     public void AddInRangeNPC(NPCDialogue npc)
