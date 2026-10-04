@@ -1,34 +1,70 @@
 fileFormatVersion: 2
-guid: 71ce9de5a79b6ca4eacbe778cc0b00ca
+guid: ebdecc9e2f48e254f8714a3c30fa23b5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8609121446387344342
-    second: player_sleep-Sheet_0
+      213: 7880670488381977395
+    second: player_die-Sheet_0
   - first:
-      213: 2638083107652481397
-    second: player_sleep-Sheet_1
+      213: 9126464136551004365
+    second: player_die-Sheet_1
   - first:
-      213: 3013908185387755320
-    second: player_sleep-Sheet_2
+      213: 6940989505954201361
+    second: player_die-Sheet_2
   - first:
-      213: -4324943009831436133
-    second: player_sleep-Sheet_3
+      213: -3559775131597528507
+    second: player_die-Sheet_3
   - first:
-      213: -1742193699907521510
-    second: player_sleep-Sheet_4
+      213: 4656985580088373688
+    second: player_die-Sheet_4
   - first:
-      213: 1963131374069861985
-    second: player_sleep-Sheet_5
+      213: -1667609155413179152
+    second: player_die-Sheet_5
   - first:
-      213: 7625352734052765927
-    second: player_sleep-Sheet_6
+      213: -2850981559607506312
+    second: player_die-Sheet_6
   - first:
-      213: 1119324859663151112
-    second: player_sleep-Sheet_7
+      213: -1688120295750234366
+    second: player_die-Sheet_7
   - first:
-      213: -5134023753694081674
-    second: player_sleep-Sheet_8
+      213: -6993895774497054550
+    second: player_die-Sheet_8
+  - first:
+      213: 8463674358841675584
+    second: player_die-Sheet_9
+  - first:
+      213: -8957699450443010810
+    second: player_die-Sheet_10
+  - first:
+      213: -9110078244146177359
+    second: player_die-Sheet_11
+  - first:
+      213: -5193759689063679604
+    second: player_die-Sheet_12
+  - first:
+      213: -8401557301760798693
+    second: player_die-Sheet_13
+  - first:
+      213: 4523669610864372126
+    second: player_die-Sheet_14
+  - first:
+      213: -4128950792530906042
+    second: player_die-Sheet_15
+  - first:
+      213: -6647590164305055681
+    second: player_die-Sheet_16
+  - first:
+      213: -6920455405849695157
+    second: player_die-Sheet_17
+  - first:
+      213: 2617818232660778615
+    second: player_die-Sheet_18
+  - first:
+      213: 6957563835347056870
+    second: player_die-Sheet_19
+  - first:
+      213: -7974349597135020759
+    second: player_die-Sheet_20
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -97,7 +133,7 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 1
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -124,164 +160,186 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_sleep-Sheet_0
+      name: player_die-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2c92e758a1468880800000000000000
-      internalID: -8609121446387344342
+      spriteID: 33379eb3e04cd5d60800000000000000
+      internalID: 7880670488381977395
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_1
+      name: player_die-Sheet_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 571b597fb9a5c9420800000000000000
-      internalID: 2638083107652481397
+      spriteID: dc8f67237c6b7ae70800000000000000
+      internalID: 9126464136551004365
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_2
+      name: player_die-Sheet_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 837eda7b68d83d920800000000000000
-      internalID: 3013908185387755320
+      spriteID: 11f3d144e29535060800000000000000
+      internalID: 6940989505954201361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_3
+      name: player_die-Sheet_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b9040314f37baf3c0800000000000000
-      internalID: -4324943009831436133
+      spriteID: 5422cd8d063299ec0800000000000000
+      internalID: -3559775131597528507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_4
+      name: player_die-Sheet_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a14b61b7f0c72d7e0800000000000000
-      internalID: -1742193699907521510
+      spriteID: 8b1b84916bfe0a040800000000000000
+      internalID: 4656985580088373688
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_5
+      name: player_die-Sheet_5
       rect:
         serializedVersion: 2
         x: 160
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 16ecbd665917e3b10800000000000000
-      internalID: 1963131374069861985
+      spriteID: 0f4886bfe467bd8e0800000000000000
+      internalID: -1667609155413179152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_6
+      name: player_die-Sheet_6
       rect:
         serializedVersion: 2
         x: 192
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7e0d44829e1b2d960800000000000000
-      internalID: 7625352734052765927
+      spriteID: 87ac76e60674f68d0800000000000000
+      internalID: -2850981559607506312
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_sleep-Sheet_7
+      name: player_die-Sheet_7
       rect:
         serializedVersion: 2
         x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.5, y: 0.65625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f0ea9f8879298e0800000000000000
+      internalID: -1688120295750234366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_die-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 256
         y: 0
         width: 32
         height: 32
@@ -291,10 +349,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8007c788704a88f00800000000000000
-      internalID: 1119324859663151112
+      spriteID: 51f8a10a7404a4f4c9b3928ea29ab947
+      internalID: -1243196816
       vertices: []
       indices: 
       edges: []
@@ -303,7 +361,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b0e8586a9d7b2c64c8c92c9211bbd35c
+    spriteID: 6e4a55a1e43bc064bbd50c20e18b495d
     internalID: 0
     vertices: []
     indices: 
@@ -313,16 +371,17 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":true,"isAlternate":false}'
     nameFileIdTable:
-      player_sleep-Sheet_0: -8609121446387344342
-      player_sleep-Sheet_1: 2638083107652481397
-      player_sleep-Sheet_2: 3013908185387755320
-      player_sleep-Sheet_3: -4324943009831436133
-      player_sleep-Sheet_4: -1742193699907521510
-      player_sleep-Sheet_5: 1963131374069861985
-      player_sleep-Sheet_6: 7625352734052765927
-      player_sleep-Sheet_7: 1119324859663151112
+      player_die-Sheet_0: 7880670488381977395
+      player_die-Sheet_1: 9126464136551004365
+      player_die-Sheet_2: 6940989505954201361
+      player_die-Sheet_3: -3559775131597528507
+      player_die-Sheet_4: 4656985580088373688
+      player_die-Sheet_5: -1667609155413179152
+      player_die-Sheet_6: -2850981559607506312
+      player_die-Sheet_7: -1688120295750234366
+      player_die-Sheet_8: -1243196816
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
