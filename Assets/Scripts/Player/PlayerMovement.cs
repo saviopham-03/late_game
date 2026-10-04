@@ -102,32 +102,37 @@ public class PlayerMovement : MonoBehaviour
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
+    }
 
-        moveAction.action.started += ctx =>
-        {
-            Vector2 input =
-                moveAction.action.ReadValue<Vector2>();
+    private void OnEnable()
+    {
+        moveAction.action.started += OnMoveStarted;
+        moveAction.action.canceled += OnMoveCanceled;
+    }
 
-            horizontalInput = input.x;
+    private void OnDisable()
+    {
+        moveAction.action.started -= OnMoveStarted;
+        moveAction.action.canceled -= OnMoveCanceled;
+        horizontalInput = 0f;
+        jumpRequested = false;
+    }
 
-            _animator.SetBool("is_running", true);
+    private void OnMoveStarted(InputAction.CallbackContext context)
+    {
+        if (!active || Time.timeScale == 0f) return;
 
-            if (active)
-            {
-                GetComponent<SpriteRenderer>().flipX =
-                    horizontalInput != 1;
-            }
-        };
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", true);
+        GetComponent<SpriteRenderer>().flipX = horizontalInput != 1;
+    }
 
-        moveAction.action.canceled += ctx =>
-        {
-            Vector2 input =
-                moveAction.action.ReadValue<Vector2>();
-
-            horizontalInput = input.x;
-
-            _animator.SetBool("is_running", false);
-        };
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        horizontalInput = input.x;
+        _animator.SetBool("is_running", false);
     }
 
     private void Start()
@@ -142,6 +147,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            jumpRequested = false;
+            return;
+        }
+
         if (jumpAction.action.triggered && active)
         {
             jumpRequested = IsGrounded();
