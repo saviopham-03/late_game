@@ -50,6 +50,8 @@ public class PlayerGrapple : MonoBehaviour
 
   private void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         if (!playerMovement.IsActive)
         {
             HighlightGrapplePoint(null);
