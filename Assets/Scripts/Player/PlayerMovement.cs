@@ -19,8 +19,6 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
-    [SerializeField] private InputActionReference grappleAction;
-    [SerializeField] private InputActionReference interactAction;
 
     [Header("Audio")]
     [SerializeField] private AudioSource playerAudioSource;
@@ -42,6 +40,16 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _animator;
     private float sleep_vel;
+    public void DisableMovement()
+    {
+        moveAction.action.Disable();
+        jumpAction.action.Disable();
+    }
+    public void EnableMovement()
+    {
+        moveAction.action.Enable();
+        jumpAction.action.Enable();
+    }
 
     private bool wasGrounded;
     private float footstepTimer;
