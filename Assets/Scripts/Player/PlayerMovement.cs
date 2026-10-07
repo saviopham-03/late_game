@@ -32,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator _animator;
     private float sleep_vel;
     private bool isGrounded;
+    public float distToGround;
+    public bool touchingGround;
     public void DisableMovement()
     {
         moveAction.action.Disable();
@@ -137,15 +139,15 @@ public class PlayerMovement : MonoBehaviour
         last_vel = playerBody.linearVelocity;
 
         RaycastHit2D hit_l = Physics2D.Raycast(
-            new Vector3(transform.position.x-GetComponent<BoxCollider2D>().bounds.extents.x, transform.position.y, transform.position.z),
+            new Vector3(transform.position.x-_collider.bounds.extents.x, transform.position.y, transform.position.z),
             Vector2.down, 
             Mathf.Infinity, groundLayer, 0, 4);
         
         RaycastHit2D hit_r = Physics2D.Raycast(
-            new Vector3(transform.position.x+GetComponent<BoxCollider2D>().bounds.extents.x, transform.position.y, transform.position.z),
+            new Vector3(transform.position.x+_collider.bounds.extents.x, transform.position.y, transform.position.z),
             Vector2.down, 
-            Mathf.Infinity, groundLayer, 0, 4);
-        
+            Mathf.Infinity, groundLayer, 0, 4); 
+
         RaycastHit2D hit = hit_l.point.y >= hit_r.point.y ? hit_l : hit_r;
 
         bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
@@ -197,7 +199,9 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
-        }
+        };
+        distToGround = Mathf.Abs(hit.point.y-_collider.bounds.min.y);
+        // touchingGround = groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1;
         if (groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1)
         {
             Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;

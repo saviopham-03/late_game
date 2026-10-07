@@ -15,6 +15,7 @@ public class CameraManager : MonoBehaviour
 
     private void Awake() { 
         Instance = this;
+        currentCameraSpace = startingCameraPoint;
         DontDestroyOnLoad(gameObject);
         }
 

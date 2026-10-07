@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3064848111127865497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0063, y: -0.16, z: 0}
+  m_LocalPosition: {x: 0.0365, y: -1.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 1790757550178764859}
   - component: {fileID: 2936089481066735481}
   - component: {fileID: 8883574067048285193}
+  - component: {fileID: 5001235461110047008}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -67,8 +68,8 @@ Transform:
   m_GameObject: {fileID: 6137904323305246293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 3.42, z: 0}
-  m_LocalScale: {x: 7.692308, y: 7.6923084, z: 7.692308}
+  m_LocalPosition: {x: -4.425, y: 1.442, z: 0}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6333225220077198705}
@@ -314,17 +315,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.00616985, y: -0.08061559}
+  m_Offset: {x: 0.035274506, y: -0.49362347}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.059177604, y: 0.15091015}
+  m_Size: {x: 0.40626907, y: 0.9769258}
   m_EdgeRadius: 0
 --- !u!212 &2235996546362535248
 SpriteRenderer:
@@ -396,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45840abe501c60a449d6965c4a934173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerColourController
-  currentColour: 1
+  currentColour: 0
 --- !u!114 &2936089481066735481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,14 +410,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2681b7b9d49e947bec5078647af6e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  maxSlopeAngle: 0
+  maxSlopeAngle: 49
   accelerationSpeed: 0.1
   decelerationSpeed: 0.2
   sleepDrift: 0.7
   maxMoveSpeed: 10
-  jumpForce: 15
+  jumpForce: 10
   groundCheck: {fileID: 6333225220077198705}
-  groundCheckRadius: 0.2
+  groundCheckRadius: 0.26
   groundLayer:
     serializedVersion: 2
     m_Bits: 66
@@ -426,6 +427,8 @@ MonoBehaviour:
   moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   last_vel: {x: 0, y: 0}
+  distToGround: 0
+  touchingGround: 0
 --- !u!95 &8883574067048285193
 Animator:
   serializedVersion: 7
@@ -448,3 +451,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5001235461110047008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6137904323305246293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a903978b2dff7d24cb129cc8c7412f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathRespawn
+  cameraSpace: {fileID: 0}
+  spawnLocation: {x: 0, y: 0}
