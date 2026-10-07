@@ -5,8 +5,7 @@ using static System.Math;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
-{   
-    [SerializeField] private float maxSlopeAngle;
+{
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float sleepDrift;
@@ -18,17 +17,29 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float coyoteTimer;
     [SerializeField] private float inputBuffer;
     [SerializeField] private Vector2 footstoolPower;
+
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource playerAudioSource;
+    [SerializeField] private AudioClip landingSound;
+    [SerializeField] private AudioClip footstepSound;
+
+    [Header("Footstep Settings")]
+    [SerializeField] private float footstepInterval = 0.35f;
+    [SerializeField] private float minimumFootstepSpeed = 0.5f;
 
     private Rigidbody2D playerBody;
     private BoxCollider2D _collider;
     private float horizontalInput;
     private bool jumpRequested;
+
     private bool active = true;
-    private bool inDialogue = false;
+
     public Vector2 last_vel;
     public bool IsActive => active;
+
     private Animator _animator;
     private float sleep_vel;
     private bool isGrounded;
@@ -45,34 +56,58 @@ public class PlayerMovement : MonoBehaviour
         jumpAction.action.Enable();
     }
 
+    private bool wasGrounded;
+    private float footstepTimer;
+
     public void setActive(bool active)
     {
         this.active = active;
+
         _animator.SetBool("is_sleeping", !active);
-        sleep_vel = last_vel.x*sleepDrift;
+
+        sleep_vel = last_vel.x * sleepDrift;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
-    {   
-        sleep_vel = playerBody.linearVelocityX*sleepDrift;
-        if (!other.gameObject.CompareTag("Player")) return;
-        // collided w clone
+    {
+        sleep_vel = playerBody.linearVelocityX * sleepDrift;
 
-        PlayerMovement other_player = other.gameObject.GetComponent<PlayerMovement>();
-        Rigidbody2D player_body = GetComponent<Rigidbody2D>();
-        Rigidbody2D other_body = other.gameObject.GetComponent<Rigidbody2D>();
+        if (!other.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+
+        // Collided with clone
+        PlayerMovement other_player =
+            other.gameObject.GetComponent<PlayerMovement>();
+
+        Rigidbody2D player_body =
+            GetComponent<Rigidbody2D>();
+
+        Rigidbody2D other_body =
+            other.gameObject.GetComponent<Rigidbody2D>();
 
         Vector2 incoming_vel = other_player.last_vel;
-        if (incoming_vel.y != 0 && last_vel.y != 0) { // ensuring you can't bounce on ppl
-            if (other_body.position.y >= player_body.position.y) // footstooled
+
+        // Ensure players cannot repeatedly bounce on each other
+        if (incoming_vel.y != 0 && last_vel.y != 0)
+        {
+            // Footstooled
+            if (other_body.position.y >= player_body.position.y)
             {
-                other_body.linearVelocityY += Abs(last_vel.y*footstoolPower.y);
+                other_body.linearVelocityY +=
+                    Abs(last_vel.y * footstoolPower.y);
+
                 player_body.linearVelocityY = 0;
-                other_body.linearVelocityX += last_vel.x*footstoolPower.x;
+
+                other_body.linearVelocityX +=
+                    last_vel.x * footstoolPower.x;
+
                 player_body.linearVelocityX = 0;
             }
         }
     }
+
     private void Awake()
     {
         _collider = GetComponent<BoxCollider2D>();
@@ -82,7 +117,6 @@ public class PlayerMovement : MonoBehaviour
         moveAction.action.Enable();
         jumpAction.action.Enable();
     }
-    
     private void OnEnable()
     {
         moveAction.action.started += OnMoveStarted;
@@ -114,6 +148,16 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("is_running", false);
     }
 
+    private void Start()
+    {
+        // Prevent landing sound from playing immediately
+        // when the scene starts.
+        wasGrounded = IsGrounded();
+
+        // Allows the first footstep without a long delay.
+        footstepTimer = footstepInterval;
+    }
+
     private void Update()
     {
         if (Time.timeScale == 0f)
@@ -138,22 +182,21 @@ public class PlayerMovement : MonoBehaviour
         if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
 
-        RaycastHit2D hit_l = Physics2D.Raycast(
-            new Vector3(transform.position.x-_collider.bounds.extents.x, transform.position.y, transform.position.z),
-            Vector2.down, 
-            Mathf.Infinity, groundLayer, 0, 4);
-        
-        RaycastHit2D hit_r = Physics2D.Raycast(
-            new Vector3(transform.position.x+_collider.bounds.extents.x, transform.position.y, transform.position.z),
-            Vector2.down, 
-            Mathf.Infinity, groundLayer, 0, 4); 
+        bool isGrounded = IsGrounded();
 
-        RaycastHit2D hit = hit_l.point.y >= hit_r.point.y ? hit_l : hit_r;
+        // Landing sound
+        if (!wasGrounded && isGrounded)
+        {
+            PlayLandingSound();
 
-        bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
-        float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
+            // Don't play a footstep at the exact landing moment.
+            footstepTimer = 0f;
+        }
 
-        if (playerBody.linearVelocity.y < 0 && !IsGrounded())
+        wasGrounded = isGrounded;
+
+        // Falling animation
+        if (playerBody.linearVelocity.y < 0 && !isGrounded)
         {
             _animator.SetBool("is_falling", true);
         }
@@ -161,24 +204,29 @@ public class PlayerMovement : MonoBehaviour
         {
             _animator.SetBool("is_falling", false);
         }
+
+        // Horizontal movement
         float vel_x;
-        float vel_y = playerBody.linearVelocityY;
 
         if (active)
         {
             vel_x = Mathf.Lerp(
                 playerBody.linearVelocity.x,
                 maxMoveSpeed * horizontalInput,
-                horizontalInput == 0 ? decelerationSpeed : accelerationSpeed
+                horizontalInput == 0
+                    ? decelerationSpeed
+                    : accelerationSpeed
             );
-        } else if (IsGrounded())
+        }
+        else if (isGrounded)
         {
             vel_x = Mathf.Lerp(
                 playerBody.linearVelocity.x,
                 0,
                 decelerationSpeed
             );
-        } else
+        }
+        else
         {
             vel_x = Mathf.Lerp(
                 playerBody.linearVelocity.x,
@@ -186,11 +234,13 @@ public class PlayerMovement : MonoBehaviour
                 decelerationSpeed
             );
         }
+
         playerBody.linearVelocity = new Vector2(
             vel_x,
             vel_y
         );
 
+        // Jump
         if (jumpRequested)
         {
             playerBody.linearVelocity = new Vector2(
@@ -220,27 +270,80 @@ public class PlayerMovement : MonoBehaviour
                 playerBody.linearVelocity = Vector3.Project(playerBody.linearVelocity, slopeTangent);   
             }
         }
+
+        // Footsteps
+        HandleFootsteps(isGrounded);
+    }
+
+    private void HandleFootsteps(bool isGrounded)
+    {
+        bool isMoving =
+            Mathf.Abs(playerBody.linearVelocity.x)
+            > minimumFootstepSpeed;
+
+        if (active && isGrounded && isMoving)
+        {
+            footstepTimer += Time.fixedDeltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayFootstepSound();
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+    }
+
+    private void PlayLandingSound()
+    {
+        if (playerAudioSource != null &&
+            landingSound != null)
+        {
+            playerAudioSource.PlayOneShot(
+                landingSound
+            );
+        }
+    }
+
+    private void PlayFootstepSound()
+    {
+        if (playerAudioSource != null &&
+            footstepSound != null)
+        {
+            playerAudioSource.PlayOneShot(
+                footstepSound
+            );
+        }
     }
 
     public bool IsGrounded()
     {
         if (groundCheck == null)
         {
-            Debug.LogError("GroundCheck has not been assigned.");
+            Debug.LogError(
+                "GroundCheck has not been assigned."
+            );
+
             return false;
         }
 
-        Collider2D[] groundCollider = Physics2D.OverlapCircleAll(
-            groundCheck.position,
-            groundCheckRadius,
-            groundLayer
-        );
+        Collider2D[] groundCollider =
+            Physics2D.OverlapCircleAll(
+                groundCheck.position,
+                groundCheckRadius,
+                groundLayer
+            );
 
         foreach (Collider2D collider in groundCollider)
         {
-            // dont detect self
+            // Don't detect self.
             if (collider.transform.root == transform.root)
+            {
                 continue;
+            }
 
             
             return true;
