@@ -10,11 +10,13 @@ public class RespawnSpace : MonoBehaviour
             transform.position,
             Vector2.down,
             collider.bounds.extents.y,
-            LayerMask.GetMask("TransparentFX", "Ground")
+            LayerMask.GetMask("TransparentFX", "Ground"),
+            0,
+            4
         );
 
         Vector2 ret = collider.bounds.min;
-        if (hit != null)
+        if (hit)
         {
             ret = new Vector2(hit.point.x, hit.point.y + playerOffset.y);
         }
