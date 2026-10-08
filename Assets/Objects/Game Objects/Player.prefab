@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3064848111127865497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0365, y: -1.001, z: 0}
+  m_LocalPosition: {x: 0.0327, y: -1.001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -426,9 +426,12 @@ MonoBehaviour:
   footstoolPower: {x: 0.6, y: 1.3}
   moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
+  playerAudioSource: {fileID: 0}
+  landingSound: {fileID: 0}
+  footstepSound: {fileID: 0}
+  footstepInterval: 0.35
+  minimumFootstepSpeed: 0.5
   last_vel: {x: 0, y: 0}
-  distToGround: 0
-  touchingGround: 0
 --- !u!95 &8883574067048285193
 Animator:
   serializedVersion: 7
