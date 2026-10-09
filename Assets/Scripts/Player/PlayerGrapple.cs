@@ -24,6 +24,9 @@ public class PlayerGrapple : MonoBehaviour
     [SerializeField] private float pullAcceleration = 60f;
     [SerializeField] private float pullDetachDistance = 0.5f;
 
+    [Header("Swing Grapple")]
+    [SerializeField] private float swingPumpForce = 8f;
+    [SerializeField] private float maxSwingSpeed = 18f;
 
     [SerializeField]
     private float ropeAdjustSpeed = 2f;
@@ -54,6 +57,8 @@ public class PlayerGrapple : MonoBehaviour
 
     private Collider2D highlightedGrapplePoint;
     private Collider2D closestPoint;
+
+    public bool IsGrappling => isGrappling;
 
     private void Awake()
     {
@@ -144,28 +149,6 @@ public class PlayerGrapple : MonoBehaviour
             return;
         }
 
-        // if (grappleAction.action.triggered)
-        // {
-        //     if (isGrappling)
-        //     {
-        //         DetachGrapple();
-        //         HighlightGrapplePoint(closestPoint);
-        //         return;
-        //     }
-
-        //     if (closestPoint != null)
-        //     {
-        //         AttachGrapple(closestPoint);
-        //     }
-        // }
-
-        // if (!isGrappling ||
-        //     currentGrapplePoint == null ||
-        //     currentGrapple == null)
-        // {
-        //     return;
-        // }
-
         float ropeInput = adjustGrappleLengthAction.action.ReadValue<float>();
 
         if (ropeInput != 0f)
@@ -210,6 +193,9 @@ public class PlayerGrapple : MonoBehaviour
         if (currentGrapple.Type == GrapplePoint.GrappleType.Pull)
         {
             UpdatePullGrapple();
+        } else
+        {
+            ApplySwingControl(playerMovement.HorizontalInput);
         }
     }
 
@@ -251,43 +237,16 @@ public class PlayerGrapple : MonoBehaviour
         rb.linearVelocity = cap_vel;
     }
 
-    // private void UpdateGrappleAnimations()
-    // {
-    //     GrappleAnimatorScript animator;
-    //     Collider2D[] grapplesInRange = GetGrapplesInRange();
+    private void ApplySwingControl(float input)
+{
+    if (!jointActive || currentGrapple == null || currentGrapple.Type != GrapplePoint.GrappleType.Swing) return;
+    
+    Vector2 ropeDirection = (rb.position - (Vector2)currentGrapplePoint.transform.position).normalized;
+    Vector2 tangent = new Vector2(-ropeDirection.y,ropeDirection.x);
 
-    //     foreach (Collider2D grapple in grapplesInRange)
-    //     {
-    //         animator =
-    //             grapple.GetComponent<GrappleAnimatorScript>();
-
-    //         if (animator != null)
-    //         {
-    //             animator.InRange(false);
-    //         }
-    //     }
-
-    //     foreach (Collider2D grapple in previousGrapples)
-    //     {
-    //         if (grapple == null)
-    //         {
-    //             continue;
-    //         }
-
-    //         if (Array.IndexOf(grapplesInRange, grapple) == -1)
-    //         {
-    //             animator =
-    //                 grapple.GetComponent<GrappleAnimatorScript>();
-
-    //             if (animator != null)
-    //             {
-    //                 animator.InRange(false);
-    //             }
-    //         }
-    //     }
-
-    //     previousGrapples = grapplesInRange;
-    // }
+    rb.AddForce(tangent * input * swingPumpForce);
+    rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity,maxSwingSpeed);
+}
 
     private void UpdateSwingGrapple()
     {
@@ -321,6 +280,7 @@ public class PlayerGrapple : MonoBehaviour
             // HighlightGrapplePoint(closestPoint);
         }
     }
+
     private Collider2D[] GetGrapplesInRange()
     {
         return Physics2D.OverlapCircleAll(

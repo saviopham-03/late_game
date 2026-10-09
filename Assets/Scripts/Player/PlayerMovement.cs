@@ -33,7 +33,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D playerBody;
     private BoxCollider2D _collider;
+    private PlayerGrapple _grappler;
     private float horizontalInput;
+    public float HorizontalInput => horizontalInput;
     private bool jumpRequested;
 
     private bool active = true;
@@ -112,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
         _collider = GetComponent<BoxCollider2D>();
         playerBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _grappler = GetComponent<PlayerGrapple>();
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
@@ -176,11 +179,27 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool isGrappling()
+    {
+        return _grappler.IsGrappling;
+    }
+
     private void FixedUpdate()
     {
         if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
 
+        if (isGrappling()) {HandleGrappleMovement();}
+        else {HandleGroundMovement();}
+
+    }
+
+    private void HandleGrappleMovement()
+    {
+        
+    }
+    private void HandleGroundMovement()
+    {
         RaycastHit2D hit_l = Physics2D.Raycast(
             new Vector3(transform.position.x-_collider.bounds.extents.x, transform.position.y, transform.position.z),
             Vector2.down, 
