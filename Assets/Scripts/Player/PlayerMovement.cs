@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static System.Math;
@@ -5,6 +6,7 @@ using static System.Math;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float sleepDrift;
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minimumFootstepSpeed = 0.5f;
 
     private Rigidbody2D playerBody;
+    private BoxCollider2D _collider;
     private float horizontalInput;
     private bool jumpRequested;
 
@@ -40,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _animator;
     private float sleep_vel;
+    private bool isGrounded;
     public void DisableMovement()
     {
         moveAction.action.Disable();
@@ -105,13 +109,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        _collider = GetComponent<BoxCollider2D>();
         playerBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
     }
-
     private void OnEnable()
     {
         moveAction.action.started += OnMoveStarted;
@@ -174,7 +178,23 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
+
+        RaycastHit2D hit_l = Physics2D.Raycast(
+            new Vector3(transform.position.x-_collider.bounds.extents.x, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4);
+        
+        RaycastHit2D hit_r = Physics2D.Raycast(
+            new Vector3(transform.position.x+_collider.bounds.extents.x, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4); 
+
+        RaycastHit2D hit = hit_l.point.y >= hit_r.point.y ? hit_l : hit_r;
+
+        bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
+        float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
 
         bool isGrounded = IsGrounded();
 
@@ -199,8 +219,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool("is_falling", false);
         }
 
-        // Horizontal movement
         float vel_x;
+        float vel_y = playerBody.linearVelocityY;
 
         if (active)
         {
@@ -231,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerBody.linearVelocity = new Vector2(
             vel_x,
-            playerBody.linearVelocity.y
+            vel_y
         );
 
         // Jump
@@ -243,6 +263,24 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
+        };
+        if (groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1)
+        {
+            Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;
+
+            Vector2 slopeTangent =
+                new Vector2(hit.normal.y, -hit.normal.x);
+
+            float gravityAlongSlope =
+                Vector2.Dot(gravity, slopeTangent);
+
+            Vector2 unfixedLinVel = playerBody.linearVelocity;
+            playerBody.linearVelocity -= slopeTangent * gravityAlongSlope * Time.fixedDeltaTime;
+
+            if (unfixedLinVel.magnitude <= maxMoveSpeed*0.9 && evenFloor)
+            {
+                playerBody.linearVelocity = Vector3.Project(playerBody.linearVelocity, slopeTangent);   
+            }
         }
 
         // Footsteps
@@ -319,6 +357,7 @@ public class PlayerMovement : MonoBehaviour
                 continue;
             }
 
+            
             return true;
         }
 
