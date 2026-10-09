@@ -3,8 +3,9 @@ using UnityEngine;
 public class CameraTrigger : MonoBehaviour
 {
     [SerializeField] private CameraManager cameraManager;
-    [SerializeField] private BoxCollider2D leftCameraPoint;
-    [SerializeField] private BoxCollider2D rightCameraPoint;
+    [SerializeField] private BoxCollider2D leftOrTopCameraPoint;
+    [SerializeField] private BoxCollider2D rightOrBottomCameraPoint;
+    [SerializeField] private bool rotate;
 
     private void switchCamera(Collider2D other)
     {
@@ -13,29 +14,33 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
-        float playerX = other.bounds.center.x;
-        float triggerX = GetComponent<Collider2D>().bounds.center.x;
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
 
-        if (playerX > triggerX + 0.1f)
+        if (rb == null)
         {
-            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightCameraPoint);
+            return;
+        }
+
+        if ((!rotate && rb.linearVelocity.x > 0.1f) || (rotate && rb.linearVelocity.y < 0.1f))
+        {
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightOrBottomCameraPoint);
             else
             {
-                CloneManager.Instance.switchCloneSet(rightCameraPoint, other.gameObject);
+                CloneManager.Instance.switchCloneSet(rightOrBottomCameraPoint, other.gameObject);
             }
             
         }
-        else if (playerX < triggerX - 0.1f)
+        else if ((!rotate && rb.linearVelocity.x < -0.1f) || (rotate && rb.linearVelocity.y > 0.1f))
         {
-            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftCameraPoint);
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftOrTopCameraPoint);
             else
             {
-                CloneManager.Instance.switchCloneSet(leftCameraPoint, other.gameObject);
+                CloneManager.Instance.switchCloneSet(leftOrTopCameraPoint, other.gameObject);
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         switchCamera(other);
     }

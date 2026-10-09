@@ -127,6 +127,24 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AdujstGrappleLength"",
+                    ""type"": ""Value"",
+                    ""id"": ""7ca1fa47-f252-4ec1-8572-260c86983172"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleGrappleMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""8079d530-b429-4c3c-b0b0-e4d0fc0f8e26"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -250,6 +268,50 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""411146fa-b298-403f-bd73-e62f407661c9"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AdujstGrappleLength"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f410399d-9473-462b-9b64-a95b0c204231"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AdujstGrappleLength"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e1a61d27-00c8-478a-8861-7539d736e87c"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AdujstGrappleLength"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b9a6546-2dbb-4e50-9fee-5d4c92631754"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleGrappleMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -262,6 +324,8 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Grapple = m_Gameplay.FindAction("Grapple", throwIfNotFound: true);
         m_Gameplay_Switch = m_Gameplay.FindAction("Switch", throwIfNotFound: true);
+        m_Gameplay_AdujstGrappleLength = m_Gameplay.FindAction("AdujstGrappleLength", throwIfNotFound: true);
+        m_Gameplay_ToggleGrappleMode = m_Gameplay.FindAction("ToggleGrappleMode", throwIfNotFound: true);
     }
 
     ~@MovementControl()
@@ -346,6 +410,8 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Grapple;
     private readonly InputAction m_Gameplay_Switch;
+    private readonly InputAction m_Gameplay_AdujstGrappleLength;
+    private readonly InputAction m_Gameplay_ToggleGrappleMode;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -373,6 +439,14 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Switch".
         /// </summary>
         public InputAction @Switch => m_Wrapper.m_Gameplay_Switch;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/AdujstGrappleLength".
+        /// </summary>
+        public InputAction @AdujstGrappleLength => m_Wrapper.m_Gameplay_AdujstGrappleLength;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ToggleGrappleMode".
+        /// </summary>
+        public InputAction @ToggleGrappleMode => m_Wrapper.m_Gameplay_ToggleGrappleMode;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -411,6 +485,12 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
+            @AdujstGrappleLength.started += instance.OnAdujstGrappleLength;
+            @AdujstGrappleLength.performed += instance.OnAdujstGrappleLength;
+            @AdujstGrappleLength.canceled += instance.OnAdujstGrappleLength;
+            @ToggleGrappleMode.started += instance.OnToggleGrappleMode;
+            @ToggleGrappleMode.performed += instance.OnToggleGrappleMode;
+            @ToggleGrappleMode.canceled += instance.OnToggleGrappleMode;
         }
 
         /// <summary>
@@ -434,6 +514,12 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
+            @AdujstGrappleLength.started -= instance.OnAdujstGrappleLength;
+            @AdujstGrappleLength.performed -= instance.OnAdujstGrappleLength;
+            @AdujstGrappleLength.canceled -= instance.OnAdujstGrappleLength;
+            @ToggleGrappleMode.started -= instance.OnToggleGrappleMode;
+            @ToggleGrappleMode.performed -= instance.OnToggleGrappleMode;
+            @ToggleGrappleMode.canceled -= instance.OnToggleGrappleMode;
         }
 
         /// <summary>
@@ -502,5 +588,19 @@ public partial class @MovementControl: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AdujstGrappleLength" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAdujstGrappleLength(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleGrappleMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleGrappleMode(InputAction.CallbackContext context);
     }
 }
