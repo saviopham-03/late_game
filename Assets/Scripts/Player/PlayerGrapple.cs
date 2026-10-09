@@ -11,20 +11,19 @@ public class PlayerGrapple : MonoBehaviour
     [Header("Grapple Input")]
     [SerializeField] private InputActionReference grappleAction;
     [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference adjustGrappleLengthAction;
+
+    [SerializeField] private InputActionReference toggleGrappleModeAction;
 
     [Header("Grapple Detection")]
     [SerializeField] private float grappleRange = 5f;
     [SerializeField] private LayerMask grapplePointLayer;
     [SerializeField] private LayerMask grappleObstacleLayer;
 
-    [SerializeField]
-    private InputActionReference adjustGrappleLengthAction;
+    [Header("Pull Grapple")]
+    [SerializeField] private float pullAcceleration = 60f;
+    [SerializeField] private float pullDetachDistance = 0.5f;
 
-    [SerializeField]
-    private InputActionReference toggleGrappleModeAction;
-    
-    [SerializeField]
-    private float grappleRange = 5f;
 
     [SerializeField]
     private float ropeAdjustSpeed = 2f;
@@ -36,18 +35,7 @@ public class PlayerGrapple : MonoBehaviour
     private float maxRopeLength = 8f;
 
     [SerializeField]
-    private LayerMask grapplePointLayer;
-
-    [SerializeField]
-    private LayerMask grappleObstacleLayer;
-
-    [SerializeField]
     private GrappleInputMode grappleInputMode = GrappleInputMode.Toggle;
-    [Header("Pull Grapple")]
-    [SerializeField] private float pullAcceleration = 60f;
-    [SerializeField] private float pullDetachDistance = 0.5f;
-
-    private Rigidbody2D rb;
     private DistanceJoint2D grappleJoint;
     private LineRenderer grappleLine;
     private PlayerMovement playerMovement;
@@ -57,11 +45,15 @@ public class PlayerGrapple : MonoBehaviour
 
     private bool isGrappling;
     private bool jointActive;
+    private Rigidbody2D rb;
 
     private float ropeLength;
     private Vector2 pullDirection;
 
     private Collider2D[] previousGrapples;
+
+    private Collider2D highlightedGrapplePoint;
+    private Collider2D closestPoint;
 
     private void Awake()
     {
@@ -83,10 +75,11 @@ public class PlayerGrapple : MonoBehaviour
   private void Update()
     {
         if (Time.timeScale == 0f) return;
+        closestPoint = FindClosestGrapplePoint();
 
         if (!playerMovement.IsActive)
         {
-            HighlightGrapplePoint(null);
+            // HighlightGrapplePoint(null);
 
             if (isGrappling)
             {
@@ -95,6 +88,10 @@ public class PlayerGrapple : MonoBehaviour
 
             return;
         }
+
+        // UpdateGrappleAnimations();
+        HighlightGrapplePoint(isGrappling ? currentGrapplePoint : closestPoint);
+
         if (toggleGrappleModeAction.action.WasPressedThisFrame())
         {
             grappleInputMode =
@@ -114,32 +111,24 @@ public class PlayerGrapple : MonoBehaviour
                     return;
                 }
 
-                Collider2D grapplePoint = FindClosestGrapplePoint();
-
-                if (grapplePoint != null)
+                if (closestPoint != null)
                 {
-                    AttachGrapple(grapplePoint);
+                    AttachGrapple(closestPoint);
                 }
-                else
-                {
-                    Debug.Log("No grapple point in range");
-                }
+                // else
+                // {
+                //     Debug.Log("No grapple point in range");
+                // }
             }
         }
         else if (grappleInputMode == GrappleInputMode.Hold)
         {
             if (grappleAction.action.WasPressedThisFrame())
             {
-                Collider2D grapplePoint = FindClosestGrapplePoint();
-
-                if (grapplePoint != null)
+                if (closestPoint != null)
                 {
-                    AttachGrapple(grapplePoint);
-                }
-                else
-                {
-                    Debug.Log("No grapple point in range");
-                }
+                    AttachGrapple(closestPoint);
+                }            
             }
 
             if (grappleAction.action.WasReleasedThisFrame() && isGrappling)
@@ -148,8 +137,6 @@ public class PlayerGrapple : MonoBehaviour
             }
         }
 
-        UpdateGrappleAnimations();
-
         // Jumping cancels the active grapple.
         if (jumpAction.action.triggered && isGrappling)
         {
@@ -157,30 +144,27 @@ public class PlayerGrapple : MonoBehaviour
             return;
         }
 
-        Collider2D closestPoint = FindClosestGrapplePoint();
-        HighlightGrapplePoint(isGrappling ? currentGrapplePoint : closestPoint);
+        // if (grappleAction.action.triggered)
+        // {
+        //     if (isGrappling)
+        //     {
+        //         DetachGrapple();
+        //         HighlightGrapplePoint(closestPoint);
+        //         return;
+        //     }
 
-        if (grappleAction.action.triggered)
-        {
-            if (isGrappling)
-            {
-                DetachGrapple();
-                HighlightGrapplePoint(closestPoint);
-                return;
-            }
+        //     if (closestPoint != null)
+        //     {
+        //         AttachGrapple(closestPoint);
+        //     }
+        // }
 
-            if (closestPoint != null)
-            {
-                AttachGrapple(closestPoint);
-            }
-        }
-
-        if (!isGrappling ||
-            currentGrapplePoint == null ||
-            currentGrapple == null)
-        {
-            return;
-        }
+        // if (!isGrappling ||
+        //     currentGrapplePoint == null ||
+        //     currentGrapple == null)
+        // {
+        //     return;
+        // }
 
         float ropeInput = adjustGrappleLengthAction.action.ReadValue<float>();
 
@@ -194,19 +178,24 @@ public class PlayerGrapple : MonoBehaviour
         if (IsGrapplePathBlocked())
         {
             DetachGrapple();
-            HighlightGrapplePoint(closestPoint);
+            // HighlightGrapplePoint(closestPoint);
             return;
         }
 
-        UpdateGrappleLine();
-
-        // Pull grapple physics is handled in FixedUpdate.
-        if (currentGrapple.Type == GrapplePoint.GrappleType.Pull)
+        if (isGrappling)
         {
-            return;
+            UpdateGrappleLine();
+
+            // Pull grapple physics is handled in FixedUpdate.
+            if (currentGrapple.Type == GrapplePoint.GrappleType.Pull)
+            {
+                return;
+            }
+
+            UpdateSwingGrapple();
         }
 
-        UpdateSwingGrapple();
+        
     }
 
     private void FixedUpdate()
@@ -262,42 +251,43 @@ public class PlayerGrapple : MonoBehaviour
         rb.linearVelocity = cap_vel;
     }
 
-    private void UpdateGrappleAnimations()
-    {
-        Collider2D[] grapplesInRange = GetGrapplesInRange();
+    // private void UpdateGrappleAnimations()
+    // {
+    //     GrappleAnimatorScript animator;
+    //     Collider2D[] grapplesInRange = GetGrapplesInRange();
 
-        foreach (Collider2D grapple in grapplesInRange)
-        {
-            GrappleAnimatorScript animator =
-                grapple.GetComponent<GrappleAnimatorScript>();
+    //     foreach (Collider2D grapple in grapplesInRange)
+    //     {
+    //         animator =
+    //             grapple.GetComponent<GrappleAnimatorScript>();
 
-            if (animator != null)
-            {
-                animator.InRange(true);
-            }
-        }
+    //         if (animator != null)
+    //         {
+    //             animator.InRange(false);
+    //         }
+    //     }
 
-        foreach (Collider2D grapple in previousGrapples)
-        {
-            if (grapple == null)
-            {
-                continue;
-            }
+    //     foreach (Collider2D grapple in previousGrapples)
+    //     {
+    //         if (grapple == null)
+    //         {
+    //             continue;
+    //         }
 
-            if (Array.IndexOf(grapplesInRange, grapple) == -1)
-            {
-                GrappleAnimatorScript animator =
-                    grapple.GetComponent<GrappleAnimatorScript>();
+    //         if (Array.IndexOf(grapplesInRange, grapple) == -1)
+    //         {
+    //             animator =
+    //                 grapple.GetComponent<GrappleAnimatorScript>();
 
-                if (animator != null)
-                {
-                    animator.InRange(false);
-                }
-            }
-        }
+    //             if (animator != null)
+    //             {
+    //                 animator.InRange(false);
+    //             }
+    //         }
+    //     }
 
-        previousGrapples = grapplesInRange;
-    }
+    //     previousGrapples = grapplesInRange;
+    // }
 
     private void UpdateSwingGrapple()
     {
@@ -312,7 +302,7 @@ public class PlayerGrapple : MonoBehaviour
                 currentDistance > grappleRange)
             {
                 DetachGrapple();
-                HighlightGrapplePoint(closestPoint);
+                // HighlightGrapplePoint(closestPoint);
                 return;
             }
 
@@ -328,7 +318,7 @@ public class PlayerGrapple : MonoBehaviour
         if (playerMovement.IsGrounded())
         {
             DetachGrapple();
-            HighlightGrapplePoint(closestPoint);
+            // HighlightGrapplePoint(closestPoint);
         }
     }
     private Collider2D[] GetGrapplesInRange()
@@ -344,7 +334,7 @@ public class PlayerGrapple : MonoBehaviour
     {
         Collider2D[] grapplePoints = GetGrapplesInRange();
 
-        Collider2D closestPoint = null;
+        closestPoint = null;
         float closestDistance = Mathf.Infinity;
 
         foreach (Collider2D grapplePoint in grapplePoints)
@@ -354,7 +344,6 @@ public class PlayerGrapple : MonoBehaviour
                 (Vector2)transform.position;
 
             float distance = direction.magnitude;
-            Debug.Log($"Grapple candidate: {grapplePoint.name} | distance={distance}");
             if (distance > grappleRange)
             {
                 continue;
@@ -416,6 +405,8 @@ public class PlayerGrapple : MonoBehaviour
 
     private bool IsGrapplePathBlocked()
     {
+        if (!currentGrapplePoint) return false;
+
         Vector2 direction =
             (Vector2)currentGrapplePoint.transform.position -
             (Vector2)transform.position;
@@ -497,6 +488,8 @@ public class PlayerGrapple : MonoBehaviour
 
     private void ActivateGrappleJoint()
     {
+        if (!currentGrapplePoint) return;
+
         if (currentGrapple == null ||
             currentGrapple.Type != GrapplePoint.GrappleType.Swing)
         {
@@ -515,6 +508,7 @@ public class PlayerGrapple : MonoBehaviour
 
     private void UpdateGrappleLine()
     {
+        if (!currentGrapplePoint) return;
         grappleLine.SetPosition(0, transform.position);
         grappleLine.SetPosition(1, currentGrapplePoint.transform.position);
     }
