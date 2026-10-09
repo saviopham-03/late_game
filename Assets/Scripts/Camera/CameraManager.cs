@@ -6,10 +6,18 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private BoxCollider2D startingCameraPoint;
     [SerializeField] private float cameraSwapSpeed;
+    public static CameraManager Instance;
+    public BoxCollider2D currentCameraSpace;
     private Bounds bounds;
     private bool swap = false;
     private float sizeFromHeight;
     private float sizeFromWidth;
+
+    private void Awake() { 
+        Instance = this;
+        currentCameraSpace = startingCameraPoint;
+        DontDestroyOnLoad(gameObject);
+        }
 
     private void Start()
     {
@@ -58,6 +66,8 @@ public class CameraManager : MonoBehaviour
         sizeFromWidth = bounds.size.x / (2f * mainCamera.aspect);
 
         swap = true;
+
+        currentCameraSpace = targetPoint;
 
     }
 }
