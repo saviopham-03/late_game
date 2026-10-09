@@ -159,8 +159,12 @@ public class PlayerGrapple : MonoBehaviour
         // Accelerate towards the grapple point.
         speedAlongDirection += pullAcceleration * Time.fixedDeltaTime;
 
+        Vector2 new_vel = pullDirection * speedAlongDirection;
+
+        Vector2 cap_vel = new Vector2(new_vel.x, Mathf.Clamp(new_vel.y, new_vel.y, playerMovement.jumpForce*1.5f));
+
         // Maintain the original straight-line trajectory.
-        rb.linearVelocity = pullDirection * speedAlongDirection;
+        rb.linearVelocity = cap_vel;
     }
 
     private void UpdateGrappleAnimations()
