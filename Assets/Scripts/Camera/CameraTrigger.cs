@@ -13,14 +13,10 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
-        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        float playerX = other.bounds.center.x;
+        float triggerX = GetComponent<Collider2D>().bounds.center.x;
 
-        if (rb == null)
-        {
-            return;
-        }
-
-        if (rb.linearVelocity.x > 0.1f)
+        if (playerX > triggerX + 0.1f)
         {
             if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightCameraPoint);
             else
@@ -29,7 +25,7 @@ public class CameraTrigger : MonoBehaviour
             }
             
         }
-        else if (rb.linearVelocity.x < -0.1f)
+        else if (playerX < triggerX - 0.1f)
         {
             if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftCameraPoint);
             else
