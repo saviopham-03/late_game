@@ -7,8 +7,6 @@ public class CameraTrigger : MonoBehaviour
     [SerializeField] private BoxCollider2D rightOrBottomCameraPoint;
     [SerializeField] private bool rotate;
 
-    private Rigidbody2D rb;
-
     private void switchCamera(Collider2D other)
     {
         if (!other.CompareTag("Player"))
@@ -16,10 +14,7 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
-        rb = other.GetComponent<Rigidbody2D>();
-         
-        float playerX = other.bounds.center.x;
-        float triggerX = GetComponent<Collider2D>().bounds.center.x;
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
 
         if (rb == null)
         {
@@ -45,7 +40,7 @@ public class CameraTrigger : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         switchCamera(other);
     }
