@@ -427,7 +427,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 66
   coyoteTimer: 0
-  inputBuffer: 0
+  inputBufferTime: 0.15
   footstoolPower: {x: 0.6, y: 1.3}
   moveAction: {fileID: 3138470335341705992, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   jumpAction: {fileID: 1369127386971132290, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}

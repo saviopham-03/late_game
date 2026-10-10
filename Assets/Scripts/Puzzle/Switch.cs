@@ -11,6 +11,15 @@ public class Switch : PuzzleInput
     [SerializeField] private Animator _animator;
     [SerializeField] private BehaviourType behaviourType = BehaviourType.TOGGLEABLE;
 
+    [Header("Colour Interaction")]
+    [SerializeField] private bool isUniversal = true;
+    [SerializeField] private PlayerColour switchColour = PlayerColour.Red;
+
+    [SerializeField] private float moveDistance = 0.1f;
+    [SerializeField] private float moveSpeed = 2f;
+
+    [SerializeField] private SpriteRenderer switchRenderer;
+
     private bool canTrigger = true;
     private bool hasBeenUsed = false;
 
@@ -23,6 +32,11 @@ public class Switch : PuzzleInput
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!IsValidActivator(other))
+        {
+            return;
+        }
+
+        if (!IsColourCompatible(other))
         {
             return;
         }
@@ -74,7 +88,27 @@ public class Switch : PuzzleInput
 
     private bool IsValidActivator(Collider2D other)
     {
-        return other.CompareTag("Player");
+        return other.CompareTag("Player") ||
+               other.CompareTag("Clone");
+    }
+
+    private bool IsColourCompatible(Collider2D other)
+    {
+        if (isUniversal)
+        {
+            return true;
+        }
+
+        PlayerColourController colourController =
+            other.GetComponent<PlayerColourController>();
+
+        if (colourController == null)
+        {
+            colourController = other.GetComponentInParent<PlayerColourController>();
+        }
+
+        return colourController != null &&
+               colourController.CurrentColour == switchColour;
     }
 
     public override void ResetPuzzleObject()
