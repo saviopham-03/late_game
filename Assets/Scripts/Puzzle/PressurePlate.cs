@@ -7,7 +7,6 @@ public class PressurePlate : PuzzleInput
     // [SerializeField] private float activationDistance = 0.15f;
     [SerializeField] private Animator _animator;
 
-    private Vector2 restingPosition;
     private int objects_on_plate;
 
     private void Start()

@@ -8,26 +8,15 @@ public class Switch : PuzzleInput
         SINGLE_USE
     }
 
+    [SerializeField] private Animator _animator;
     [SerializeField] private BehaviourType behaviourType = BehaviourType.TOGGLEABLE;
-
-    [SerializeField] private float moveDistance = 0.1f;
-    [SerializeField] private float moveSpeed = 2f;
-
-    [SerializeField] private SpriteRenderer switchRenderer;
 
     private bool canTrigger = true;
     private bool hasBeenUsed = false;
 
-    private Vector3 inactivePosition;
-    private Vector3 activePosition;
-
     private void Start()
     {
-        inactivePosition = transform.position;
-
-        activePosition =
-            inactivePosition + (Vector3.down * moveDistance);
-
+        _animator = GetComponent<Animator>();
         UpdateColour();
     }
 
@@ -80,37 +69,12 @@ public class Switch : PuzzleInput
 
     private void UpdateColour()
     {
-        if (switchRenderer == null)
-        {
-            return;
-        }
-
-        if (isActive)
-        {
-            switchRenderer.color = Color.green;
-        }
-        else
-        {
-            switchRenderer.color = Color.red;
-        }
+        if (_animator) _animator.SetBool("active", isActive);
     }
 
     private bool IsValidActivator(Collider2D other)
     {
-        return other.CompareTag("Player") ||
-               other.CompareTag("Clone");
-    }
-
-    private void Update()
-    {
-        Vector3 targetPosition =
-            isActive ? activePosition : inactivePosition;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPosition,
-            moveSpeed * Time.deltaTime
-        );
+        return other.CompareTag("Player");
     }
 
     public override void ResetPuzzleObject()
@@ -118,8 +82,6 @@ public class Switch : PuzzleInput
         isActive = false;
         hasBeenUsed = false;
         canTrigger = true;
-
-        transform.position = inactivePosition;
 
         UpdateColour();
         SendNotification();
