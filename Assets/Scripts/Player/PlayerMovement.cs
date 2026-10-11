@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D playerBody;
     private BoxCollider2D _collider;
     private PlayerGrapple _grappler;
+    private PlayerColourController _colour;
     private float horizontalInput;
     public float HorizontalInput => horizontalInput;
     private bool jumpRequested;
@@ -122,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
         playerBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _grappler = GetComponent<PlayerGrapple>();
+        _colour = GetComponent<PlayerColourController>();
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
@@ -236,15 +238,10 @@ public class PlayerMovement : MonoBehaviour
         if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
 
-        if (isGrappling()) {HandleGrappleMovement();}
-        else {HandleGroundMovement();}
+        if (!isGrappling()) {HandleGroundMovement();}
 
     }
 
-    private void HandleGrappleMovement()
-    {
-        
-    }
     private void HandleGroundMovement()
     {
         RaycastHit2D hit_l = Physics2D.Raycast(
@@ -418,12 +415,10 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D collider in groundCollider)
         {
             // Don't detect self.
-            if (collider.transform.root == transform.root)
-            {
-                continue;
-            }
+            if (collider.transform.root == transform.root) continue;
+            string colliderColour = _colour.GetColour().ToString();
+            if (collider.gameObject.CompareTag(colliderColour)) continue;
 
-            
             return true;
         }
 

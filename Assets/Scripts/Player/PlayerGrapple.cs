@@ -56,6 +56,7 @@ public class PlayerGrapple : MonoBehaviour
     private Collider2D[] previousGrapples;
 
     private Collider2D highlightedGrapplePoint;
+    private Collider2D highlightedActivePoint;
     private Collider2D closestPoint;
 
     public bool IsGrappling => isGrappling;
@@ -96,6 +97,7 @@ public class PlayerGrapple : MonoBehaviour
 
         // UpdateGrappleAnimations();
         HighlightGrapplePoint(isGrappling ? currentGrapplePoint : closestPoint);
+        ActivateGrappleAnim(currentGrapplePoint);
 
         if (toggleGrappleModeAction.action.WasPressedThisFrame())
         {
@@ -360,6 +362,26 @@ public class PlayerGrapple : MonoBehaviour
         if (highlightedGrapplePoint != null)
         {
             highlightedGrapplePoint.GetComponent<GrappleAnimatorScript>().InRange(true);
+        }
+    }
+
+    private void ActivateGrappleAnim(Collider2D point)
+    {
+        if (highlightedActivePoint == point)
+        {
+            return;
+        }
+
+        if (highlightedActivePoint != null)
+        {
+            highlightedActivePoint.GetComponent<GrappleAnimatorScript>().Active(false);
+        }
+
+        highlightedActivePoint = point;
+
+        if (highlightedActivePoint != null)
+        {
+            highlightedActivePoint.GetComponent<GrappleAnimatorScript>().Active(true);
         }
     }
 

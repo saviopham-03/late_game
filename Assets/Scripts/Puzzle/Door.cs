@@ -35,6 +35,7 @@ public class Door : PuzzleOutput
 
     protected override void Activate()
     {
+        Debug.Log("door actieated");
         targetPosition = openPosition;
     }
 
