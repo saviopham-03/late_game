@@ -3392,7 +3392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790757550178764859, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: currentColour
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552369461741866297, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_EnableCollision
