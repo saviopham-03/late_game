@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using System;
 
@@ -28,11 +29,20 @@ public class PlayerColourController : MonoBehaviour
         Debug.Log("changed colour from " + currentColour + " to " + newColour);
 
         currentColour = newColour;
-        renderer.material.color = PlayerColours.GetColor(currentColour);
 
+        // Change the sprite tint without instantiating a material
+        if (renderer != null)
+        {
+            renderer.color = PlayerColours.GetColor(currentColour);
+            Debug.Log(renderer.color);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerColourController: SpriteRenderer not found.");
+        }
+
+        // Notify other systems that the player's colour changed
         ColourChanged?.Invoke(currentColour);
-
-        Debug.Log(renderer.material.color);
     }
 
     public PlayerColour GetColour()
