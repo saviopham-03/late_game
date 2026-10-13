@@ -1,0 +1,51 @@
+using UnityEngine;
+
+public class CameraTrigger : MonoBehaviour
+{
+    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private BoxCollider2D leftOrTopCameraPoint;
+    [SerializeField] private BoxCollider2D rightOrBottomCameraPoint;
+    [SerializeField] private bool rotate;
+
+    private void switchCamera(Collider2D other)
+    {
+        if (!other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+
+        if (rb == null)
+        {
+            return;
+        }
+
+        if ((!rotate && rb.linearVelocity.x > 0.1f) || (rotate && rb.linearVelocity.y < 0.1f))
+        {
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightOrBottomCameraPoint);
+            else
+            {
+                CloneManager.Instance.switchCloneSet(rightOrBottomCameraPoint, other.gameObject);
+            }
+            
+        }
+        else if ((!rotate && rb.linearVelocity.x < -0.1f) || (rotate && rb.linearVelocity.y > 0.1f))
+        {
+            if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftOrTopCameraPoint);
+            else
+            {
+                CloneManager.Instance.switchCloneSet(leftOrTopCameraPoint, other.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        switchCamera(other);
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        switchCamera(other);
+    }
+}
