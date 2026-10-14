@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraTrigger : MonoBehaviour
 {
-    [SerializeField] private CameraManager cameraManager;
+    private CameraManager cameraManager;
     [SerializeField] private BoxCollider2D leftOrTopCameraPoint;
     [SerializeField] private BoxCollider2D rightOrBottomCameraPoint;
     [SerializeField] private bool rotate;
@@ -11,6 +11,7 @@ public class CameraTrigger : MonoBehaviour
 
     private void Start()
     {
+        cameraManager = CameraManager.Instance;
         _collider = GetComponent<BoxCollider2D>();
     }
 

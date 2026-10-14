@@ -2098,6 +2098,7 @@ MonoBehaviour:
   currentState: 0
   startingState: 0
   invertOutput: 0
+  invert: 0
 --- !u!114 &23720396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2202,7 +2203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1874385561}
   rightOrBottomCameraPoint: {fileID: 1282745430}
   rotate: 0
@@ -2400,7 +2400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1282745430}
   rightOrBottomCameraPoint: {fileID: 291775632}
   rotate: 0
@@ -2983,7 +2982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 448250622}
   rightOrBottomCameraPoint: {fileID: 2101383897}
   rotate: 1
@@ -3405,6 +3403,26 @@ PrefabInstance:
     - target: {fileID: 2936089481066735481, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: decelerationSpeed
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892780063044504611, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892780063044504611, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 3892780063044504611, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892780063044504611, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3892780063044504611, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4179738485871080950, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_LinearDamping
@@ -5235,7 +5253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1874385561}
   rightOrBottomCameraPoint: {fileID: 2125061628}
   rotate: 1
@@ -5577,7 +5594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 376578851}
   rightOrBottomCameraPoint: {fileID: 694888486}
   rotate: 0
@@ -5731,7 +5747,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1257616825}
   rightOrBottomCameraPoint: {fileID: 403235105}
   rotate: 0
@@ -5848,7 +5863,7 @@ Transform:
   m_GameObject: {fileID: 546613592}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.997448, y: 20.77829, z: 0}
+  m_LocalPosition: {x: -11.86, y: 20.77829, z: 0}
   m_LocalScale: {x: -0.71, y: -6.8610373, z: -0.71}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6259,7 +6274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 2125061628}
   rightOrBottomCameraPoint: {fileID: 376578851}
   rotate: 1
@@ -7109,7 +7123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 291775632}
   rightOrBottomCameraPoint: {fileID: 448250622}
   rotate: 1
@@ -7248,7 +7261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 694888486}
   rightOrBottomCameraPoint: {fileID: 2101383897}
   rotate: 0
@@ -7511,7 +7523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1742460086}
   rightOrBottomCameraPoint: {fileID: 342127779}
   rotate: 0
@@ -23375,8 +23386,8 @@ Transform:
   m_GameObject: {fileID: 1257616824}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.517448, y: 19.68829, z: 0}
-  m_LocalScale: {x: 18.808887, y: 10.58, z: 18.808887}
+  m_LocalPosition: {x: -20.4, y: 19.38, z: 0}
+  m_LocalScale: {x: 19.984444, y: 11.24125, z: 19.984444}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 412277496}
@@ -24832,7 +24843,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 1742460086}
   rightOrBottomCameraPoint: {fileID: 1257616825}
   rotate: 0
@@ -26538,6 +26548,101 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1620720931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1620720935}
+  - component: {fileID: 1620720932}
+  - component: {fileID: 1620720934}
+  m_Layer: 0
+  m_Name: AreaUnlock (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1620720932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620720931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeabcda25ad58b440ab68874c69aa4be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaUnlock
+  currentState: 0
+  startingState: 0
+  invertOutput: 0
+  invert: 1
+--- !u!61 &1620720934
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620720931}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1620720935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620720931}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 39.585762, y: 4.37144, z: 0}
+  m_LocalScale: {x: 1.472398, y: 2.975, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1980995474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1624483338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27419,7 +27524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 403235105}
   rightOrBottomCameraPoint: {fileID: 291775632}
   rotate: 1
@@ -27573,7 +27677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 2022811397}
   leftOrTopCameraPoint: {fileID: 306893356}
   rightOrBottomCameraPoint: {fileID: 1742460086}
   rotate: 0
@@ -28567,6 +28670,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1620720935}
   - {fileID: 2027872372}
   m_Father: {fileID: 931366918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -28586,6 +28690,7 @@ MonoBehaviour:
   - {fileID: 1428757767}
   outputs:
   - {fileID: 2027872373}
+  - {fileID: 1620720932}
   logicType: 1
   isSatisfied: 0
 --- !u!1 &2010934385
@@ -28780,7 +28885,7 @@ MonoBehaviour:
   currentState: 0
   startingState: 0
   invertOutput: 0
-  openHeight: 20
+  openHeight: 17
   moveSpeed: 2
 --- !u!483693784 &2027872374
 TilemapRenderer:

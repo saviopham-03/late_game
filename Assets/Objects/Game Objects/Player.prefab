@@ -108,15 +108,20 @@ MonoBehaviour:
   adjustGrappleLengthAction: {fileID: -7239600258484585016, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   toggleGrappleModeAction: {fileID: -2103114782840583606, guid: 3f06b7b7216fab14d88cd8e50bb6a723, type: 3}
   grappleRange: 5
-  ropeAdjustSpeed: 2
-  minRopeLength: 1
-  maxRopeLength: 8
   grapplePointLayer:
     serializedVersion: 2
     m_Bits: 128
   grappleObstacleLayer:
     serializedVersion: 2
     m_Bits: 256
+  pullAcceleration: 80
+  pullDetachDistance: 0.5
+  swingPumpForce: 8
+  maxSwingSpeed: 18
+  ropeAdjustSpeed: 2
+  minRopeLength: 1
+  maxRopeLength: 8
+  grappleInputMode: 0
 --- !u!232 &2552369461741866297
 DistanceJoint2D:
   m_ObjectHideFlags: 0
@@ -126,7 +131,7 @@ DistanceJoint2D:
   m_GameObject: {fileID: 6137904323305246293}
   m_Enabled: 0
   serializedVersion: 4
-  m_EnableCollision: 0
+  m_EnableCollision: 1
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -272,7 +277,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.7
   m_AngularDamping: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -402,7 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45840abe501c60a449d6965c4a934173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerColourController
-  currentColour: 0
+  currentColour: 1
 --- !u!114 &2936089481066735481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,10 +422,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   maxSlopeAngle: 49
   accelerationSpeed: 0.1
-  decelerationSpeed: 0.2
+  decelerationSpeed: 0.1
   sleepDrift: 0.7
   maxMoveSpeed: 10
-  jumpForce: 10
+  jumpForce: 15
   groundCheck: {fileID: 6333225220077198705}
   groundCheckRadius: 0.26
   groundLayer:
