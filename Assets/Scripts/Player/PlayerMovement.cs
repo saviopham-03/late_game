@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using static System.Math;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float maxSlopeAngle;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float decelerationSpeed;
     [SerializeField] private float sleepDrift;
@@ -14,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float coyoteTimer;
-    [SerializeField] private float inputBuffer;
+    [FormerlySerializedAs("inputBuffer")]
+    [SerializeField, Min(0f)] private float inputBufferTime = 0.15f;
     [SerializeField] private Vector2 footstoolPower;
 
     [SerializeField] private InputActionReference moveAction;
@@ -30,9 +34,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minimumFootstepSpeed = 0.5f;
 
     private Rigidbody2D playerBody;
+    private BoxCollider2D _collider;
+    private PlayerGrapple _grappler;
+    private PlayerColourController _colour;
     private float horizontalInput;
+    public float HorizontalInput => horizontalInput;
     private bool jumpRequested;
-
+    private float jumpBufferTimer;
     private bool active = true;
 
     public Vector2 last_vel;
@@ -40,10 +48,12 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator _animator;
     private float sleep_vel;
+    private bool isGrounded;
     public void DisableMovement()
     {
         moveAction.action.Disable();
         jumpAction.action.Disable();
+        ClearJumpBuffer();
     }
     public void EnableMovement()
     {
@@ -59,8 +69,12 @@ public class PlayerMovement : MonoBehaviour
         this.active = active;
 
         _animator.SetBool("is_sleeping", !active);
+        sleep_vel = last_vel.x*sleepDrift;
 
-        sleep_vel = last_vel.x * sleepDrift;
+        if (!active)
+        {
+            ClearJumpBuffer();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -105,13 +119,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        _collider = GetComponent<BoxCollider2D>();
         playerBody = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _grappler = GetComponent<PlayerGrapple>();
+        _colour = GetComponent<PlayerColourController>();
 
         moveAction.action.Enable();
         jumpAction.action.Enable();
     }
-
     private void OnEnable()
     {
         moveAction.action.started += OnMoveStarted;
@@ -155,26 +171,93 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (Time.timeScale == 0f)
+        if (!active)
         {
-            jumpRequested = false;
+            ClearJumpBuffer();
             return;
         }
 
-        if (jumpAction.action.triggered && active)
+        if (jumpAction.action.triggered)
         {
-            jumpRequested = IsGrounded();
-
-            if (jumpRequested)
+            // Grounded jumps remain immediate. If we are airborne, remember the
+            // input for a short window so it can be consumed when we land.
+            if (IsGrounded())
             {
-                _animator.SetTrigger("jumped");
+                RequestJump();
+                ClearJumpBuffer();
+            }
+            else
+            {
+                jumpBufferTimer = inputBufferTime;
             }
         }
+
+        if (jumpBufferTimer <= 0f)
+        {
+            return;
+        }
+
+        if (IsGrounded())
+        {
+            RequestJump();
+            ClearJumpBuffer();
+            return;
+        }
+
+        jumpBufferTimer -= Time.deltaTime;
+
+        if (jumpBufferTimer <= 0f)
+        {
+            ClearJumpBuffer();
+        }
+    }
+
+    private void RequestJump()
+    {
+        if (jumpRequested)
+        {
+            return;
+        }
+
+        jumpRequested = true;
+        _animator.SetTrigger("jumped");
+    }
+
+    private void ClearJumpBuffer()
+    {
+        jumpBufferTimer = 0f;
+    }
+
+    private bool isGrappling()
+    {
+        return _grappler.IsGrappling;
     }
 
     private void FixedUpdate()
     {
+        if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
+
+        if (!isGrappling()) {HandleGroundMovement();}
+
+    }
+
+    private void HandleGroundMovement()
+    {
+        RaycastHit2D hit_l = Physics2D.Raycast(
+            new Vector3(transform.position.x-_collider.bounds.extents.x, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4);
+        
+        RaycastHit2D hit_r = Physics2D.Raycast(
+            new Vector3(transform.position.x+_collider.bounds.extents.x, transform.position.y, transform.position.z),
+            Vector2.down, 
+            Mathf.Infinity, groundLayer, 0, 4); 
+
+        RaycastHit2D hit = hit_l.point.y >= hit_r.point.y ? hit_l : hit_r;
+
+        bool evenFloor = Mathf.Abs(Vector2.Angle(hit_l.normal, Vector2.up) - Vector2.Angle(hit_r.normal,Vector2.up)) <= 0.1;
+        float groundAngle = Vector2.Angle(hit.normal, Vector2.up);
 
         bool isGrounded = IsGrounded();
 
@@ -199,8 +282,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool("is_falling", false);
         }
 
-        // Horizontal movement
         float vel_x;
+        float vel_y = playerBody.linearVelocityY;
 
         if (active)
         {
@@ -231,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerBody.linearVelocity = new Vector2(
             vel_x,
-            playerBody.linearVelocity.y
+            vel_y
         );
 
         // Jump
@@ -243,6 +326,24 @@ public class PlayerMovement : MonoBehaviour
             );
 
             jumpRequested = false;
+        };
+        if (groundAngle <= maxSlopeAngle && IsGrounded() && Mathf.Abs(hit.point.y-_collider.bounds.min.y)<0.1)
+        {
+            Vector2 gravity = Physics2D.gravity * playerBody.gravityScale;
+
+            Vector2 slopeTangent =
+                new Vector2(hit.normal.y, -hit.normal.x);
+
+            float gravityAlongSlope =
+                Vector2.Dot(gravity, slopeTangent);
+
+            Vector2 unfixedLinVel = playerBody.linearVelocity;
+            playerBody.linearVelocity -= slopeTangent * gravityAlongSlope * Time.fixedDeltaTime;
+
+            if (unfixedLinVel.magnitude <= maxMoveSpeed*0.9 && evenFloor)
+            {
+                playerBody.linearVelocity = Vector3.Project(playerBody.linearVelocity, slopeTangent);   
+            }
         }
 
         // Footsteps
@@ -314,10 +415,9 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider2D collider in groundCollider)
         {
             // Don't detect self.
-            if (collider.transform.root == transform.root)
-            {
-                continue;
-            }
+            if (collider.transform.root == transform.root) continue;
+            string colliderColour = _colour.GetColour().ToString();
+            if (collider.gameObject.CompareTag(colliderColour)) continue;
 
             return true;
         }

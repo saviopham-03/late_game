@@ -23,6 +23,7 @@ public class GrappleAnimatorScript : MonoBehaviour
     }
     public void Active(bool active)
     {
-        _animator.SetBool("active", active);
+        Debug.Log(active);
+        _animator.SetBool("grappled", active);
     }
 }

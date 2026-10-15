@@ -24,6 +24,8 @@ public class DialogueManager : MonoBehaviour
             if (currentDialogue == null) StartDialogue();
             else NextLine();
         };
+        DontDestroyOnLoad(gameObject);
+        
     }
 
     public void AddInRangeNPC(NPCDialogue npc)
@@ -60,6 +62,16 @@ public class DialogueManager : MonoBehaviour
         }
 
         return closest;
+    }
+
+    public void ForceDialogue(DialogueSet dialogueSet, GameObject player)
+    {
+        active_player = player;
+        active_player.GetComponent<PlayerMovement>().DisableMovement();
+        CloneManager.Instance.Disable();
+        currentDialogue = dialogueSet;
+        currentLineIndex = 0;
+        ShowCurrentLine();
     }
 
     public void StartDialogue()

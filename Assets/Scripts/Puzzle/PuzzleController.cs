@@ -18,6 +18,7 @@ public class PuzzleController : MonoBehaviour
 
     public void InputChanged()
     {
+        Debug.Log("did stuff");
         EvaluateConditions();
     }
 
