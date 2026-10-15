@@ -15,6 +15,16 @@ public class MainMenuUI : MonoBehaviour
         LoadLevel(levelSelectScene);
     }
 
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+
     public void LoadLevel(string sceneName)
     {
         if (SceneNavigationManager.Instance == null)
