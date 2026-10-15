@@ -25,18 +25,20 @@ public class OptionsMenuController : MonoBehaviour
 
         rebindControls = optionsPanel.GetComponentsInChildren<KeyRebindUI>(true);
 
-        if (IsOpen)
-        {
-            timeScaleBeforeOpen = Time.timeScale;
-            SetPaused(true);
-        }
+        // if (IsOpen)
+        // {
+        //     timeScaleBeforeOpen = Time.timeScale;
+        //     SetPaused(true);
+        // }
+        HideOptions();
+        
     }
 
     private void Update()
     {
         bool backPressed =
-            Keyboard.current?.escapeKey.wasPressedThisFrame == true ||
-            Gamepad.current?.buttonEast.wasPressedThisFrame == true;
+            (Keyboard.current?.escapeKey.wasPressedThisFrame == true ||
+            Gamepad.current?.buttonEast.wasPressedThisFrame == true) && IsOpen;
 
         if (!backPressed)
         {
@@ -138,7 +140,7 @@ public class OptionsMenuController : MonoBehaviour
             return;
         }
 
-        Time.timeScale = paused ? 0f : timeScaleBeforeOpen;
+        // Time.timeScale = paused ? 0f : timeScaleBeforeOpen;
     }
 
     private static void ClearSelection()

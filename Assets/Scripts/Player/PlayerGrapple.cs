@@ -49,6 +49,7 @@ public class PlayerGrapple : MonoBehaviour
     private bool isGrappling;
     private bool jointActive;
     private Rigidbody2D rb;
+    private Animator _animator;
 
     private float ropeLength;
     private Vector2 pullDirection;
@@ -67,6 +68,7 @@ public class PlayerGrapple : MonoBehaviour
         grappleJoint = GetComponent<DistanceJoint2D>();
         grappleLine = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
+        _animator = GetComponent<Animator>();
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
@@ -241,7 +243,7 @@ public class PlayerGrapple : MonoBehaviour
 
     private void ApplySwingControl(float input)
 {
-    if (!jointActive || currentGrapple == null || currentGrapple.Type != GrapplePoint.GrappleType.Swing) return;
+    if (!jointActive || currentGrapple == null || currentGrapple.Type != GrapplePoint.GrappleType.Swing || rb.bodyType != RigidbodyType2D.Dynamic) return;
     
     Vector2 ropeDirection = (rb.position - (Vector2)currentGrapplePoint.transform.position).normalized;
     Vector2 tangent = new Vector2(-ropeDirection.y,ropeDirection.x);
@@ -429,6 +431,7 @@ public class PlayerGrapple : MonoBehaviour
         }
 
         isGrappling = true;
+        _animator.SetBool("is_grappling", true);
         jointActive = false;
 
         currentGrapplePoint = grapplePoint;
@@ -495,8 +498,10 @@ public class PlayerGrapple : MonoBehaviour
         grappleLine.SetPosition(1, currentGrapplePoint.transform.position);
     }
 
-    private void DetachGrapple()
+    public void DetachGrapple()
     {
+        _animator.SetBool("is_grappling", false);
+
         isGrappling = false;
         jointActive = false;
 

@@ -2,25 +2,26 @@ using UnityEngine;
 
 public class MenuFloatingAnimation : MonoBehaviour
 {
-    [SerializeField] private float floatAmount;
-    [SerializeField] private float floatSpeed;
+    [SerializeField] private float floatAmount = 10f;
+    [SerializeField] private float floatSpeed = 2f;
 
-    private bool direction;
-    private Vector2 original_pos;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private RectTransform rectTransform;
+    private Vector2 originalPos;
+
+    void Awake()
     {
-        original_pos = transform.position;
+        rectTransform = GetComponent<RectTransform>();
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        originalPos = rectTransform.anchoredPosition;
+    }
+
     void Update()
     {
-        float newY = original_pos.y + Mathf.Sin(Time.time * floatSpeed) * floatAmount;
+        float offset = Mathf.Sin(Time.time * floatSpeed) * floatAmount;
 
-        transform.position = new Vector2(
-            original_pos.x,
-            newY
-        );
+        rectTransform.anchoredPosition = originalPos + new Vector2(0f, offset);
     }
 }

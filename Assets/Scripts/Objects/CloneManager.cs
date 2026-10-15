@@ -24,7 +24,6 @@ public class CloneManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     void Start()

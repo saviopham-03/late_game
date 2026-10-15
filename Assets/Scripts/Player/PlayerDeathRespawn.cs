@@ -23,6 +23,7 @@ public class PlayerDeathRespawn : MonoBehaviour
 
     public void killPlayer()
     {  
+        player.GetComponent<PlayerGrapple>().DetachGrapple();
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         _animator.SetBool("died", true);
     }

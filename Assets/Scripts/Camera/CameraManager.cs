@@ -14,6 +14,12 @@ public class CameraManager : MonoBehaviour
     private float sizeFromWidth;
 
     private void Awake() { 
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
         currentCameraSpace = startingCameraPoint;
         DontDestroyOnLoad(gameObject);

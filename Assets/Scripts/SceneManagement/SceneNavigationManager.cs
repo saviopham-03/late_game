@@ -23,6 +23,20 @@ public class SceneNavigationManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject initialCameraSpace = GameObject.Find("InitialSpace");
+
+        if (initialCameraSpace == null)
+        {
+            Debug.LogWarning("InitialSpace was not found in scene: " + scene.name);
+            return;
+        }
+
+        CameraManager.Instance.SwitchCamera(initialCameraSpace.GetComponent<BoxCollider2D>());
     }
 
     private void Start()
@@ -33,6 +47,10 @@ public class SceneNavigationManager : MonoBehaviour
     /// <summary>
     /// Loads a specific scene using its scene name.
     /// </summary>
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void LoadScene(string sceneName)
     {
         if (string.IsNullOrWhiteSpace(sceneName))
