@@ -20,6 +20,7 @@ public class DialogueBox : MonoBehaviour
         imgComponent.color = new Color(1f,1f,1f,0f);
         overlayComponent.material.color = new Color(1f,1f,1f,0f);
         textComponent.text = string.Empty;
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

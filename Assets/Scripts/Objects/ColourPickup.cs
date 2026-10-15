@@ -5,6 +5,7 @@ public class ColourPickup : MonoBehaviour
 {
     [SerializeField] private PlayerColour pickupColour;
     [SerializeField] private Animator _animator;
+    [SerializeField] private bool persistent = false;
 
     private bool active = true;
     private InteractionAudioFeedback pickupAudio;
@@ -35,12 +36,16 @@ public class ColourPickup : MonoBehaviour
             return;
         }
 
-        active = false;
+        active = persistent;
 
         playerColourController.SetColour(pickupColour);
 
         pickupAudio.Play();
 
         _animator.SetTrigger("pickup");
+
+        _animator.SetBool("respawn", persistent);
+
+        //TODO: make respawn animation and trigger
     }
 }

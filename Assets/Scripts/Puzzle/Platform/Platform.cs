@@ -13,14 +13,17 @@ public class Platform : PuzzleObject
 
     [Header("Movement")]
     [SerializeField] private float movementSpeed = 2f;
+    [SerializeField] private bool returnToStartOnDeactivation = true;
 
     [Header("Puzzle Control")]
     [SerializeField] private bool puzzleMovementAllowed = true;
+    
 
     private Rigidbody2D rb;
 
     private int currentNodeIndex;
-    private int targetNodeIndex;
+    private int nextNodeIndex;
+    private int previousNodeIndex;
 
     private Vector2 startingPosition;
     private Quaternion startingRotation;
@@ -28,6 +31,10 @@ public class Platform : PuzzleObject
     private Vector2 platformVelocity = Vector2.zero;
 
     private readonly List<GameObject> riders = new List<GameObject>();
+
+    private bool goForward = true;
+    private enum PathDirection{behind, on_node, ahead};
+    private PathDirection direction;
 
     private void Start()
     {
@@ -61,8 +68,10 @@ public class Platform : PuzzleObject
         startingRotation = transform.rotation;
 
         currentNodeIndex = path.GetStartNodeIndex();
+        previousNodeIndex = currentNodeIndex;
+        direction = PathDirection.on_node;
 
-        targetNodeIndex =
+        nextNodeIndex =
             pathModifier.GetNextNodeIndex(
                 currentNodeIndex,
                 path
@@ -81,6 +90,9 @@ public class Platform : PuzzleObject
 
     private void FixedUpdate()
     {
+        // Debug.Log((previousNodeIndex, currentNodeIndex, nextNodeIndex, direction));
+        goForward = !returnToStartOnDeactivation || puzzleMovementAllowed;
+        
         foreach (PlatformModifier modifier in platformModifiers)
         {
             if (modifier != null)
@@ -88,22 +100,20 @@ public class Platform : PuzzleObject
                 modifier.UpdateModifier();
             }
         }
-
         if (!CanMove())
         {
             platformVelocity = Vector2.zero;
-            return;
+            if (!returnToStartOnDeactivation) return;
         }
 
-        if (targetNodeIndex == -1)
+        if (nextNodeIndex == -1 && direction == PathDirection.on_node)
         {
             platformVelocity = Vector2.zero;
-            return;
+            if (goForward) return;
         }
-
-        Vector2 targetPosition =
-            path.GetNodePosition(targetNodeIndex);
-
+        int targetIndex = GetTargetPosition();
+        Vector2 targetPosition = path.GetNodePosition(targetIndex);
+        
         Vector2 oldPosition = rb.position;
 
         Vector2 newPosition =
@@ -121,10 +131,36 @@ public class Platform : PuzzleObject
 
         rb.MovePosition(newPosition);
 
+        if (HasRiders())
+        {
+            foreach (GameObject rider in riders)
+            {
+                rider.GetComponent<Rigidbody2D>().position += platformMovement;
+            }
+        }
+
         if (Vector2.Distance(newPosition, targetPosition) < 0.01f)
         {
-            NodeReached();
+            NodeReached(targetIndex);
         }
+    }
+
+    private int GetTargetPosition()
+    {
+        if (goForward)
+        {
+            if (direction == PathDirection.ahead || direction == PathDirection.on_node) {
+                direction = PathDirection.ahead;
+                return nextNodeIndex;
+            }
+            return currentNodeIndex;
+        } 
+        // going backwards
+        if (direction == PathDirection.behind || direction == PathDirection.on_node) {
+            direction = PathDirection.behind;
+            return previousNodeIndex;
+        }
+        return currentNodeIndex;
     }
 
     private bool CanMove()
@@ -150,9 +186,10 @@ public class Platform : PuzzleObject
         return true;
     }
 
-    private void NodeReached()
+    private void NodeReached(int nodeReached)
     {
-        currentNodeIndex = targetNodeIndex;
+        direction = PathDirection.on_node;
+        currentNodeIndex = nodeReached;
 
         movementBehaviour.OnNodeReached(currentNodeIndex);
 
@@ -164,11 +201,14 @@ public class Platform : PuzzleObject
             }
         }
 
-        targetNodeIndex =
+        nextNodeIndex =
             pathModifier.GetNextNodeIndex(
                 currentNodeIndex,
                 path
             );
+        previousNodeIndex =
+            path.GetPreviousNodeIndex(
+                currentNodeIndex);
     }
 
     public void RiderEnter(GameObject rider)
@@ -283,10 +323,23 @@ public class Platform : PuzzleObject
         currentNodeIndex =
             path.GetStartNodeIndex();
 
-        targetNodeIndex =
+        nextNodeIndex =
             pathModifier.GetNextNodeIndex(
                 currentNodeIndex,
                 path
             );
+    }
+
+    void OnCollisionEnter2D(Collision2D obj)
+    {
+        if (obj.gameObject.CompareTag("Player") || obj.gameObject.CompareTag("Heavy Object"))
+        {
+            RiderEnter(obj.gameObject);
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D obj)
+    {
+        if (obj.gameObject.CompareTag("Player") || obj.gameObject.CompareTag("Heavy Object")) RiderExit(obj.gameObject);
     }
 }

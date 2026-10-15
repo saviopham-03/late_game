@@ -36,6 +36,13 @@ public class Path : PuzzleObject
         return nodes.Length - 1;
     }
 
+    public int GetPreviousNodeIndex(int index)
+    {
+        if (index == -1) return GetLastNodeIndex();
+        if (index == startNodeIndex) return startNodeIndex;
+        return index-1;
+    }
+
     public bool HasNextNode(int index)
     {
         return index < GetLastNodeIndex();

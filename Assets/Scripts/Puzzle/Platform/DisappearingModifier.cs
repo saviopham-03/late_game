@@ -103,7 +103,7 @@ public class DisappearingModifier : PlatformModifier
 
         respawnTimer -= Time.fixedDeltaTime;
 
-        if (respawnTimer <= 0f)
+        if (respawnTimer <= 0f && respawnDelay != -1)
         {
             ShowPlatform();
         }

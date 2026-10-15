@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneNavigationManager : MonoBehaviour
-{
+{   
+    [SerializeField] private float transitionTime = 1f;
     public static SceneNavigationManager Instance { get; private set; }
 
     [SerializeField]
     private List<string> orderedScenes = new List<string>();
+    private TransitionLevel transition;
 
     private void Awake()
     {
@@ -20,6 +23,11 @@ public class SceneNavigationManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        transition = transform.GetChild(0).gameObject.GetComponent<TransitionLevel>();
     }
 
     /// <summary>
@@ -42,7 +50,15 @@ public class SceneNavigationManager : MonoBehaviour
             return;
         }
 
+        StartCoroutine(LoadAnimation(sceneName));
+    }
+
+    IEnumerator LoadAnimation(string sceneName)
+    {
+        transition.start = true;
+        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
+        transition.start = true;
     }
 
     /// <summary>

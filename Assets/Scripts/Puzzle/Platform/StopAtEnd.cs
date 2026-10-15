@@ -1,5 +1,6 @@
 public class StopAtEnd : PathModifier
 {
+
     public override int GetNextNodeIndex(int currentNodeIndex, Path path)
     {
         if (path.HasNextNode(currentNodeIndex))

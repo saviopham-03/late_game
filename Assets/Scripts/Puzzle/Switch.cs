@@ -8,7 +8,12 @@ public class Switch : PuzzleInput
         SINGLE_USE
     }
 
+    [SerializeField] private Animator _animator;
     [SerializeField] private BehaviourType behaviourType = BehaviourType.TOGGLEABLE;
+
+    [Header("Colour Interaction")]
+    [SerializeField] private bool isUniversal = true;
+    [SerializeField] private PlayerColour switchColour = PlayerColour.Red;
 
     [SerializeField] private float moveDistance = 0.1f;
     [SerializeField] private float moveSpeed = 2f;
@@ -18,22 +23,20 @@ public class Switch : PuzzleInput
     private bool canTrigger = true;
     private bool hasBeenUsed = false;
 
-    private Vector3 inactivePosition;
-    private Vector3 activePosition;
-
     private void Start()
     {
-        inactivePosition = transform.position;
-
-        activePosition =
-            inactivePosition + (Vector3.down * moveDistance);
-
+        _animator = GetComponent<Animator>();
         UpdateColour();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!IsValidActivator(other))
+        {
+            return;
+        }
+
+        if (!IsColourCompatible(other))
         {
             return;
         }
@@ -80,19 +83,7 @@ public class Switch : PuzzleInput
 
     private void UpdateColour()
     {
-        if (switchRenderer == null)
-        {
-            return;
-        }
-
-        if (isActive)
-        {
-            switchRenderer.color = Color.green;
-        }
-        else
-        {
-            switchRenderer.color = Color.red;
-        }
+        if (_animator) _animator.SetBool("active", isActive);
     }
 
     private bool IsValidActivator(Collider2D other)
@@ -101,16 +92,23 @@ public class Switch : PuzzleInput
                other.CompareTag("Clone");
     }
 
-    private void Update()
+    private bool IsColourCompatible(Collider2D other)
     {
-        Vector3 targetPosition =
-            isActive ? activePosition : inactivePosition;
+        if (isUniversal)
+        {
+            return true;
+        }
 
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPosition,
-            moveSpeed * Time.deltaTime
-        );
+        PlayerColourController colourController =
+            other.GetComponent<PlayerColourController>();
+
+        if (colourController == null)
+        {
+            colourController = other.GetComponentInParent<PlayerColourController>();
+        }
+
+        return colourController != null &&
+               colourController.CurrentColour == switchColour;
     }
 
     public override void ResetPuzzleObject()
@@ -118,8 +116,6 @@ public class Switch : PuzzleInput
         isActive = false;
         hasBeenUsed = false;
         canTrigger = true;
-
-        transform.position = inactivePosition;
 
         UpdateColour();
         SendNotification();

@@ -20,11 +20,11 @@ public class CloneManager : MonoBehaviour
 
     private Dictionary<BoxCollider2D, CloneList> cloneSets = new();
     private CloneList current = new();
-    private BoxCollider2D currentSpace;
 
     void Awake()
     {
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -46,6 +46,8 @@ public class CloneManager : MonoBehaviour
     public void Enable() {
         switchAction.action.Enable();
     }
+
+    private BoxCollider2D getCurrentSpace(){ return CameraManager.Instance.currentCameraSpace;}
 
     private CloneList findByGameObj(GameObject clone)
     {
@@ -100,10 +102,10 @@ public class CloneManager : MonoBehaviour
             new_clone_list.Previous = current_new;
         }
 
-        if (clone == null)
-        {
-            currentSpace = newSpace;
-        }
+        // if (clone == null)
+        // {
+        //     currentSpace = newSpace;
+        // }
     }
 
     private void removeFromCurrentSet(CloneList clone)
@@ -132,7 +134,7 @@ public class CloneManager : MonoBehaviour
             Value = newClone,
             Previous = current,
             Next = current.Next,
-            Space = currentSpace
+            Space = getCurrentSpace()
         };
         current.Next.Previous = new_node;
         current.Next = new_node;
