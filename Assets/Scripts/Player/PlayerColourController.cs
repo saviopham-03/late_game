@@ -26,8 +26,6 @@ public class PlayerColourController : MonoBehaviour
             renderer = GetComponent<SpriteRenderer>();
         }
 
-        Debug.Log("changed colour from " + currentColour + " to " + newColour);
-
         currentColour = newColour;
 
         // Change the sprite tint without instantiating a material

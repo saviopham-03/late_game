@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pull_grapple_anim
+  m_Controller: {fileID: 9100000, guid: 41814405772210144b0329f6ff42c3b6, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: dae42eebaa26fc8449250de0f99eca5b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 113492349a842fa428c20cef6923a118, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 02acb4a5f06fba04a94eeb5ccdb05f69, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6fde1513fa5e6744192c6e42b7a07c4f, type: 2}

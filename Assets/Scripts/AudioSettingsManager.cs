@@ -11,6 +11,20 @@ public class AudioSettingsManager : MonoBehaviour
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    public static AudioSettingsManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        // Keep only one SceneNavigationManager between scenes.
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {

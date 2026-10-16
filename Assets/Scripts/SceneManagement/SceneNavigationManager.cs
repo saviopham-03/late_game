@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneNavigationManager : MonoBehaviour
-{
+{   
+    [SerializeField] private float transitionTime = 1f;
     public static SceneNavigationManager Instance { get; private set; }
 
     [SerializeField]
     private List<string> orderedScenes = new List<string>();
+    private TransitionLevel transition;
 
     private void Awake()
     {
@@ -20,11 +23,34 @@ public class SceneNavigationManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject initialCameraSpace = GameObject.Find("InitialSpace");
+
+        if (initialCameraSpace == null)
+        {
+            Debug.LogWarning("InitialSpace was not found in scene: " + scene.name);
+            return;
+        }
+
+        CameraManager.Instance.SwitchCamera(initialCameraSpace.GetComponent<BoxCollider2D>());
+    }
+
+    private void Start()
+    {
+        transition = transform.GetChild(0).gameObject.GetComponent<TransitionLevel>();
     }
 
     /// <summary>
     /// Loads a specific scene using its scene name.
     /// </summary>
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
     public void LoadScene(string sceneName)
     {
         if (string.IsNullOrWhiteSpace(sceneName))
@@ -42,7 +68,15 @@ public class SceneNavigationManager : MonoBehaviour
             return;
         }
 
+        StartCoroutine(LoadAnimation(sceneName));
+    }
+
+    IEnumerator LoadAnimation(string sceneName)
+    {
+        transition.start = true;
+        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
+        transition.start = true;
     }
 
     /// <summary>

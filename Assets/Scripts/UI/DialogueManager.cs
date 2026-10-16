@@ -17,13 +17,26 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+
         interactAction.action.Enable();
         interactAction.action.started += _ =>
         {
             if (currentDialogue == null) StartDialogue();
             else NextLine();
         };
+        
+    }
+    private void Start()
+    {
+        _dialogueBox.gameObject.SetActive(false);
     }
 
     public void AddInRangeNPC(NPCDialogue npc)
@@ -62,10 +75,22 @@ public class DialogueManager : MonoBehaviour
         return closest;
     }
 
+    public void ForceDialogue(DialogueSet dialogueSet, GameObject player)
+    {
+        _dialogueBox.gameObject.SetActive(true);
+        active_player = player;
+        active_player.GetComponent<PlayerMovement>().DisableMovement();
+        CloneManager.Instance.Disable();
+        currentDialogue = dialogueSet;
+        currentLineIndex = 0;
+        ShowCurrentLine();
+    }
+
     public void StartDialogue()
     {
         if (currentDialogue == null)
         {
+            _dialogueBox.gameObject.SetActive(true);
             NPCDialogue dialogue_npc = GetClosestNPC();
             if (!active_player) return;
             
@@ -115,6 +140,7 @@ public class DialogueManager : MonoBehaviour
         active_player.GetComponent<PlayerMovement>().EnableMovement();
         CloneManager.Instance.Enable();
         active_player = null;
+        _dialogueBox.gameObject.SetActive(false);
         // Debug.Log("Dialogue ended");
     }
 }

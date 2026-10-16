@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class CameraTrigger : MonoBehaviour
 {
-    [SerializeField] private CameraManager cameraManager;
+    private CameraManager cameraManager;
     [SerializeField] private BoxCollider2D leftOrTopCameraPoint;
     [SerializeField] private BoxCollider2D rightOrBottomCameraPoint;
     [SerializeField] private bool rotate;
+
+    private BoxCollider2D _collider;
+
+    private void Start()
+    {
+        cameraManager = CameraManager.Instance;
+        _collider = GetComponent<BoxCollider2D>();
+    }
 
     private void switchCamera(Collider2D other)
     {
@@ -14,6 +22,7 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
+        Vector3 relativePosition = other.transform.position - _collider.bounds.center;
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
 
         if (rb == null)
@@ -21,7 +30,7 @@ public class CameraTrigger : MonoBehaviour
             return;
         }
 
-        if ((!rotate && rb.linearVelocity.x > 0.1f) || (rotate && rb.linearVelocity.y < 0.1f))
+        if ((!rotate && relativePosition.x > 0) || (rotate && relativePosition.y < 0))
         {
             if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(rightOrBottomCameraPoint);
             else
@@ -30,7 +39,7 @@ public class CameraTrigger : MonoBehaviour
             }
             
         }
-        else if ((!rotate && rb.linearVelocity.x < -0.1f) || (rotate && rb.linearVelocity.y > 0.1f))
+        else if ((!rotate && relativePosition.x < 0) || (rotate && relativePosition.y > 0))
         {
             if (other.GetComponent<PlayerMovement>().IsActive) cameraManager.SwitchCamera(leftOrTopCameraPoint);
             else

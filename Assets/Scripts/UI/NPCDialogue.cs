@@ -5,20 +5,23 @@ using System.Collections.Generic;
 public class NPCDialogue : MonoBehaviour
 {
 
-    public DialogueSet dialogue;
-    public bool interactable;
+    [SerializeField] private bool forceDialogue;
+
+    [SerializeField] public DialogueSet dialogue;
     private List<PlayerMovement> closeClones = new List<PlayerMovement>();
 
-    private void Awake()
-    {
-        interactable = false;
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        
         if (other.CompareTag("Player")) {
             DialogueManager.Instance.AddInRangeNPC(this);
             closeClones.Add(other.GetComponent<PlayerMovement>());
+        }
+        if (forceDialogue)
+        {
+            forceDialogue = false;
+            DialogueManager.Instance.ForceDialogue(dialogue, NearActiveClone());
         }
     }
     private void OnTriggerExit2D(Collider2D other)
