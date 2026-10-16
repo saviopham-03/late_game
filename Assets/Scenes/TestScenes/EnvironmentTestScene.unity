@@ -3799,6 +3799,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1743890995}
   startingCameraPoint: {fileID: 1715030054}
   cameraSwapSpeed: 0.06
+  currentCameraSpace: {fileID: 0}
 --- !u!4 &810200179
 Transform:
   m_ObjectHideFlags: 0
@@ -4647,6 +4648,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PressurePlate
   isActive: 0
   puzzleController: {fileID: 827948596}
+  isUniversal: 1
+  requiredColour: 0
   _animator: {fileID: 528774995}
 --- !u!234 &1512611268
 SliderJoint2D:
@@ -4837,9 +4840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1823d921291fc46d582daa7d322b5f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTrigger
-  cameraManager: {fileID: 810200178}
-  leftCameraPoint: {fileID: 1715030054}
-  rightCameraPoint: {fileID: 4822851}
+  leftOrTopCameraPoint: {fileID: 0}
+  rightOrBottomCameraPoint: {fileID: 0}
+  rotate: 0
 --- !u!61 &1602568544
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8800,7 +8803,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790757550178764859, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: currentColour
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6137904323305246293, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_Name
