@@ -90,10 +90,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentDialogue == null)
         {
-            _dialogueBox.gameObject.SetActive(true);
             NPCDialogue dialogue_npc = GetClosestNPC();
             if (!active_player) return;
             
+            _dialogueBox.gameObject.SetActive(true);
             active_player.GetComponent<PlayerMovement>().DisableMovement();
             CloneManager.Instance.Disable();
 

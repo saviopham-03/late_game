@@ -3588,7 +3588,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790757550178764859, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: currentColour
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2552369461741866297, guid: a0e266b9187483b418d05fb04a50e728, type: 3}
       propertyPath: m_EnableCollision
@@ -40164,8 +40164,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5228604312539270443}
   m_HandleRect: {fileID: 4521861626191783376}
   m_Direction: 2
-  m_Value: 0.9999995
-  m_Size: 0.5817875
+  m_Value: 0.9999993
+  m_Size: 0.58178747
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
