@@ -25,6 +25,7 @@ public class Switch : PuzzleInput
 
     private void Start()
     {
+        GetPickupAudio();
         _animator = GetComponent<Animator>();
         UpdateColour();
     }
@@ -49,11 +50,13 @@ public class Switch : PuzzleInput
         if (behaviourType == BehaviourType.TOGGLEABLE)
         {
             ToggleSwitch();
+            PlaySound();
         }
         else if (behaviourType == BehaviourType.SINGLE_USE)
         {
             if (!hasBeenUsed)
             {
+                PlaySound();
                 SetSwitchState(true);
                 hasBeenUsed = true;
             }

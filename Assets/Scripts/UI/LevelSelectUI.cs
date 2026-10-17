@@ -37,7 +37,7 @@ public class LevelSelectUI : MonoBehaviour
             if (entry.button != null) entry.button.interactable = LevelProgressManager.IsUnlocked(levelNumber);
             if (entry.label != null)
             {
-                entry.label.text = LevelProgressManager.IsUnlocked(levelNumber) ? levelName : "'Unvisited'";
+                entry.label.text = LevelProgressManager.IsUnlocked(levelNumber) ? levelName : "Unvisited";
             }
         }
     }

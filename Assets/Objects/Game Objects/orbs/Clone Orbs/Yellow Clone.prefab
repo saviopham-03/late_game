@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 49698451794807471, guid: 6157c8cdf4573ea4d9b7ab5140593099, type: 3}
+      propertyPath: m_Pitch
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1269514181564534967, guid: 6157c8cdf4573ea4d9b7ab5140593099, type: 3}
       propertyPath: m_Name
       value: Yellow Clone
@@ -60,7 +64,8 @@ PrefabInstance:
       propertyPath: cloneColour
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8810977570843229199, guid: 6157c8cdf4573ea4d9b7ab5140593099, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

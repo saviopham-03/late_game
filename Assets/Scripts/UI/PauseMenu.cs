@@ -20,7 +20,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         bool backPressed = Keyboard.current?.escapeKey.wasPressedThisFrame == true;
-        if (backPressed) {
+        if (backPressed && SceneNavigationManager.Instance.currentScene != "MainMenu") {
             if (isOpen) Unpause();
             else Pause();
         }

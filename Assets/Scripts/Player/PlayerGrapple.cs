@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(DistanceJoint2D))]
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerGrapple : MonoBehaviour
-{
+{   
+    
     [Header("Grapple Input")]
     [SerializeField] private InputActionReference grappleAction;
     [SerializeField] private InputActionReference jumpAction;
@@ -36,6 +37,7 @@ public class PlayerGrapple : MonoBehaviour
 
     [SerializeField]
     private float maxRopeLength = 8f;
+    
 
     [SerializeField]
     private GrappleInputMode grappleInputMode = GrappleInputMode.Toggle;
@@ -45,6 +47,7 @@ public class PlayerGrapple : MonoBehaviour
 
     private Collider2D currentGrapplePoint;
     private GrapplePoint currentGrapple;
+    private InteractionAudioFeedback pickupAudio;
 
     private bool isGrappling;
     private bool jointActive;
@@ -69,6 +72,7 @@ public class PlayerGrapple : MonoBehaviour
         grappleLine = GetComponent<LineRenderer>();
         playerMovement = GetComponent<PlayerMovement>();
         _animator = GetComponent<Animator>();
+        pickupAudio = GetComponent<InteractionAudioFeedback>();
 
         grappleAction.action.Enable();
         jumpAction.action.Enable();
@@ -78,6 +82,7 @@ public class PlayerGrapple : MonoBehaviour
 
         grappleJoint.enabled = false;
         grappleLine.enabled = false;
+        
     }
 
   private void Update()
@@ -469,6 +474,7 @@ public class PlayerGrapple : MonoBehaviour
 
             rb.linearVelocity = pullDirection * existingSpeed;
         }
+        pickupAudio.Play();
     }
 
     private void ActivateGrappleJoint()

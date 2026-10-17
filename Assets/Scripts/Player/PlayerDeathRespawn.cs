@@ -10,6 +10,11 @@ public class PlayerDeathRespawn : MonoBehaviour
     private GameObject player;
     private BoxCollider2D _collider;
     private bool dying = false;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource playerAudioSource;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip reviveSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +23,28 @@ public class PlayerDeathRespawn : MonoBehaviour
         player = gameObject;
         cameraSpace = CameraManager.Instance.currentCameraSpace;
         spawnLocation = gameObject.transform.position;
+    }
+
+    private void PlayDeathSound()
+    {
+        if (playerAudioSource != null &&
+            deathSound != null)
+        {
+            playerAudioSource.PlayOneShot(
+                deathSound
+            );
+        }
+    }
+
+    private void PlayReviveSound()
+    {
+        if (playerAudioSource != null &&
+            reviveSound != null)
+        {
+            playerAudioSource.PlayOneShot(
+                reviveSound
+            );
+        }
     }
 
     void FixedUpdate()
@@ -37,7 +64,8 @@ public class PlayerDeathRespawn : MonoBehaviour
                 other.CompareTag("Red") ||
                 other.CompareTag("Blue") ||
                 other.CompareTag("Green") ||
-                other.CompareTag("Yellow"))
+                other.CompareTag("Yellow") ||
+                other.CompareTag("Player"))
                 continue;
 
             ColliderDistance2D distance =
@@ -61,6 +89,7 @@ public class PlayerDeathRespawn : MonoBehaviour
     {  
         if (!dying) {
         dying = true;
+        PlayDeathSound();
         player.GetComponent<PlayerGrapple>().DetachGrapple();
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         _animator.SetBool("died", true);
@@ -73,6 +102,7 @@ public class PlayerDeathRespawn : MonoBehaviour
         GetComponent<Rigidbody2D>().position = spawnLocation;
         CameraManager.Instance.SwitchCamera(cameraSpace);
         _animator.SetBool("died", false);
+        PlayReviveSound();
     }
 
     public void unlockPlayerMovement()
@@ -80,6 +110,7 @@ public class PlayerDeathRespawn : MonoBehaviour
         player.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
         dying = false;
+        
     }
     
 }

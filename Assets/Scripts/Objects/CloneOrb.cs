@@ -4,6 +4,7 @@ public class CloneOrb : MonoBehaviour
 {
     [SerializeField] private PlayerColour cloneColour;
     [SerializeField] private GameObject player_obj;
+    private InteractionAudioFeedback pickupAudio;
     private CloneManager _manager;
     [SerializeField] private Animator _animator;
     private bool active = true;
@@ -11,6 +12,7 @@ public class CloneOrb : MonoBehaviour
     void Start()
     {
         _manager = CloneManager.Instance;
+        pickupAudio = GetComponent<InteractionAudioFeedback>();
     }
 
     // Update is called once per frame
@@ -23,5 +25,6 @@ public class CloneOrb : MonoBehaviour
         _animator.SetTrigger("pickup");
         PlayerColourController playerControl = clone.GetComponent<PlayerColourController>();
         playerControl.SetColour(cloneColour);
+        pickupAudio.Play();
     }
 }

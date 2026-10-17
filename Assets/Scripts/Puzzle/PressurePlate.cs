@@ -19,11 +19,13 @@ public class PressurePlate : PuzzleInput
 
     public bool IsUniversal => isUniversal;
     public PlayerColour RequiredColour => requiredColour;
+    private bool shouldBeActive;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         TrackActivator(other);
         EvaluatePlate();
+        if (shouldBeActive) PlaySound();
     }
 
     private void OnTriggerStay2D(Collider2D other)
@@ -35,8 +37,10 @@ public class PressurePlate : PuzzleInput
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        PlaySound();
         objectsOnPlate.Remove(other);
         EvaluatePlate();
+        if (!shouldBeActive) PlaySound();
     }
 
     private void FixedUpdate()
@@ -77,7 +81,7 @@ public class PressurePlate : PuzzleInput
         // Remove destroyed collider references.
         objectsOnPlate.RemoveWhere(collider => collider == null);
 
-        bool shouldBeActive = false;
+        shouldBeActive = false;
 
         foreach (Collider2D activator in objectsOnPlate)
         {
@@ -87,7 +91,7 @@ public class PressurePlate : PuzzleInput
                 break;
             }
         }
-
+        
         SetActive(shouldBeActive);
 
         if (_animator != null)

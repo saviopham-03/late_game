@@ -11,6 +11,7 @@ public class SceneNavigationManager : MonoBehaviour
     [SerializeField]
     private List<string> orderedScenes = new List<string>();
     private TransitionLevel transition;
+    public string currentScene { get; private set; }
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class SceneNavigationManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
+        currentScene = "MainMenu";
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -36,6 +38,7 @@ public class SceneNavigationManager : MonoBehaviour
             return;
         }
 
+        currentScene = scene.name;
         CameraManager.Instance.SwitchCamera(initialCameraSpace.GetComponent<BoxCollider2D>());
     }
 
@@ -49,7 +52,8 @@ public class SceneNavigationManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        
+        LoadScene("MainMenu");
     }
     public void LoadScene(string sceneName)
     {
@@ -67,7 +71,7 @@ public class SceneNavigationManager : MonoBehaviour
             );
             return;
         }
-
+        currentScene = sceneName;
         StartCoroutine(LoadAnimation(sceneName));
     }
 

@@ -16,10 +16,11 @@ public class DialogueBox : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        GetComponent<Image>().color = new Color(1f,1f,1f,0f);
-        imgComponent.color = new Color(1f,1f,1f,0f);
-        overlayComponent.color = new Color(1f,1f,1f,0f);
-        textComponent.text = string.Empty;
+        
+        if (GetComponent<Image>() != null) {GetComponent<Image>().color = new Color(1f,1f,1f,0f);}
+        if (imgComponent != null) {imgComponent.color = new Color(1f,1f,1f,0f);}
+        if (overlayComponent != null) {overlayComponent.color = new Color(1f,1f,1f,0f);}
+        if (textComponent != null) {textComponent.text = string.Empty;}
     }
 
     // Update is called once per frame
