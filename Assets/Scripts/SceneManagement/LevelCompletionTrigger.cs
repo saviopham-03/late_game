@@ -8,6 +8,7 @@ public class LevelCompletionTrigger : MonoBehaviour
     [Range(1, LevelProgressManager.TotalLevels)]
     [SerializeField] private int levelNumber = 1;
     [SerializeField] private string levelSelectScene = "LevelSelect";
+    [SerializeField] private bool returnToLevelSelect = false;
     private bool completed;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -21,10 +22,16 @@ public class LevelCompletionTrigger : MonoBehaviour
         }
         completed = true;
         LevelProgressManager.CompleteLevel(levelNumber);
-        if (SceneNavigationManager.Instance != null)
+        if (SceneNavigationManager.Instance == null) return;
+        if (returnToLevelSelect)
+        {
             SceneNavigationManager.Instance.LoadScene(levelSelectScene);
+
+        }
         else
-            SceneManager.LoadScene(levelSelectScene);
+        {
+            SceneNavigationManager.Instance.LoadNextScene();
+        }
     }
 
     private void Reset()

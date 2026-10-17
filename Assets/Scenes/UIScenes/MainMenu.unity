@@ -1473,6 +1473,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 917888394222548620, guid: f3493c071611b354eaa79ad4879bc78c, type: 3}
+      propertyPath: orderedScenes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 917888394222548620, guid: f3493c071611b354eaa79ad4879bc78c, type: 3}
+      propertyPath: 'orderedScenes.Array.data[0]'
+      value: A1L1Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 917888394222548620, guid: f3493c071611b354eaa79ad4879bc78c, type: 3}
+      propertyPath: 'orderedScenes.Array.data[1]'
+      value: A1L2Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 917888394222548620, guid: f3493c071611b354eaa79ad4879bc78c, type: 3}
+      propertyPath: 'orderedScenes.Array.data[2]'
+      value: A1L3Scene
+      objectReference: {fileID: 0}
     - target: {fileID: 1798390777067400948, guid: f3493c071611b354eaa79ad4879bc78c, type: 3}
       propertyPath: m_Name
       value: SceneNavigationManager

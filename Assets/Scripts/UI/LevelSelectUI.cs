@@ -9,6 +9,7 @@ public class LevelSelectUI : MonoBehaviour
     private class LevelEntry
     {
         public string sceneName;
+        public string levelName;
         public Button button;
         public TMP_Text label;
     }
@@ -30,14 +31,13 @@ public class LevelSelectUI : MonoBehaviour
         for (int i = 0; i < levels.Length && i < LevelProgressManager.TotalLevels; i++)
         {
             var entry = levels[i];
+            var levelName = entry.levelName;
             if (entry == null) continue;
             int levelNumber = i + 1;
             if (entry.button != null) entry.button.interactable = LevelProgressManager.IsUnlocked(levelNumber);
             if (entry.label != null)
             {
-                string state = LevelProgressManager.IsCompleted(levelNumber) ? " (Completed)" :
-                    LevelProgressManager.IsUnlocked(levelNumber) ? "" : " (Locked)";
-                entry.label.text = $"Level {levelNumber}{state}";
+                entry.label.text = LevelProgressManager.IsUnlocked(levelNumber) ? levelName : "'Unvisited'";
             }
         }
     }
