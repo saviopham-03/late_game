@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float coyoteTimer;
+    [SerializeField, Min(0f)] private float coyoteTimer = 0.15f;
     [FormerlySerializedAs("inputBuffer")]
     [SerializeField, Min(0f)] private float inputBufferTime = 0.15f;
     [SerializeField] private Vector2 footstoolPower;
@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public float HorizontalInput => horizontalInput;
     private bool jumpRequested;
     private float jumpBufferTimer;
+    private float coyoteTimeCounter;
     private bool active = true;
 
     public Vector2 last_vel;
@@ -54,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         moveAction.action.Disable();
         jumpAction.action.Disable();
         ClearJumpBuffer();
+        ClearCoyoteTime();
     }
     public void EnableMovement()
     {
@@ -74,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         if (!active)
         {
             ClearJumpBuffer();
+            ClearCoyoteTime();
         }
     }
 
@@ -140,6 +143,8 @@ public class PlayerMovement : MonoBehaviour
         moveAction.action.canceled -= OnMoveCanceled;
         horizontalInput = 0f;
         jumpRequested = false;
+        ClearJumpBuffer();
+        ClearCoyoteTime();
     }
 
     private void OnMoveStarted(InputAction.CallbackContext context)
@@ -164,6 +169,7 @@ public class PlayerMovement : MonoBehaviour
         // Prevent landing sound from playing immediately
         // when the scene starts.
         wasGrounded = IsGrounded();
+        coyoteTimeCounter = wasGrounded ? coyoteTimer : 0f;
 
         // Allows the first footstep without a long delay.
         footstepTimer = footstepInterval;
@@ -177,14 +183,17 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        bool grounded = IsGrounded();
+
         if (jumpAction.action.triggered)
         {
-            // Grounded jumps remain immediate. If we are airborne, remember the
-            // input for a short window so it can be consumed when we land.
-            if (IsGrounded())
+            // Grounded and coyote-time jumps remain immediate. If neither is
+            // available, remember the input briefly so it can fire on landing.
+            if (grounded || coyoteTimeCounter > 0f)
             {
                 RequestJump();
                 ClearJumpBuffer();
+                ClearCoyoteTime();
             }
             else
             {
@@ -197,10 +206,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (IsGrounded())
+        if (grounded)
         {
             RequestJump();
             ClearJumpBuffer();
+            ClearCoyoteTime();
             return;
         }
 
@@ -228,6 +238,34 @@ public class PlayerMovement : MonoBehaviour
         jumpBufferTimer = 0f;
     }
 
+    private void ClearCoyoteTime()
+    {
+        coyoteTimeCounter = 0f;
+    }
+
+    private void UpdateCoyoteTime(bool grounded)
+    {
+        if (!active)
+        {
+            ClearCoyoteTime();
+            return;
+        }
+
+        // Do not refresh the grace window while a grounded jump is waiting for
+        // the next physics step; otherwise it could briefly behave like a
+        // second jump after take-off.
+        if (grounded && playerBody.linearVelocity.y <= 0f && !jumpRequested)
+        {
+            coyoteTimeCounter = coyoteTimer;
+            return;
+        }
+
+        coyoteTimeCounter = Mathf.Max(
+            0f,
+            coyoteTimeCounter - Time.fixedDeltaTime
+        );
+    }
+
     private bool isGrappling()
     {
         return _grappler.IsGrappling;
@@ -237,6 +275,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerBody.bodyType != RigidbodyType2D.Dynamic) return;
         last_vel = playerBody.linearVelocity;
+
+        UpdateCoyoteTime(IsGrounded());
 
         if (!isGrappling()) {HandleGroundMovement();}
 
