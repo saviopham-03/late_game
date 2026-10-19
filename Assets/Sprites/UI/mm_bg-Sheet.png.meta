@@ -105,8 +105,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,10 +125,10 @@ TextureImporter:
       name: mm_bg-Sheet_1
       rect:
         serializedVersion: 2
-        x: 128
+        x: 160
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,10 +147,10 @@ TextureImporter:
       name: mm_bg-Sheet_2
       rect:
         serializedVersion: 2
-        x: 256
+        x: 320
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +169,10 @@ TextureImporter:
       name: mm_bg-Sheet_3
       rect:
         serializedVersion: 2
-        x: 384
+        x: 480
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -191,10 +191,10 @@ TextureImporter:
       name: mm_bg-Sheet_4
       rect:
         serializedVersion: 2
-        x: 512
+        x: 640
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,10 +213,10 @@ TextureImporter:
       name: mm_bg-Sheet_5
       rect:
         serializedVersion: 2
-        x: 640
+        x: 800
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -235,10 +235,10 @@ TextureImporter:
       name: mm_bg-Sheet_6
       rect:
         serializedVersion: 2
-        x: 768
+        x: 960
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -257,10 +257,10 @@ TextureImporter:
       name: mm_bg-Sheet_7
       rect:
         serializedVersion: 2
-        x: 896
+        x: 1120
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,10 +279,10 @@ TextureImporter:
       name: mm_bg-Sheet_8
       rect:
         serializedVersion: 2
-        x: 1024
+        x: 1280
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -301,10 +301,10 @@ TextureImporter:
       name: mm_bg-Sheet_9
       rect:
         serializedVersion: 2
-        x: 1152
+        x: 1440
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -323,10 +323,10 @@ TextureImporter:
       name: mm_bg-Sheet_10
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 1600
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -345,10 +345,10 @@ TextureImporter:
       name: mm_bg-Sheet_11
       rect:
         serializedVersion: 2
-        x: 1408
+        x: 1760
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,10 +367,10 @@ TextureImporter:
       name: mm_bg-Sheet_12
       rect:
         serializedVersion: 2
-        x: 1536
+        x: 1920
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -389,10 +389,10 @@ TextureImporter:
       name: mm_bg-Sheet_13
       rect:
         serializedVersion: 2
-        x: 1664
+        x: 2080
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -411,10 +411,10 @@ TextureImporter:
       name: mm_bg-Sheet_14
       rect:
         serializedVersion: 2
-        x: 1792
+        x: 2240
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -433,10 +433,10 @@ TextureImporter:
       name: mm_bg-Sheet_15
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 2400
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -455,10 +455,10 @@ TextureImporter:
       name: mm_bg-Sheet_16
       rect:
         serializedVersion: 2
-        x: 2048
+        x: 2560
         y: 0
-        width: 128
-        height: 72
+        width: 160
+        height: 104
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -487,7 +487,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":17.0,"y":1.0},"gridSpriteSize":{"x":128.0,"y":72.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":17.0,"y":1.0},"gridSpriteSize":{"x":160.0,"y":104.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       mm_bg-Sheet_0: 4751781182934722463
       mm_bg-Sheet_1: -654732963
