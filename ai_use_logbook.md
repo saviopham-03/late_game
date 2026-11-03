@@ -8,6 +8,7 @@ This document records all uses of AI tools during the project.
 |------|-------------|---------|---------|
 | 2026-07-31 | Savio | ChatGPT | Generate Team Contract |
 | 2026-07-31 | Savio | ChatGPT | Generate AI Usage Log Format |
+| 2026-11-03 | Bhanu | ChatGPT | Generated code based on designs and helped identify problems with pull requests |
 
 ---
 
@@ -43,29 +44,21 @@ This document records all uses of AI tools during the project.
 ### Entry #2
 
 **Date**
-- 2026-07-31
+- 2026-11-03
 
 **Team Member**
-- Savio
+- Bhanu
 
 **AI Tool**
 - ChatGPT
 
 **Task**
-- Generate an AI usage format
-
-**Prompt**
-> what would be a good format in markdown for logging ai usage in a project
-
-**AI Output Summary**
-- Created a Markdown format which can be copy pasted for logbook purposes
+- Generated code based on designs and helped identify problems with pull requests
 
 **How It Was Used**
-- Used as a starting point.
-- Modified entries and removed unnecessary details
-
-**Verification**
-- N/A
+- Based upon designs of crc cards, sequence diagrams and pseudocode
+- Simply used to give suggestions on pull requests however I did do further enquiry to check if there were legitimate concerns through playtesting and checking requirements
+- Code was refined by user further through playtesting and ultimately was based on designs often naming changed to be more explicit
 
 ---
 
@@ -75,9 +68,9 @@ This document records all uses of AI tools during the project.
 |----------|------:|
 | Brainstorming | 0 |
 | Documentation | 2 |
-| Code Generation | 0 |
+| Code Generation | 1 |
 | Debugging | 0 |
-| Testing | 0 |
+| Testing | 2 |
 | Report Writing | 0 |
 
 ---
