@@ -10,6 +10,7 @@ This document records all uses of AI tools during the project.
 | 2026-07-31 | Savio | ChatGPT | Generate AI Usage Log Format |
 | 2026-11-03 | Bhanu | ChatGPT | Generated code based on designs and helped identify problems with pull requests |
 | 2026-11-04 | Yixuan | ChatGPT | Assisted with Unity C# scripting and code refinement |
+| 2026-11-04 | Jun Li | ChatGPT | Assisted with Coyote Time debugging and integration |
 
 
 ---
@@ -85,6 +86,28 @@ This document records all uses of AI tools during the project.
 **Verification**
 - Tested the implemented features in Unity to check that they worked as intended.
 
+### Entry #4
+
+**Date**
+- 2026-11-04
+
+**Team Member**
+- Jun Li
+
+**AI Tool**
+- ChatGPT
+
+**Task**
+- Assisted with Coyote Time integration, debugging, and documentation refinement.
+
+**How It Was Used**
+- Used AI to review and refine the Coyote Time implementation while preserving the existing input buffering.
+- Used AI to help draft and improve presentation, vlog, and Final Report content.
+- Reviewed and modified all suggested code and written content before use.
+
+**Verification**
+- Tested Coyote Time in Unity using a 0.15-second value.
+- Submitted the implementation through pull request #30 and revised the written content based on team feedback.
 
 ---
 
@@ -93,11 +116,11 @@ This document records all uses of AI tools during the project.
 | Category | Count |
 |----------|------:|
 | Brainstorming | 0 |
-| Documentation | 2 |
+| Documentation | 3 |
 | Code Generation | 1 |
-| Debugging | 0 |
-| Testing | 2 |
-| Report Writing | 0 |
+| Debugging | 1 |
+| Testing | 3 |
+| Report Writing | 1 |
 
 ---
 
