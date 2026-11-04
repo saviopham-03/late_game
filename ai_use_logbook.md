@@ -109,6 +109,31 @@ This document records all uses of AI tools during the project.
 - Tested Coyote Time in Unity using a 0.15-second value.
 - Submitted the implementation through pull request #30 and revised the written content based on team feedback.
 
+### Entry #4
+
+**Date**
+- 2026-11-04
+
+**Team Member**
+- Oscar Percy
+
+**AI Tool**
+- ChatGPT
+
+**Task**
+- Assistance with Unity gameplay development, debugging, version control, and project documentation.
+
+**How It Was Used**
+- Used ChatGPT to help troubleshoot and refine gameplay mechanics, particularly the grappling system and its behaviour in Unity.
+
+- Used AI to discuss level design approaches and implementation decisions.
+
+- Assisted with preparing presentation materials, generating visual assets, and refining sections of the final project report.
+
+**Verification**
+- Reviewed technical suggestions against the existing project implementation and tested relevant gameplay changes in Unity.
+
+- Reviewed and revised AI-assisted documentation and presentation materials to ensure they accurately represented the project's development and outcomes.
 ---
 
 ## AI Usage Statistics
