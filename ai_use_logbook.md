@@ -9,6 +9,8 @@ This document records all uses of AI tools during the project.
 | 2026-07-31 | Savio | ChatGPT | Generate Team Contract |
 | 2026-07-31 | Savio | ChatGPT | Generate AI Usage Log Format |
 | 2026-11-03 | Bhanu | ChatGPT | Generated code based on designs and helped identify problems with pull requests |
+| 2026-11-04 | Yixuan | ChatGPT | Assisted with Unity C# scripting and code refinement |
+
 
 ---
 
@@ -59,6 +61,30 @@ This document records all uses of AI tools during the project.
 - Based upon designs of crc cards, sequence diagrams and pseudocode
 - Simply used to give suggestions on pull requests however I did do further enquiry to check if there were legitimate concerns through playtesting and checking requirements
 - Code was refined by user further through playtesting and ultimately was based on designs often naming changed to be more explicit
+
+
+### Entry #3
+
+**Date**
+- 2026-11-03
+
+**Team Member**
+- Yixuan
+
+**AI Tool**
+- ChatGPT
+
+**Task**
+- Assisted with Unity C# scripting, and debugging.
+
+**How It Was Used**
+- Used AI to help develop and refine C# scripts for scene navigation。
+- Used AI to better understand existing code and troubleshoot problems during development.
+- Reviewed, modified, and tested the suggested solutions in Unity before integrating them into the project.
+
+**Verification**
+- Tested the implemented features in Unity to check that they worked as intended.
+
 
 ---
 
